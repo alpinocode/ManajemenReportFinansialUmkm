@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "182722442913",
+    "firebase_url": "https://manajemenreportfinansialumkm-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "manajemenreportfinansialumkm",
+    "storage_bucket": "manajemenreportfinansialumkm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182722442913:android:b03c51268e34481c0122e0",
+        "android_client_info": {
+          "package_name": "com.example.manajemenreportfinansialumkm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfrq_HvgyxEyss6Rr50kXgJ5O14FR63yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
