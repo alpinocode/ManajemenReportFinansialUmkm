@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "1.9.24-1.0.20"
     id("com.google.gms.google-services")
 }
 
@@ -79,12 +79,15 @@ dependencies {
 
 
     // firebase setup
-    implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.bom.v3281))
 
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.database)
 
-    implementation(libs.firebase.auth)
 
+    implementation(libs.google.firebase.auth)
+
+    // facebook
+    implementation(libs.facebook.login)
 
 }
