@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.manajemenreportfinansialumkm.data.loginfirebase.UsersData
 import com.example.manajemenreportfinansialumkm.databinding.ActivityMainBinding
 import com.example.manajemenreportfinansialumkm.ui.home.HomeActivity
 import com.facebook.AccessToken
@@ -13,11 +14,13 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginResult
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.coroutineScope
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,16 +40,20 @@ class MainActivity : AppCompatActivity() {
 
         mCallbackManager = CallbackManager.Factory.create()
 
+        // implement user authentication facebook
         user = auth.currentUser
 
-        val dataUser = user?.let {
-            it.email + "\n"
-            it.phoneNumber + "\n"
-           it.photoUrl.toString() + "\n"
-            it.displayName
+
+        user?.let {
+            UsersData(
+                it.displayName.toString(),
+                it.email.toString(),
+                it.phoneNumber.toString(),
+                it.photoUrl.toString(),
+
+            )
         }
 
-        Log.d(TAG, "Cek Datanya : ${dataUser}")
 
         val loginFacebook = binding.btnFacebooklogin
         loginFacebook.setReadPermissions("email", "public_profile")
@@ -61,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSuccess(result: LoginResult) {
                 handleFacebookAccessToken(result.accessToken)
-                Log.d(TAG, "Cek Data Access token : ${result.accessToken}")
+                    Log.d(TAG, "Cek Data Access token : ${result.accessToken}")
             }
 
         })
@@ -79,14 +86,11 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "signInWithCrential:success")
                     user = auth.currentUser
                     if(user != null) {
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                    } else  {
-                        val intent = Intent(this, HomeActivity::class.java)
-                        intent.putExtra(HomeActivity.DATA, user)
-                        binding.root.context.startActivity(intent)
+                        val context = binding.root.context
+                        val intent = Intent(context, HomeActivity::class.java)
+                        intent.putExtra(HomeActivity.DATA_USER, user)
+                        context.startActivity(intent)
                     }
-
                 } else {
                     Log.w(TAG, "SingInWithCredemtial:Failure", task.exception)
                     Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()

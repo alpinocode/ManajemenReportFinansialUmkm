@@ -10,4 +10,16 @@
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">VzSiQcXRmi2kyjzcA+mYLEtbGVs=</string>
 
+
+    // user
+    <string name="hello">Hello</string>
+    <string name="name">Alfino Hasan</string>
+    <string name="total_saldo_text">Total Saldo Usaha</string>
+    <string name="saldo">Rp 100.000.000</string>
+
+    // box
+    <string name="laporan">Laporan Keuangan</string>
+    <string name="add_tranksaksi">Tambah Transaksi </string>
+    <string name="history_tranksaksi">Riwayat Transaksi</string>
+    <string name="product">Produk</string>
 </resources>

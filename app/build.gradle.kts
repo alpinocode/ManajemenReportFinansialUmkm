@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp") version "1.9.24-1.0.20"
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -89,5 +90,10 @@ dependencies {
 
     // facebook
     implementation(libs.facebook.login)
+
+    // google authentication 
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
 }
