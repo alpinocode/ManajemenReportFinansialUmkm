@@ -22,4 +22,11 @@
     <string name="add_tranksaksi">Tambah Transaksi </string>
     <string name="history_tranksaksi">Riwayat Transaksi</string>
     <string name="product">Produk</string>
+    
+    
+    // register component text 
+    <string name="name_text">Full Name</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="policy_text">I agree about the security</string>
 </resources>

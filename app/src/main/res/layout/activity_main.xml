@@ -97,6 +97,7 @@
                 />
 
             <TextView
+                android:id="@+id/register_to_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/register_home"
@@ -104,33 +105,22 @@
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/gmail_icon"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
-            <ImageView
-                android:id="@+id/gmail_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/google" />
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/btn_facebooklogin"
-                android:layout_width="30dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="25dp" />
-            
-            <ImageView
-                android:id="@+id/telephone_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/baseline_phone_24"
-                android:layout_marginStart="20dp" />
-        </LinearLayout>
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_facebooklogin"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

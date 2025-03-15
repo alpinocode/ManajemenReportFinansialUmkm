@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       FacebookSdk.sdkInitialize(this)
+        FacebookSdk.sdkInitialize(this)
 
         auth = Firebase.auth
 
@@ -42,17 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         // implement user authentication facebook
         user = auth.currentUser
-
-
-        user?.let {
-            UsersData(
-                it.displayName.toString(),
-                it.email.toString(),
-                it.phoneNumber.toString(),
-                it.photoUrl.toString(),
-
-            )
-        }
 
 
         val loginFacebook = binding.btnFacebooklogin
@@ -85,12 +74,7 @@ class MainActivity : AppCompatActivity() {
                 if(task.isSuccessful) {
                     Log.d(TAG, "signInWithCrential:success")
                     user = auth.currentUser
-                    if(user != null) {
-                        val context = binding.root.context
-                        val intent = Intent(context, HomeActivity::class.java)
-                        intent.putExtra(HomeActivity.DATA_USER, user)
-                        context.startActivity(intent)
-                    }
+                    user?.let { handleLogin(it) }
                 } else {
                     Log.w(TAG, "SingInWithCredemtial:Failure", task.exception)
                     Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
@@ -102,6 +86,15 @@ class MainActivity : AppCompatActivity() {
 
         // Pass the activity result back to the Facebook SDK
         mCallbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun handleLogin(usersData:FirebaseUser) {
+        if(usersData != null) {
+            val intent = Intent(this, HomeActivity::class.java )
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Mohon Untuk Login", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {
