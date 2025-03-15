@@ -3,11 +3,14 @@ package com.example.manajemenreportfinansialumkm
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.manajemenreportfinansialumkm.data.loginfirebase.UsersData
+import androidx.credentials.GetCredentialRequest
+import androidx.lifecycle.lifecycleScope
 import com.example.manajemenreportfinansialumkm.databinding.ActivityMainBinding
 import com.example.manajemenreportfinansialumkm.ui.home.HomeActivity
+import com.example.manajemenreportfinansialumkm.ui.register.RegisterActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -20,13 +23,21 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import androidx.credentials.Credential
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+import com.google.firebase.auth.GoogleAuthProvider
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth:FirebaseAuth
     private lateinit var mCallbackManager: CallbackManager
     private var user: FirebaseUser? = null
+    private var credentialManager:CredentialManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 
         mCallbackManager = CallbackManager.Factory.create()
 
+        credentialManager = CredentialManager.create(baseContext)
+
+
         // implement user authentication facebook
         user = auth.currentUser
 
@@ -48,11 +62,12 @@ class MainActivity : AppCompatActivity() {
         loginFacebook.setReadPermissions("email", "public_profile")
         loginFacebook.registerCallback(mCallbackManager, object : FacebookCallback<LoginResult>{
             override fun onCancel() {
-                TODO("Not yet implemented")
+                supportActionBar?.setHomeButtonEnabled(true)
             }
 
             override fun onError(error: FacebookException) {
                 Log.d(TAG, "On Failure response  : ${error.message}")
+                Toast.makeText(baseContext, "Terjadi Kesalahan : ${error.message}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onSuccess(result: LoginResult) {
@@ -63,10 +78,23 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        val toRegister = binding.registerToPage
+        toRegister.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+        val loginGoogle = binding.btnGoogleLogin
+        loginGoogle.setOnClickListener{
+            launchCrenditialManager()
+        }
+
     }
 
+    // facebook sigin
     private fun handleFacebookAccessToken(token:AccessToken) {
-        Log.d(TAG, "HandleFacebookAccessToken:$token")
 
         val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential)
@@ -88,6 +116,58 @@ class MainActivity : AppCompatActivity() {
         mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
+
+
+    // Gooogle singin method
+    private fun launchCrenditialManager(){
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setServerClientId(getString(R.string.web_client_id))
+            .setFilterByAuthorizedAccounts(false)
+            .setAutoSelectEnabled(true)
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        lifecycleScope.launch {
+            try {
+                val result = credentialManager?.getCredential(
+                    context = baseContext,
+                    request = request
+                )
+                result?.let { handleSignInGoggle(it.credential) }
+            } catch (e:Exception) {
+                Log.e(TAG, "OnFaulu")
+            }
+        }
+    }
+
+    private fun handleSignInGoggle(credential: Credential) {
+        if(credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+            val googleIdCrendential = GoogleIdTokenCredential.createFrom(credential.data)
+
+            firebaseAuthWithGoogle(googleIdCrendential.idToken)
+        } else {
+            Log.w(TAG, "Crendetial is not of type Google ID!")
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if(task.isSuccessful) {
+                    Log.d(TAG, "signInWithCredetial:success")
+                    val user = auth.currentUser
+                    user?.let { handleLogin(it) }
+                } else {
+                    Log.w(TAG, "SinginWithCredetial:Failure", task.exception)
+                }
+            }
+
+    }
+
     private fun handleLogin(usersData:FirebaseUser) {
         if(usersData != null) {
             val intent = Intent(this, HomeActivity::class.java )
@@ -97,7 +177,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     companion object {
         private const val TAG = "MainActivity"
     }
+
+
 }

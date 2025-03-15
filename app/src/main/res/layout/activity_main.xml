@@ -107,7 +107,7 @@
 
 
         <com.google.android.gms.common.SignInButton
-            android:id="@+id/gmail_icon"
+            android:id="@+id/btn_google_login"
             android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

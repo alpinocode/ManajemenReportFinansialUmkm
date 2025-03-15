@@ -10,6 +10,9 @@
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">VzSiQcXRmi2kyjzcA+mYLEtbGVs=</string>
 
+    // web client key
+    <string name="web_client_id">182722442913-jl0pfc1159eh0lf20l064o94qcesdtv6.apps.googleusercontent.com</string>
+
 
     // user
     <string name="hello">Hello</string>
