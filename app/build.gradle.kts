@@ -42,12 +42,13 @@ android {
 }
 
 dependencies {
-
+    // ui
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.hdodenhof.circleimageview)
 
     // testing
     testImplementation(libs.junit)
@@ -95,5 +96,6 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
+
 
 }
