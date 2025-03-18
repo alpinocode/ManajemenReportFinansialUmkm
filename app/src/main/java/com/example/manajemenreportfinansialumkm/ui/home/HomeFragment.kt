@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
 
     // data Authentication Firebase Provider Authentication
     private fun dataUserAuth(usersData: FirebaseUser?) {
-        binding?.username?.text = usersData?.displayName
+        binding?.textUsername?.text = "Hello ${usersData?.displayName}"
 
         binding?.imageUser?.let {
             Glide.with(this)
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val data = snapshot.child(userData).child("name")
                 val dataUSerTitle = data.value.toString()
-                binding?.username?.text =dataUSerTitle
+                binding?.textUsername?.text = "Hello $dataUSerTitle"
             }
 
             override fun onCancelled(error: DatabaseError) {

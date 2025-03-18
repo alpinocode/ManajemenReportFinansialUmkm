@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityRegisterBinding
-import com.example.manajemenreportfinansialumkm.ui.helper.HelperFirebaseDatabase
+import com.example.manajemenreportfinansialumkm.helper.HelperFirebaseDatabase
 import com.example.manajemenreportfinansialumkm.ui.HomeActivity
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
