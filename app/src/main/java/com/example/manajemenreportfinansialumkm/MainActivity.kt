@@ -119,37 +119,25 @@ class MainActivity : AppCompatActivity() {
 
 
         btnLogIn.setOnClickListener {
-            inputDataLogin()
+            loginWithAuthEmail()
         }
 
     }
 
     // input data login
-    private fun inputDataLogin() {
+    private fun loginWithAuthEmail() {
         val name = binding.textInputEmail.text.toString().trim()
         val password = binding.textInputPassword.text.toString().trim()
 
-        val database = FirebaseDatabase.getInstance()
-        val dataUSer = database.getReference("users")
-        dataUSer.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val dataUser = snapshot.child(name).child("email")
-                val dataPassword = snapshot.child(name).child("password")
-                if(dataUser.exists() && dataPassword.value.toString() == password) {
-                        val intent = Intent(this@MainActivity, HomeActivity::class.java)
-                        Log.d(TAG, "Cek Data User Yang Mau Dikirim : ${dataUser.value.toString()}")
-                        intent.putExtra(HomeActivity.DATA_USER, name)
-                        startActivity(intent)
-                        finish()
-                } else {
-                    Toast.makeText(baseContext, "Password Atau Email Salah", Toast.LENGTH_SHORT).show()
-                }
+        auth.signInWithEmailAndPassword(name, password).addOnCompleteListener(this) { task ->
+            if(task.isSuccessful) {
+                val user = auth.currentUser
+                user?.let { handleLogin(it) }
+            } else {
+                Log.w(TAG, "signInWithEmail:failure", task.exception)
+                Toast.makeText(this, "Email Atau Password Salah", Toast.LENGTH_SHORT).show()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "Cek apakah data terdapat error: ${error.message}")
-            }
-        })
+        }
     }
 
 
@@ -160,7 +148,6 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful) {
-                    Log.d(TAG, "signInWithCrential:success")
                     user = auth.currentUser
                     user?.let { handleLogin(it) }
                 } else {
@@ -169,6 +156,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -198,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 result?.let { handleSignInGoggle(it.credential) }
             } catch (e:Exception) {
-                Log.e(TAG, "OnFaulu")
+                Log.e(TAG, "OnFailure Auth : ${e.message}")
             }
         }
     }

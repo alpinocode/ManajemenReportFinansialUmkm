@@ -1,10 +1,9 @@
 package com.example.manajemenreportfinansialumkm.helper
 
-import java.util.UUID
 
 data class HelperFirebaseDatabase(
-    val id: UUID,
+    val uuid: String,
     val name:String,
     val email:String,
-    val password:String
+    val imageUrl:String? = null
 )

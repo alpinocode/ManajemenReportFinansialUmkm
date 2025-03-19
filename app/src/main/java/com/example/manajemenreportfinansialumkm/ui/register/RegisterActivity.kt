@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.R
@@ -11,18 +12,25 @@ import com.example.manajemenreportfinansialumkm.databinding.ActivityRegisterBind
 import com.example.manajemenreportfinansialumkm.helper.HelperFirebaseDatabase
 import com.example.manajemenreportfinansialumkm.ui.HomeActivity
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 import com.google.firebase.database.database
 import java.util.UUID
 
 class RegisterActivity : AppCompatActivity() {
     private var binding:ActivityRegisterBinding? = null
+    private lateinit var auth:FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        auth = FirebaseAuth.getInstance()
+
         binding?.btnSubmitRegister?.setOnClickListener {
-            inserDatabase()
+            firebaseAuthRegister()
         }
 
         binding?.textInputLayoutPassword?.setEndIconOnClickListener {
@@ -38,54 +46,70 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding?.textInputLayoutPasswordConfirm?.setEndIconOnClickListener {
-            val dataPasswordConfirmData = binding?.textInputPasswordConfirm
-            if(dataPasswordConfirmData?.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                dataPasswordConfirmData?.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding?.textInputLayoutPasswordConfirm?.endIconDrawable = getDrawable(R.drawable.eye)
+            val dataPasswordData = binding?.textInputPassword
+            if(dataPasswordData?.transformationMethod == PasswordTransformationMethod.getInstance()) {
+                dataPasswordData?.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding?.textInputLayoutPassword?.endIconDrawable = getDrawable(R.drawable.eye)
             } else {
-                dataPasswordConfirmData?.transformationMethod = PasswordTransformationMethod.getInstance()
-                binding?.textInputLayoutPasswordConfirm?.endIconDrawable = getDrawable(R.drawable.hidden)
+                dataPasswordData?.transformationMethod = PasswordTransformationMethod.getInstance()
+                binding?.textInputLayoutPassword?.endIconDrawable = getDrawable(R.drawable.hidden)
             }
-            dataPasswordConfirmData?.setSelection( dataPasswordConfirmData.text?.length ?: 0)
+            dataPasswordData?.setSelection( dataPasswordData.text?.length ?: 0)
         }
     }
 
-    private fun inserDatabase() {
+    private fun firebaseAuthRegister() {
         val name = binding?.textInputFullName?.text.toString().trim()
         val email = binding?.textInputEmail?.text.toString().trim()
         val password = binding?.textInputPassword?.text.toString().trim()
         val confirmPassword = binding?.textInputPasswordConfirm?.text.toString().trim()
 
-        when {
-            password != confirmPassword -> Toast.makeText(this, "Confirm Password Tidak sama dengan password", Toast.LENGTH_SHORT).show()
-            email.isEmpty() -> Toast.makeText(this, "Email harus unique", Toast.LENGTH_SHORT).show()
-            name.isEmpty() -> Toast.makeText(this, "Name Harus Ada", Toast.LENGTH_SHORT).show()
+        if(name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(this, "Form Tidak Boleh Kosong ", Toast.LENGTH_SHORT).show()
+        }
+
+        if(password != confirmPassword) {
+            Toast.makeText(this, "Password dan confirm password Tidak Sama", Toast.LENGTH_SHORT).show()
         }
 
 
-        val database = Firebase.database
-        val myRefenrece = database.getReference("users")
 
-        val dataUsers = HelperFirebaseDatabase(UUID.randomUUID(),name,email,password)
+        Firebase.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{ task ->
+            if(task.isSuccessful) {
+                val user = auth.currentUser
+                val database = Firebase.database.getReference("users")
 
-        val registerData = myRefenrece.child(name).setValue(dataUsers)
+                val uuid = user?.uid.toString()
+                val dataUser = HelperFirebaseDatabase(uuid,name, email)
+                database.child(uuid).setValue(dataUser)
 
-        if(registerData != null) {
-            Toast.makeText(this@RegisterActivity, "Akun Anda Sudah Terdaftar", Toast.LENGTH_SHORT).show()
+                user?.let { handleLogin(it)}
+
+            } else {
+                Toast.makeText(this, "Alamat Email Sudah Ada", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.putExtra(HomeActivity.DATA_USER, name)
-        startActivity(intent)
-        finish()
     }
+
+    private fun handleLogin(usersData: FirebaseUser) {
+        if(usersData != null) {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(this, "Mohon Untuk Login", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
         binding = null
     }
-    companion object {
+    companion object  {
         private val TAG = "Register Activity"
     }
 }

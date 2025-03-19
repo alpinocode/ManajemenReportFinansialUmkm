@@ -17,7 +17,7 @@
 
     // user
     <string name="hello">Hello</string>
-    <string name="name">Alfino Hasan</string>
+    <string name="name_user">Alfino Hasan</string>
     <string name="total_saldo_text">Total Saldo Usaha</string>
     <string name="saldo">Rp 100.000.000</string>
 

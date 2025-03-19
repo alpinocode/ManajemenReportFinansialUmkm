@@ -1,5 +1,6 @@
 package com.example.manajemenreportfinansialumkm.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.FragmentHomeBinding
 import com.example.manajemenreportfinansialumkm.ui.HomeActivity
+import com.example.manajemenreportfinansialumkm.ui.product.ProductActivity
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -33,6 +35,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding
     private  var usersAuth: FirebaseAuth? = null
     private lateinit var credentialManager: CredentialManager
+    private lateinit var dataEmailUser:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,18 +49,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val toProduct = binding?.productContainer
+
+        toProduct?.setOnClickListener{
+            val intent = Intent(requireContext(), ProductActivity::class.java)
+            startActivity(intent)
+        }
+
         usersAuth = FirebaseAuth.getInstance()
 
         val usersDataAuth = usersAuth?.currentUser
 
-        val dataUser = requireActivity().intent.getStringExtra(HomeActivity.DATA_USER)
 
-        if(dataUser != null) {
-          dataUserAuthDatabase(dataUser)
-            Glide.with(this)
-                .load(R.drawable.avatar)
-                .into(binding!!.imageUser)
-        } else if(usersDataAuth != null) {
+        if(usersDataAuth != null) {
             dataUserAuth(usersDataAuth)
         }
 
@@ -93,30 +97,38 @@ class HomeFragment : Fragment() {
 
     // data Authentication Firebase Provider Authentication
     private fun dataUserAuth(usersData: FirebaseUser?) {
-        binding?.textUsername?.text = "Hello ${usersData?.displayName}"
 
-        binding?.imageUser?.let {
-            Glide.with(this)
-                .load(usersData?.photoUrl)
-                .into(it)
+        if(usersData?.displayName == null) {
+            val database = FirebaseDatabase.getInstance().getReference("users")
+            database.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val dataUserId = usersAuth?.currentUser?.uid
+                    val data = snapshot.child(dataUserId.toString()).child("name")
+                    binding?.textUsername?.text = "Hello ${data.value}"
+                    binding?.imageUser?.let {
+                        Glide.with(requireContext())
+                            .load(R.drawable.avatar)
+                            .into(it)
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), "Terjadi Kesalahan pada database", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+        } else {
+            binding?.textUsername?.text = "Hello ${usersData?.displayName}"
+
+            binding?.imageUser?.let {
+                Glide.with(this)
+                    .load(usersData.photoUrl)
+                    .into(it)
+            }
         }
 
-    }
 
-    // data authentication firebase database
-    private fun dataUserAuthDatabase(userData:String) {
-        val database = FirebaseDatabase.getInstance().getReference("users")
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val data = snapshot.child(userData).child("name")
-                val dataUSerTitle = data.value.toString()
-                binding?.textUsername?.text = "Hello $dataUSerTitle"
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(binding?.root?.context, "Data Tidak Ada", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
 
