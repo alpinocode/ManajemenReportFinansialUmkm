@@ -13,9 +13,11 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.exceptions.ClearCredentialException
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.manajemenreportfinansialumkm.R
+import com.example.manajemenreportfinansialumkm.SignUpAndSignOutViewModel
 import com.example.manajemenreportfinansialumkm.databinding.FragmentHomeBinding
 import com.example.manajemenreportfinansialumkm.ui.HomeActivity
 import com.example.manajemenreportfinansialumkm.ui.product.ProductActivity
@@ -34,8 +36,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
     private  var usersAuth: FirebaseAuth? = null
-    private lateinit var credentialManager: CredentialManager
-    private lateinit var dataEmailUser:String
+    private  val signOutViewModel:SignUpAndSignOutViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,12 +66,10 @@ class HomeFragment : Fragment() {
             dataUserAuth(usersDataAuth)
         }
 
-        credentialManager = CredentialManager.create(requireContext())
-
 
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                signOut()
+                signOutViewModel.signOut(requireContext())
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
                 requireActivity().finish()
@@ -79,21 +78,8 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun signOut() {
-        // Firebase sign out
-        usersAuth?.signOut()
 
-        // When a user signs out, clear the current user credential state from all credential providers.
-        lifecycleScope.launch {
-            try {
-                val clearRequest = ClearCredentialStateRequest()
-                credentialManager.clearCredentialState(clearRequest)
-                dataUserAuth(null)
-            } catch (e: ClearCredentialException) {
-                Log.e(TAG, "Couldn't clear user credentials: ${e.localizedMessage}")
-            }
-        }
-    }
+
 
     // data Authentication Firebase Provider Authentication
     private fun dataUserAuth(usersData: FirebaseUser?) {
