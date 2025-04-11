@@ -3,28 +3,35 @@ package com.example.manajemenreportfinansialumkm.ui.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manajemenreportfinansialumkm.databinding.ItemStockBinding
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.example.manajemenreportfinansialumkm.ui.stock.AddStockActivity
+import com.example.manajemenreportfinansialumkm.ui.stock.StockViewModel
+import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
-class StockAdapter : ListAdapter<Stock, StockAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StockAdapter() : ListAdapter<Stock, StockAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
+    var onDeleteClick: ((id:String) -> Unit)? = null
     inner class MyViewHolder(private val binding: ItemStockBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(stock: Stock, position: Int) {
             binding.apply {
+                val context = binding.root.context
                 nomor.text = (position + 1).toString()
                 codeBarang.text = stock.codeBarang
                 namaBarang.text = stock.nameBarang
                 jumlahStock.text = stock.jumlah
-                containerStock.setOnClickListener{
-                    val context = binding.root.context
+                containerStock.setOnClickListener {
                     val intent = Intent(context, AddStockActivity::class.java)
                     intent.putExtra(AddStockActivity.STOCK_ID, stock.codeBarang)
                     context.startActivity(intent)
+                }
+                actionDeleteStock.setOnClickListener {
+                    onDeleteClick?.invoke(stock.codeBarang.toString())
                 }
             }
         }

@@ -225,8 +225,8 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                     if(stockItem != null) {
                         dataStock.add(stockItem)
                     }
-                    _userStock.value = dataStock
                 }
+                _userStock.value = dataStock
                 _isLoading.value =false
             }
 
@@ -260,7 +260,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     }
 
 
-    fun updateData(
+    fun updateStockData(
         id: String,
         nameSuplier: String,
         nameBarang: String,
@@ -297,6 +297,22 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             }
     }
 
+
+    fun deleteStock(id:String) {
+        val dataUsername = auth.currentUser?.displayName
+        val database = FirebaseDatabase.getInstance().getReference(dataUsername.toString())
+        database.child("Stock").child(id).removeValue()
+            .addOnSuccessListener {
+                getStock() // Refresh data setelah delete sukses
+                _isLoading.value = false
+                _messageSuccess.value = "delete Data Success"
+            }
+            .addOnFailureListener {
+                _isLoading.value = false
+                Log.e("DeleteStock", "Gagal menghapus: ${it.message}")
+                _messageError.value = "Error : ${it.message}"
+            }
+    }
 
     companion object {
         private val TAG = "Repository"

@@ -11,5 +11,6 @@ class StockViewModel(private val repository: Repository) : ViewModel(){
     fun addStock(name:String,nameSuplier:String, nameBarang:String, codeBarang:String, keterangan:String, jumlah:String, date:String) = repository.addStock(name, nameSuplier, nameBarang, codeBarang, keterangan, jumlah, date )
     fun getStockById(id:String) = repository.getStockById(id)
 
-    fun updateStock(id:String,nameSuplier:String, nameBarang:String, keterangan:String, jumlah:String, date:String) = repository.updateData(id, nameSuplier, nameBarang, keterangan, jumlah, date)
+    fun updateStock(id:String,nameSuplier:String, nameBarang:String, keterangan:String, jumlah:String, date:String) = repository.updateStockData(id, nameSuplier, nameBarang, keterangan, jumlah, date)
+
 }

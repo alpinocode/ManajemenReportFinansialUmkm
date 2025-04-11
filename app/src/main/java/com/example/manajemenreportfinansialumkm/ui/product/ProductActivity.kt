@@ -9,7 +9,9 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityProductBinding
@@ -37,6 +39,25 @@ class ProductActivity : AppCompatActivity() {
         binding?.rvStock?.layoutManager = LinearLayoutManager(this)
         binding?.rvStock?.adapter = adapter
 
+
+
+        adapter.onDeleteClick = {
+            AlertDialog.Builder(this).apply {
+                setTitle("Konfirmasi Hapus")
+                setMessage("Yakin ingin menghapus ?")
+                setPositiveButton("Ya") { _, _ ->
+                    viewModel.deleteStock(it)  // implementasikan di ViewModel
+                }
+                setNegativeButton("Batal", null)
+            }.show()
+            viewModel.messageSuccess.observe(this) {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+            viewModel.messageError.observe(this) {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // Aksi untuk tambah stok
         binding?.floatingActionAddStock?.setOnClickListener {
             val intent = Intent(this, AddStockActivity::class.java)
@@ -54,39 +75,8 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-//        val spinner = binding?.spinnerOption
-//
-//        spinner?.onItemSelectedListener = object : OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//
-//                if (position == 0) {
-//                    viewModel.loadStockInData()
-//                    Toast.makeText(this@ProductActivity, "Barang Masuk", Toast.LENGTH_SHORT).show()
-//                } else if (position == 1) {
-//                    viewModel.loadStockOutData()
-//                    Toast.makeText(this@ProductActivity, "Barang Keluar", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        }
-//
-//        ArrayAdapter.createFromResource(
-//            this,
-//            R.array.product_selected,
-//            android.R.layout.simple_spinner_item
-//        ).also { adapter ->
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-//            spinner?.adapter = adapter
-//        }
+
+
     }
 
     private fun showLoading(isLoading: Boolean) {
