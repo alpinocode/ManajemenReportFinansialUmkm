@@ -10,26 +10,32 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityRegisterBinding
-import com.example.manajemenreportfinansialumkm.helper.HelperFirebaseDatabase
 import com.example.manajemenreportfinansialumkm.ui.HomeActivity
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
+import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.auth
-import com.google.firebase.database.database
-import java.util.UUID
 
 class RegisterActivity : AppCompatActivity() {
     private var binding:ActivityRegisterBinding? = null
-    private lateinit var auth:FirebaseAuth
-    private val registerViewModel:RegisterViewModel by viewModels()
+//    private val registerViewModel:RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        auth = FirebaseAuth.getInstance()
+        val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
+        val viewModel:RegisterViewModel by viewModels {
+            factory
+        }
+
+        viewModel.userLogin.observe(this) {
+            Log.d(TAG, "Cek Username ${it?.displayName}")
+            it?.let { it1 -> handleLogin(it1) }
+        }
+
+        viewModel.messageError.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
 
         binding?.btnSubmitRegister?.setOnClickListener {
             val name = binding?.textInputFullName?.text.toString().trim()
@@ -37,10 +43,13 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding?.textInputPassword?.text.toString().trim()
             val confirmPassword = binding?.textInputPasswordConfirm?.text.toString().trim()
 
-            registerViewModel.signUp(name, email, password, confirmPassword)
+//            registerViewModel.signUp(name, email, password, confirmPassword)
+            viewModel.register(name, email, password, confirmPassword)
         }
 
-        observeRegister()
+//        observeRegister()
+
+
         binding?.textInputLayoutPassword?.setEndIconOnClickListener {
             showAndHidePassword()
         }
@@ -50,16 +59,16 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeRegister() {
-        registerViewModel.userAuth.observe(this) {
-            handleLogin(it)
-        }
-        registerViewModel.messageError.observe(this) {
-            it.let {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+//    private fun observeRegister() {
+//        registerViewModel.userLogin.observe(this) {
+//            it?.let { it1 -> handleLogin(it1) }
+//        }
+//        registerViewModel.messageError.observe(this) {
+//            it.let {
+//                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
 
 

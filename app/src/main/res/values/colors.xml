@@ -7,4 +7,7 @@
     <color name="blue_dark">#0E62F8</color>
     <color name="orange">#FFB433</color>
     <color name="light_cyan">#B4EBE6</color>
+    <color name="transparent">#00FBFBFB</color>
+    <color name="selected_color">#2196F3</color> <!-- Biru -->
+    <color name="unselected_color">#757575</color> <!-- Abu-abu -->
 </resources>

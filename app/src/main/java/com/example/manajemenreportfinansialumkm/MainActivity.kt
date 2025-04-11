@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.databinding.ActivityMainBinding
 import com.example.manajemenreportfinansialumkm.ui.HomeActivity
 import com.example.manajemenreportfinansialumkm.ui.register.RegisterActivity
+import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -20,15 +21,11 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
-import androidx.credentials.CredentialManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth:FirebaseAuth
     private lateinit var callbackManager: CallbackManager
-    private var user: FirebaseUser? = null
-    private var credentialManager:CredentialManager? = null
-    private val signUpViewModel:SignUpAndSignOutViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,40 +39,36 @@ class MainActivity : AppCompatActivity() {
 
         callbackManager = CallbackManager.Factory.create()
 
-        credentialManager = CredentialManager.create(baseContext)
-
-
-        // implement user authentication facebook
-        user = auth.currentUser
-
-        observeLogin()
-
-
-
-
-
-        val btnLogIn = binding.btnLogin
-
-        binding.textFieldPassword.setEndIconOnClickListener {
-            val passwordData = binding.textInputPassword
-            if(passwordData.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                passwordData.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding.textFieldPassword.endIconDrawable = getDrawable(R.drawable.eye)
-            } else {
-                passwordData.transformationMethod = PasswordTransformationMethod.getInstance()
-                binding.textFieldPassword.endIconDrawable = getDrawable(R.drawable.hidden)
-            }
-            passwordData.setSelection( passwordData.text?.length ?: 0)
+        val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
+        val viewModel:SignUpAndSignOutViewModel by viewModels {
+            factory
         }
 
 
+        viewModel.userLogin.observe(this) {
+            if (it != null) {
+                handleLogin(it)
+            }
+        }
 
-        btnLogIn.setOnClickListener {
-            Log.d(TAG, "Cek Apakah Button sudah di klik")
+        viewModel.messageError.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.messageSuccess.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+
+
+        binding.textFieldPassword.setEndIconOnClickListener {
+           showAndHidePassword()
+        }
+
+        binding.btnLogin.setOnClickListener {
             val email = binding.textInputEmail.text.toString().trim()
             val password = binding.textInputPassword.text.toString().trim()
 
-            signUpViewModel.sigInWitEmail(email,password)
+            viewModel.signInWithEmail(email, password)
         }
 
 
@@ -88,43 +81,27 @@ class MainActivity : AppCompatActivity() {
 
             override fun onError(error: FacebookException) {
                 Log.d(TAG, "On Failure response  : ${error.message}")
+                Toast.makeText(this@MainActivity, "${error.message}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onSuccess(result: LoginResult) {
-                signUpViewModel.sigInWithFacebook(result.accessToken)
+                viewModel.signInWithFacebook(result.accessToken)
             }
 
         })
 
+        binding.btnGoogleLogin.setOnClickListener{
+            viewModel.signInWithGoogle(baseContext)
+        }
 
-        val toRegister = binding.registerToPage
-        toRegister.setOnClickListener{
+        binding.registerToPage.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
-
-
-        val loginGoogle = binding.btnGoogleLogin
-        loginGoogle.setOnClickListener{
-            signUpViewModel.sigInWithGoogle(baseContext)
-        }
     }
 
 
-    private fun observeLogin() {
-        signUpViewModel.userLogin.observe(this) { users ->
-            users?.let {
-                handleLogin(it)
-            }
-        }
 
-        signUpViewModel.messageError.observe(this) {
-            it.let {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -133,6 +110,18 @@ class MainActivity : AppCompatActivity() {
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
+    private fun showAndHidePassword() {
+        val dataPasswordData = binding.textInputPassword
+        if(dataPasswordData.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            dataPasswordData.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            binding.textFieldPassword.endIconDrawable = getDrawable(R.drawable.eye)
+        } else {
+            dataPasswordData.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding.textFieldPassword.endIconDrawable = getDrawable(R.drawable.hidden)
+        }
+        dataPasswordData.setSelection( dataPasswordData.text?.length ?: 0)
+        return
+    }
 
     private fun handleLogin(usersData:FirebaseUser) {
         if(usersData != null) {

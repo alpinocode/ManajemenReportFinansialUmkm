@@ -40,4 +40,24 @@
     <string name="policy_text">I agree about the security</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="product_selected">
+        <item>Barang Masuk</item>
+        <item>Barang Keluar</item>
+    </string-array>
+
+    // add stock page
+    <string name="stock_in">Add Stock</string>
+    <string name="text_keterangan">Keterangan</string>
+    <string name="text_jumlah">Jumlah</string>
+    <string name="text_nama_barang">Nama Barang</string>
+    <string name="text_nama_suplier">Nama Suplier</string>
+    <string name="text_code_barang">Code Barang</string>
+
+
+    // product page
+    <string name="text_no">No</string>
+    <string name="text_stock">Stock</string>
+    <string name="text_action">Action</string>
 </resources>

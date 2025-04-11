@@ -31,7 +31,5 @@ class PembukuanFragment : Fragment() {
 
     }
 
-    companion object {
 
-    }
 }

@@ -55,6 +55,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
     // navigation
     val nav_version = "2.8.9"
     implementation(libs.androidx.navigation.fragment)
