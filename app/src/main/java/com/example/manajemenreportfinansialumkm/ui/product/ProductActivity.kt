@@ -47,16 +47,11 @@ class ProductActivity : AppCompatActivity() {
                 setTitle("Konfirmasi Hapus")
                 setMessage("Yakin ingin menghapus ?")
                 setPositiveButton("Ya") { _, _ ->
-                    viewModel.deleteStock(it)  // implementasikan di ViewModel
+                    viewModel.deleteStock(it)
                 }
                 setNegativeButton("Batal", null)
             }.show()
-            viewModel.messageSuccess.observe(this) {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
-            viewModel.messageError.observe(this) {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
+
         }
 
         binding?.floatingActionAddStock?.setOnClickListener {
@@ -79,10 +74,15 @@ class ProductActivity : AppCompatActivity() {
                 showLoading(it)
             }
         }
-
+        viewModel.messageSuccess.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        viewModel.messageError.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
         setUpSearchStock()
 
-
+2
     }
 
     private fun setUpSearchStock() {

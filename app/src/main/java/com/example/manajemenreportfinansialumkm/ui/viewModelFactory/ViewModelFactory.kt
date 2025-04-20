@@ -11,6 +11,7 @@ import com.example.manajemenreportfinansialumkm.ui.notification.NotificationView
 import com.example.manajemenreportfinansialumkm.ui.product.ProductViewModel
 import com.example.manajemenreportfinansialumkm.ui.register.RegisterViewModel
 import com.example.manajemenreportfinansialumkm.ui.stock.StockViewModel
+import com.example.manajemenreportfinansialumkm.ui.transaction.TrasanctionViewModel
 
 class ViewModelFactory(private val repository: Repository) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -26,6 +27,8 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
             return ProductViewModel(repository) as T
         } else if(modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
             return NotificationViewModel(repository) as T
+        } else if(modelClass.isAssignableFrom(TrasanctionViewModel::class.java)) {
+            return TrasanctionViewModel(repository) as T
         }
         throw Exception("Unknown Class ${modelClass.name}")
     }

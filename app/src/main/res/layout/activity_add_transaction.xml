@@ -7,4 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.transaction.AddTransactionActivity">
 
+    <SearchView
+        android:id="@+id/search_add_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"/>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_add_transaksi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/search_add_transaction"
+        app:layout_constraintEnd_toEndOf="@+id/search_add_transaction"
+        app:layout_constraintTop_toBottomOf="@+id/search_add_transaction"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+        
 </androidx.constraintlayout.widget.ConstraintLayout>

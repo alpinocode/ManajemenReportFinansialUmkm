@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.util.Patterns
+import androidx.annotation.RequiresApi
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
@@ -16,6 +18,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.data.local.entity.UserEntity
 import com.example.manajemenreportfinansialumkm.data.local.room.UserDao
+import com.example.manajemenreportfinansialumkm.helper.Pemasukan
 import com.example.manajemenreportfinansialumkm.helper.Pengeluaran
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.facebook.AccessToken
@@ -36,6 +39,8 @@ import com.google.firebase.database.database
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import kotlin.random.Random
 
 class Repository(private val userDao: UserDao, private val context: Context) {
     private val _messageError = MutableLiveData<String?>()
@@ -53,8 +58,8 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     private val _userStock = MutableLiveData<List<Stock>>()
     val userStock:LiveData<List<Stock>> = _userStock
 
-    private val _searchStock = MutableLiveData<List<Stock?>>()
-    val searchStock:LiveData<List<Stock?>> = _searchStock
+    private val _searchItem = MutableLiveData<List<Stock?>>()
+    val searchItem:LiveData<List<Stock?>> = _searchItem
 
     private val _notification = MutableLiveData<List<Stock>>()
     val notification:LiveData<List<Stock>> = _notification
@@ -235,12 +240,14 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         _messageSuccess.value = "Add Data Success "
     }
 
-    fun addPengeluaran(name:String, codeBarang: String,harga: Int, stock: Int) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addPengeluaran(name:String, codeBarang: String, harga: Int, stock: Int) {
         val db = Firebase.database
         val ref = db.getReference(name)
+        val date = LocalDate.now().toString()
 
-        val pengeluaran = Pengeluaran(name, codeBarang, harga * stock)
-        ref.child("Pembukuan").child("Pengeluaran").setValue(pengeluaran)
+        val pengeluaran = Pengeluaran(codeBarang, harga * stock)
+        ref.child("Pembukuan").child("Pengeluaran").child(date).child(codeBarang).setValue(pengeluaran)
     }
 
     fun getStock() {
@@ -375,7 +382,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
 
     }
 
-    fun searchStock(query: String) {
+    fun searchItem(query: String) {
         val username = auth.currentUser?.displayName.toString()
         val database = FirebaseDatabase.getInstance().getReference(username).child("Stock")
 
@@ -389,7 +396,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                         filteredList.add(produk)
                     }
                 }
-                _searchStock.value = filteredList
+                _searchItem.value = filteredList
                 _isLoading.value = false
             }
 
@@ -399,6 +406,49 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         })
     }
 
+
+    fun updateStockAfterTransaction(id: String, stock: Int) {
+        val dataUsername = auth.currentUser?.displayName.toString()
+        val refenrence = FirebaseDatabase.getInstance().getReference(dataUsername).child("Stock").child(id)
+        refenrence.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val data = snapshot.getValue(Stock::class.java)
+                val updateDataStock = data?.stock.toString().toInt() - stock.toString().toInt()
+
+                val dataUpdate = mapOf<String, Any>(
+                    "stock" to updateDataStock
+                )
+
+                val database = FirebaseDatabase.getInstance().getReference(dataUsername)
+                val stockRefUpdate = database.child("Stock").child(id)
+
+                stockRefUpdate.updateChildren(dataUpdate)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addPemasukanTransaction(id:String, codeBarang: String, harga: Int, stock: Int) {
+        val database = Firebase.database
+        val dataUsername = auth.currentUser?.displayName.toString()
+        val pemasukanRef = database.getReference(dataUsername)
+        val date = LocalDate.now().toString()
+        val randomId = Random.nextInt(0, 40000)
+
+        val pemasukanData = Pemasukan(codeBarang, harga * stock)
+
+        pemasukanRef.child("Pembukuan").child("Pemasukan").child(date).child(randomId.toString()).setValue(pemasukanData).addOnCompleteListener{ task ->
+            if (task.isSuccessful) {
+                _messageSuccess.value = "Add Pemasukan Success"
+            } else {
+                _messageError.value = "Add Pemasukan Failed"
+            }
+        }
+    }
     companion object {
         private val TAG = "Repository"
 

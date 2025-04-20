@@ -1,19 +1,83 @@
 package com.example.manajemenreportfinansialumkm.ui.transaction
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityAddTransactionBinding
+import com.example.manajemenreportfinansialumkm.ui.adapter.TransactionAdapter
+import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
 class AddTransactionActivity : AppCompatActivity() {
     private lateinit var binding:ActivityAddTransactionBinding
+    private val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val viewModel:TrasanctionViewModel by viewModels {
+        factory
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val adapter = TransactionAdapter()
+        binding.rvAddTransaksi.layoutManager = LinearLayoutManager(this)
+        binding.rvAddTransaksi.adapter = adapter
+
+
+        searchTransaksion()
+
+        viewModel.userSearchTransaction.observe(this){
+            adapter.submitList(it)
+        }
+
+        viewModel.userTransaction.observe(this) {
+            adapter.submitList(it)
+        }
+        viewModel.isLoading.observe(this) {
+            if(it != null) {
+                showLoading(it)
+            }
+        }
+        viewModel.messageSuccess.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        viewModel.messageError.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun searchTransaksion() {
+        binding.searchAddTransaction.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null) {
+                    viewModel.searchTransaction(query.toString())
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    viewModel.searchTransaction(newText.toString())
+                }
+                return false
+            }
+
+        })
+    }
+    private fun showLoading(isLoading:Boolean) {
+        if (isLoading) {
+            binding.progressBarTransaction.visibility = View.VISIBLE
+        } else {
+            binding.progressBarTransaction.visibility = View.GONE
+        }
     }
 }
