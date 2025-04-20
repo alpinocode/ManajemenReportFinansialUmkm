@@ -13,7 +13,7 @@
         android:title="@string/pembukuan"/>
 
     <item
-        android:id="@+id/navigation_help"
-        android:icon="@drawable/baseline_help_center_24"
-        android:title="@string/help"/>
+        android:id="@+id/navigation_notification"
+        android:icon="@drawable/notification"
+        android:title="@string/notification"/>
 </menu>

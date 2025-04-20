@@ -14,13 +14,15 @@ import com.google.firebase.database.ValueEventListener
 
 class ProductViewModel(private val repository: Repository) : ViewModel() {
     val userStock = repository.userStock
-
+    val userSearchStock = repository.searchStock
     val messageSuccess = repository.messageSuccess
     val messageError = repository.messageError
     val isLoading = repository.isLoading
 
 
+
     fun loadStockInData() = repository.getStock()
     fun deleteStock(id:String) = repository.deleteStock(id)
 
+    fun searchStock(query:String) = repository.searchStock(query)
 }

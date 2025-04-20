@@ -7,11 +7,19 @@ import com.google.firebase.auth.FirebaseAuth
 
 class HomeViewModel(private val repository: Repository) : ViewModel() {
     val userAuth = repository.userAuth
+    val userVerification = repository.userVerfication
 
-    val auth = FirebaseAuth.getInstance()
+    val messageSuccess = repository.messageSuccess
+    val messageError = repository.messageError
+
+    init {
+        checkedEmailVerification()
+    }
 
     fun logOut(id:String) = repository.logOut(id)
 
+    private fun checkedEmailVerification() = repository.checkedEmailVerification()
+    fun sendVerificationEmail() = repository.userVerification()
     fun signOut(context: Context)  = repository.signOut(context)
 
     companion object {

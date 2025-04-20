@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -58,12 +59,16 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-        // Aksi untuk tambah stok
         binding?.floatingActionAddStock?.setOnClickListener {
             val intent = Intent(this, AddStockActivity::class.java)
             startActivity(intent)
         }
 
+
+
+        viewModel.userSearchStock.observe(this) {
+            adapter.submitList(it as MutableList<Stock>?)
+        }
 
         viewModel.userStock.observe(this) {
             adapter.submitList(it as MutableList<Stock>?)
@@ -75,8 +80,35 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
+        setUpSearchStock()
 
 
+    }
+
+    private fun setUpSearchStock() {
+        binding?.searchStock?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null) {
+                    viewModel.searchStock(query)
+                    return false
+                } else {
+                    viewModel.loadStockInData()
+                    return false
+                }
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText != null) {
+                    viewModel.searchStock(newText)
+                    return false
+                } else {
+                    viewModel.loadStockInData()
+                    return false
+                }
+            }
+
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {

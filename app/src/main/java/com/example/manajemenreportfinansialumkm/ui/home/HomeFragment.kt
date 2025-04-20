@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -42,28 +41,44 @@ class HomeFragment : Fragment() {
             factory
         }
 
+        usersAuth = FirebaseAuth.getInstance()
 
         toProduct?.setOnClickListener{
             val intent = Intent(requireContext(), ProductActivity::class.java)
             startActivity(intent)
         }
 
-        usersAuth = FirebaseAuth.getInstance()
+        binding?.addTransaksiContainer?.setOnClickListener{
+            val intent = Intent(requireContext(), AddTransactionActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
         viewModel.userAuth.observe(requireActivity()) {
             if(it != null) {
                 dataUserAuth(it)
             }
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                usersAuth?.currentUser?.uid?.let { viewModel.logOut(it) }
-                viewModel.signOut(requireContext())
-                FirebaseAuth.getInstance().signOut()
-                LoginManager.getInstance().logOut()
-                requireActivity().finish()
+        viewModel.userVerification.observe(viewLifecycleOwner){
+            if(it == true) {
+                binding?.btnVerificationEmail?.visibility = View.GONE
+            } else {
+                binding?.btnVerificationEmail?.setOnClickListener{
+                    viewModel.sendVerificationEmail()
+                }
             }
-        })
+        }
+
+        binding?.btnLogout?.setOnClickListener{
+            viewModel.signOut(requireContext())
+            usersAuth?.signOut()
+            LoginManager.getInstance().logOut()
+            requireActivity().finish()
+        }
+
+      
     }
 
 

@@ -7,6 +7,7 @@ import com.example.manajemenreportfinansialumkm.SignUpAndSignOutViewModel
 import com.example.manajemenreportfinansialumkm.data.Repository
 import com.example.manajemenreportfinansialumkm.di.Injection
 import com.example.manajemenreportfinansialumkm.ui.home.HomeViewModel
+import com.example.manajemenreportfinansialumkm.ui.notification.NotificationViewModel
 import com.example.manajemenreportfinansialumkm.ui.product.ProductViewModel
 import com.example.manajemenreportfinansialumkm.ui.register.RegisterViewModel
 import com.example.manajemenreportfinansialumkm.ui.stock.StockViewModel
@@ -23,6 +24,8 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
             return StockViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ProductViewModel::class.java)) {
             return ProductViewModel(repository) as T
+        } else if(modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
+            return NotificationViewModel(repository) as T
         }
         throw Exception("Unknown Class ${modelClass.name}")
     }

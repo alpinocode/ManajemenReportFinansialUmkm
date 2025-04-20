@@ -9,11 +9,20 @@
     tools:context=".ui.home.HomeFragment"
     android:background="@color/blue_light">
 
+    <ImageView
+        android:id="@+id/btn_logout"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@drawable/logout"
+        android:layout_gravity="end"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="30dp"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="350dp"
         android:layout_height="170dp"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="40dp"
         app:cardCornerRadius="15dp">
 
@@ -35,6 +44,32 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:src="@tools:sample/avatars" />
 
+
+            <LinearLayout
+                android:id="@+id/btn_verification_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/image_user"
+                app:layout_constraintHorizontal_bias="0.904"
+                app:layout_constraintStart_toStartOf="@+id/image_user"
+                app:layout_constraintTop_toBottomOf="@+id/image_user">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/noverification" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verification Now"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/text_username"
                 android:layout_width="wrap_content"
@@ -44,7 +79,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/image_user"
                 app:layout_constraintHorizontal_bias="0.054"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

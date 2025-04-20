@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,165 +7,226 @@
     android:layout_height="match_parent"
     tools:context=".ui.stock.AddStockActivity">
 
-    <TextView
-        android:id="@+id/text_nama_suplier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_nama_suplier"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="24dp"/>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_nama_suplier"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@id/text_nama_suplier"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_suplier"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/text_nama_suplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_nama_suplier"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="24dp"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_nama_suplier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/text_nama_suplier"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_suplier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <TextView
-        android:id="@+id/text_nama_barang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_nama_barang"
-        android:textSize="18sp"
-        android:layout_marginTop="12dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/text_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@+id/input_layout_nama_suplier" />
+        <TextView
+            android:id="@+id/text_nama_barang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_nama_barang"
+            android:textSize="18sp"
+            android:layout_marginTop="12dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_nama_suplier" />
 
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_nama_barang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/text_nama_barang"
-        app:layout_constraintTop_toBottomOf="@id/text_nama_barang"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_barang"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_nama_barang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="@id/text_nama_barang"
+            app:layout_constraintTop_toBottomOf="@id/text_nama_barang"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_barang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/text_code_barang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_code_barang"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_nama_barang"
-        android:layout_marginTop="12dp"/>
+        <TextView
+            android:id="@+id/text_code_barang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_code_barang"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_nama_barang"
+            android:layout_marginTop="12dp"/>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_code_barang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/input_layout_nama_barang"
-        app:layout_constraintTop_toBottomOf="@id/text_code_barang"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_code_barang"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_code_barang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="@id/input_layout_nama_barang"
+            app:layout_constraintTop_toBottomOf="@id/text_code_barang"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_code_barang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <TextView
-        android:id="@+id/text_keterangan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_keterangan"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_code_barang"
-        android:layout_marginTop="12dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_keterangan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@id/text_keterangan"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"
-     >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_keterangan"
+        <LinearLayout
+            android:id="@+id/container_item_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_code_barang"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kategory : "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
 
-    <TextView
-        android:id="@+id/text_jumlah"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_jumlah"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_keterangan"
-        android:layout_marginTop="12dp"/>
-    
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_jumlah"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
-        app:layout_constraintTop_toBottomOf="@id/text_jumlah"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp">
+            <Spinner
+                android:id="@+id/item_kategory_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"/>
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_jumlah"
+        <TextView
+            android:id="@+id/text_harga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Harga"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/container_item_category"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_harga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/text_harga"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_harga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text_stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_stock"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_harga"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_stock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/text_stock"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Button
-        android:id="@+id/btn_tambah_stock"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="@string/stock_in"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="20dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/text_keterangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_keterangan"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_stock"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_keterangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/text_keterangan"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_keterangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_tambah_stock"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stock_in"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_keterangan"
+            android:layout_marginTop="80dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

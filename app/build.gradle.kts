@@ -98,5 +98,8 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
+    val work_version = "2.9.1"
+    implementation(libs.androidx.work.runtime.ktx)
+
 
 }

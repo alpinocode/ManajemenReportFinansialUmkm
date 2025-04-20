@@ -1,8 +1,9 @@
 package com.example.manajemenreportfinansialumkm.data
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
-import android.os.Build
+import android.net.Uri
 import android.util.Log
 import android.util.Patterns
 import androidx.credentials.ClearCredentialStateRequest
@@ -15,6 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.data.local.entity.UserEntity
 import com.example.manajemenreportfinansialumkm.data.local.room.UserDao
+import com.example.manajemenreportfinansialumkm.helper.Pengeluaran
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.facebook.AccessToken
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -34,8 +36,6 @@ import com.google.firebase.database.database
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 
 class Repository(private val userDao: UserDao, private val context: Context) {
     private val _messageError = MutableLiveData<String?>()
@@ -53,7 +53,14 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     private val _userStock = MutableLiveData<List<Stock>>()
     val userStock:LiveData<List<Stock>> = _userStock
 
+    private val _searchStock = MutableLiveData<List<Stock?>>()
+    val searchStock:LiveData<List<Stock?>> = _searchStock
 
+    private val _notification = MutableLiveData<List<Stock>>()
+    val notification:LiveData<List<Stock>> = _notification
+
+    private val _userVerification = MutableLiveData<Boolean?>()
+    val userVerfication:LiveData<Boolean?> = _userVerification
 
     val auth = FirebaseAuth.getInstance()
 
@@ -177,9 +184,6 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         }
     }
 
-
-
-
     fun signOut(context: Context) {
         auth.signOut()
         val crendetialManager = CredentialManager.create(context)
@@ -195,18 +199,48 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         }
     }
 
-    fun addStock(name:String,nameSuplier:String, nameBarang:String, codeBarang:String, keterangan:String, jumlah:String, date:String) {
-        if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || keterangan.isEmpty() || jumlah.isEmpty()){
+    fun userVerification() {
+        auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
+            if (task.isSuccessful){
+                _messageSuccess.value = "Verification Send Email"
+            } else {
+                _messageError.value = "Verification Failed"
+            }
+        }
+    }
+
+    fun checkedEmailVerification() {
+        val userCheckedVerification = auth.currentUser
+
+        userCheckedVerification?.reload()?.addOnCompleteListener{ task ->
+            if (task.isSuccessful) {
+                _userVerification.value = userCheckedVerification.isEmailVerified
+            } else {
+                _userVerification.value = false
+            }
+        }
+    }
+
+    fun addStock( name:String, nameSuplier:String, nameBarang:String, codeBarang:String, kategory:String, harga:Int, stock:Int, keterangan:String,  date:String) {
+        if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || keterangan.isEmpty() || stock.toString().isEmpty() || kategory.isEmpty() || harga.toString().isEmpty()){
             _messageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
             return
         }
         val db = Firebase.database
         val ref = db.getReference(name)
 
-        val stock = Stock(name,nameSuplier, nameBarang, codeBarang, keterangan, jumlah, date)
+        val stock = Stock(name,nameSuplier, nameBarang, codeBarang, kategory, harga,stock,keterangan, date)
         ref.child("Stock").child(codeBarang).setValue(stock)
 
         _messageSuccess.value = "Add Data Success "
+    }
+
+    fun addPengeluaran(name:String, codeBarang: String,harga: Int, stock: Int) {
+        val db = Firebase.database
+        val ref = db.getReference(name)
+
+        val pengeluaran = Pengeluaran(name, codeBarang, harga * stock)
+        ref.child("Pembukuan").child("Pengeluaran").setValue(pengeluaran)
     }
 
     fun getStock() {
@@ -264,8 +298,10 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         id: String,
         nameSuplier: String,
         nameBarang: String,
+        kategory: String,
+        stock: Int,
+        harga: Int,
         keterangan: String,
-        jumlah: String,
         date: String
     ) {
         _isLoading.value = true
@@ -275,12 +311,13 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         val database = FirebaseDatabase.getInstance().getReference(dataUsername.toString())
         val stockRef = database.child("Stock").child(id)
 
-        // Buat map data yang akan diupdate
         val updateMap = mapOf<String, Any>(
             "nameSuplier" to nameSuplier,
             "nameBarang" to nameBarang,
             "keterangan" to keterangan,
-            "jumlah" to jumlah,
+            "stock" to stock,
+            "harga" to harga,
+            "kategory" to kategory,
             "date" to date
         )
 
@@ -288,8 +325,6 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             .addOnCompleteListener { task ->
                 _isLoading.value = false
                 if (task.isSuccessful) {
-                    // Bisa tambahkan logika sukses (misal tampilkan Toast)
-                    Log.d("Update", "Data berhasil diupdate")
                     _messageSuccess.value = "Update Data Success"
                 } else {
                     _messageError.value = "Update Data Failed"
@@ -303,7 +338,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         val database = FirebaseDatabase.getInstance().getReference(dataUsername.toString())
         database.child("Stock").child(id).removeValue()
             .addOnSuccessListener {
-                getStock() // Refresh data setelah delete sukses
+                getStock()
                 _isLoading.value = false
                 _messageSuccess.value = "delete Data Success"
             }
@@ -312,6 +347,56 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                 Log.e("DeleteStock", "Gagal menghapus: ${it.message}")
                 _messageError.value = "Error : ${it.message}"
             }
+    }
+
+    fun getStockMenipis() {
+        _isLoading.value = true
+        val username = auth.currentUser?.displayName.toString()
+
+        val database = FirebaseDatabase.getInstance().getReference(username).child("Stock").orderByChild("stock").endAt(5.0)
+
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val notificationItem = mutableListOf<Stock>()
+                for (produkSnapshot in snapshot.children) {
+                    val produk = produkSnapshot.getValue(Stock::class.java)
+                    produk?.let { notificationItem.add(it) }
+                }
+                Log.d(TAG, "Cek Datanya Notification : ${notificationItem}")
+                _notification.value = notificationItem
+                _isLoading.value = false
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d(TAG, "Cek Error STock menipis ${error.message}")
+            }
+
+        })
+
+    }
+
+    fun searchStock(query: String) {
+        val username = auth.currentUser?.displayName.toString()
+        val database = FirebaseDatabase.getInstance().getReference(username).child("Stock")
+
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                _isLoading.value = true
+                val filteredList = mutableListOf<Stock>()
+                for (produkSnapshot in snapshot.children) {
+                    val produk = produkSnapshot.getValue(Stock::class.java)
+                    if (produk != null && produk.nameBarang!!.contains(query, ignoreCase = true)) {
+                        filteredList.add(produk)
+                    }
+                }
+                _searchStock.value = filteredList
+                _isLoading.value = false
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Database error: ${error.message}")
+            }
+        })
     }
 
     companion object {

@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             factory
         }
 
-
         viewModel.userLogin.observe(this) {
             if (it != null) {
                 handleLogin(it)
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.textFieldPassword.setEndIconOnClickListener {
-           showAndHidePassword()
+            showAndHidePassword()
         }
 
         binding.btnLogin.setOnClickListener {
@@ -99,9 +98,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
