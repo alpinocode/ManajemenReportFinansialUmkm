@@ -227,28 +227,36 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     }
 
     fun addStock( name:String, nameSuplier:String, nameBarang:String, codeBarang:String, kategory:String, harga:Int, stock:Int, keterangan:String,  date:String) {
-        if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || keterangan.isEmpty() || stock.toString().isEmpty() || kategory.isEmpty() || harga.toString().isEmpty()){
-            _messageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
-            return
-        }
-        val db = Firebase.database
-        val ref = db.getReference(name)
-
-        val stock = Stock(name,nameSuplier, nameBarang, codeBarang, kategory, harga,stock,keterangan, date)
-        ref.child("Stock").child(codeBarang).setValue(stock)
-
-        _messageSuccess.value = "Add Data Success "
+    if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || keterangan.isEmpty() || stock.toString().isEmpty() || kategory.isEmpty() || harga.toString().isEmpty()){
+        _messageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
+        return
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun addPengeluaran(name:String, codeBarang: String, harga: Int, stock: Int) {
-        val db = Firebase.database
-        val ref = db.getReference(name)
-        val date = LocalDate.now().toString()
-
-        val pengeluaran = Pengeluaran(codeBarang, harga * stock)
-        ref.child("Pembukuan").child("Pengeluaran").child(date).child(codeBarang).setValue(pengeluaran)
+    if (harga == 0 || stock == 0) {
+        _messageError.value = "Harga dan stok tidak boleh 0"
+        return
     }
+    val db = Firebase.database
+    val ref = db.getReference(name)
+
+    val stock = Stock(name,nameSuplier, nameBarang, codeBarang, kategory, harga,stock,keterangan, date)
+    ref.child("Stock").child(codeBarang).setValue(stock)
+
+    _messageSuccess.value = "Add Data Success "
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun addPengeluaran(name:String, codeBarang: String, harga: Int, stock: Int) {
+    if (harga == 0 || stock == 0) {
+        _messageError.value = "Harga dan stok tidak boleh 0"
+        return
+    }
+    val db = Firebase.database
+    val ref = db.getReference(name)
+    val date = LocalDate.now().toString()
+
+    val pengeluaran = Pengeluaran(codeBarang, harga * stock)
+    ref.child("Pembukuan").child("Pengeluaran").child(date).child(codeBarang).setValue(pengeluaran)
+}
 
     fun getStock() {
         _isLoading.value = true
@@ -302,42 +310,46 @@ class Repository(private val userDao: UserDao, private val context: Context) {
 
 
     fun updateStockData(
-        id: String,
-        nameSuplier: String,
-        nameBarang: String,
-        kategory: String,
-        stock: Int,
-        harga: Int,
-        keterangan: String,
-        date: String
-    ) {
-        _isLoading.value = true
-
-        val dataUsername = auth.currentUser?.displayName
-
-        val database = FirebaseDatabase.getInstance().getReference(dataUsername.toString())
-        val stockRef = database.child("Stock").child(id)
-
-        val updateMap = mapOf<String, Any>(
-            "nameSuplier" to nameSuplier,
-            "nameBarang" to nameBarang,
-            "keterangan" to keterangan,
-            "stock" to stock,
-            "harga" to harga,
-            "kategory" to kategory,
-            "date" to date
-        )
-
-        stockRef.updateChildren(updateMap)
-            .addOnCompleteListener { task ->
-                _isLoading.value = false
-                if (task.isSuccessful) {
-                    _messageSuccess.value = "Update Data Success"
-                } else {
-                    _messageError.value = "Update Data Failed"
-                }
-            }
+    id: String,
+    nameSuplier: String,
+    nameBarang: String,
+    kategory: String,
+    stock: Int,
+    harga: Int,
+    keterangan: String,
+    date: String
+) {
+    _isLoading.value = true
+    if (harga == 0 || stock == 0) {
+        _messageError.value = "Harga dan stok tidak boleh 0"
+        return
     }
+
+    val dataUsername = auth.currentUser?.displayName
+
+    val database = FirebaseDatabase.getInstance().getReference(dataUsername.toString())
+    val stockRef = database.child("Stock").child(id)
+
+    val updateMap = mapOf<String, Any>(
+        "nameSuplier" to nameSuplier,
+        "nameBarang" to nameBarang,
+        "keterangan" to keterangan,
+        "stock" to stock,
+        "harga" to harga,
+        "kategory" to kategory,
+        "date" to date
+    )
+
+    stockRef.updateChildren(updateMap)
+        .addOnCompleteListener { task ->
+            _isLoading.value = false
+            if (task.isSuccessful) {
+                _messageSuccess.value = "Update Data Success"
+            } else {
+                _messageError.value = "Update Data Failed"
+            }
+        }
+}
 
 
     fun deleteStock(id:String) {
