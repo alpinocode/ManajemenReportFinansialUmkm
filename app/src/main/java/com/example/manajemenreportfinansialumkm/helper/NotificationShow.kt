@@ -20,29 +20,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class NotificationShow(context:Context, workerParameters: WorkerParameters) :CoroutineWorker(context, workerParameters){
-    private val auth = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+    private val auth = FirebaseAuth.getInstance().currentUser
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            val lowStockData = fetchLowStockData()
-            if (lowStockData.isNotEmpty()) {
+            if (auth != null) {
+                val lowStockData = fetchLowStockData()
+                if (lowStockData.isNotEmpty()) {
+                    val item = lowStockData.first()
+                    val lastNotificationItem = getLastNotificationItem(applicationContext)
+                    if (item.nameBarang != lastNotificationItem) {
+                            val title = "Halo ${item.name}, Barang ${item.nameBarang} Udah Mau Habis"
+                            val desc = item.keterangan ?: "Segera restock ya!"
+                            showNotification(title, desc, R.drawable.logo)
 
-                val item = lowStockData.first()
-                val lastNotificationItem = getLastNotificationItem(applicationContext)
-
-                if (item.nameBarang != lastNotificationItem) {
-                    if (item.name != null) {
-                        val title = "Halo ${item.name}, Barang ${item.nameBarang} Udah Mau Habis"
-                        val desc = item.keterangan ?: "Segera restock ya!"
-                        showNotification(title, desc, R.drawable.logo)
-
-                        saveLastNotificationItem(applicationContext, item.nameBarang.toString())
-                    } else {
-                        false
+                            saveLastNotificationItem(applicationContext, item.nameBarang.toString())
                     }
-
                 }
-
             }
             Result.success()
         } catch (e:Exception) {
@@ -53,14 +47,16 @@ class NotificationShow(context:Context, workerParameters: WorkerParameters) :Cor
     private suspend fun fetchLowStockData():List<Stock> = withContext(Dispatchers.IO) {
         val result = mutableListOf<Stock>()
         val task = kotlinx.coroutines.suspendCancellableCoroutine<List<Stock>> { cont ->
-            val ref = FirebaseDatabase.getInstance().getReference(auth).child("Stock").orderByChild("stock").endAt(5.0)
+            val ref = FirebaseDatabase.getInstance().getReference(auth?.displayName.toString()).child("Stock").orderByChild("stock").endAt(5.0)
 
             ref.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (item in snapshot.children) {
                         val data = item.getValue(Stock::class.java)
                         data?.let {
-                            result.add(it)
+                            if (it.status == true) {
+                                result.add(it)
+                            }
                         }
                     }
                     cont.resume(result, null)
@@ -88,7 +84,7 @@ class NotificationShow(context:Context, workerParameters: WorkerParameters) :Cor
             .setContentText(description)
             .setLargeIcon(bitmap)
             .setPriority(Notification.PRIORITY_MAX)
-            .setPriority(Notification.VISIBILITY_PRIVATE)
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)

@@ -2,6 +2,7 @@ package com.example.manajemenreportfinansialumkm.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,8 @@ class HomeFragment : Fragment() {
 
         usersAuth = FirebaseAuth.getInstance()
 
+        Log.d(TAG, "Cari APakah Ada Usernya :${usersAuth?.currentUser?.displayName}")
+        dataUserAuth(usersAuth?.currentUser)
         toProduct?.setOnClickListener{
             val intent = Intent(requireContext(), ProductActivity::class.java)
             startActivity(intent)
@@ -67,11 +70,7 @@ class HomeFragment : Fragment() {
         }
 
 
-        viewModel.userAuth.observe(requireActivity()) {
-            if(it != null) {
-                dataUserAuth(it)
-            }
-        }
+
 
         viewModel.userVerification.observe(viewLifecycleOwner){
             if(it == true) {
