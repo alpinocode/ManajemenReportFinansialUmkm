@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityRegisterBinding
-import com.example.manajemenreportfinansialumkm.ui.HomeActivity
+import com.example.manajemenreportfinansialumkm.ui.home.HomeActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import com.google.firebase.auth.FirebaseUser
 

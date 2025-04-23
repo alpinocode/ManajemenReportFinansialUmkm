@@ -31,11 +31,16 @@ class NotificationShow(context:Context, workerParameters: WorkerParameters) :Cor
                 val lastNotificationItem = getLastNotificationItem(applicationContext)
 
                 if (item.nameBarang != lastNotificationItem) {
-                    val title = "Halo ${item.name}, Barang ${item.nameBarang} Udah Mau Habis"
-                    val desc = item.keterangan ?: "Segera restock ya!"
-                    showNotification(title, desc, R.drawable.logo)
+                    if (item.name != null) {
+                        val title = "Halo ${item.name}, Barang ${item.nameBarang} Udah Mau Habis"
+                        val desc = item.keterangan ?: "Segera restock ya!"
+                        showNotification(title, desc, R.drawable.logo)
 
-                    saveLastNotificationItem(applicationContext, item.nameBarang.toString())
+                        saveLastNotificationItem(applicationContext, item.nameBarang.toString())
+                    } else {
+                        false
+                    }
+
                 }
 
             }

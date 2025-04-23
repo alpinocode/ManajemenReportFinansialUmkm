@@ -1,5 +1,6 @@
 package com.example.manajemenreportfinansialumkm.ui.notification
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -11,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.FragmentNoficationBinding
-import com.example.manajemenreportfinansialumkm.ui.adapter.NotificationAdapter
+import com.example.manajemenreportfinansialumkm.helper.Stock
+import com.example.manajemenreportfinansialumkm.ui.adapter.ItemCardStockAdapter
+import com.example.manajemenreportfinansialumkm.ui.stock.AddStockActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
 class NoficationFragment : Fragment() {
@@ -46,12 +48,9 @@ class NoficationFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.hide()
 
-        val adapter = NotificationAdapter()
-        binding.rvNotification.layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvNotification.adapter = adapter
 
         viewModel.notification.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            showDataNotificationStock(it)
         }
 
 
@@ -61,6 +60,21 @@ class NoficationFragment : Fragment() {
                 showLoading(it)
             }
         }
+    }
+
+    private fun showDataNotificationStock(stock:List<Stock>) {
+       val stockAdapter = ItemCardStockAdapter(stock)
+       binding.rvNotification.layoutManager = LinearLayoutManager(requireActivity())
+       binding.rvNotification.adapter = stockAdapter
+        stockAdapter.submitList(stock)
+
+        stockAdapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback {
+            override fun onItemCallback(data: Stock) {
+                val intent = Intent(requireContext(), AddStockActivity::class.java)
+                intent.putExtra(AddStockActivity.STOCK_ID, data.codeBarang)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {

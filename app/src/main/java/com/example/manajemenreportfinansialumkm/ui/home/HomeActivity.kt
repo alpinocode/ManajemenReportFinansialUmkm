@@ -1,4 +1,4 @@
-package com.example.manajemenreportfinansialumkm.ui
+package com.example.manajemenreportfinansialumkm.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

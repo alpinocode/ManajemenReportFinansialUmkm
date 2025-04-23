@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.stock.AddStockActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,59 +103,94 @@
 
 
 
-        <LinearLayout
-            android:id="@+id/container_item_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_code_barang"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="12dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kategory : "
-                android:textSize="18sp"
-                android:textStyle="bold"
-                />
 
-            <Spinner
-                android:id="@+id/item_kategory_product"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:id="@+id/container_item_category"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/input_layout_code_barang"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:layout_marginEnd="24dp"-->
+<!--            android:layout_marginTop="12dp">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Kategory : "-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                />-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/item_kategory_product"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"/>-->
+<!--        </LinearLayout>-->
 
         <TextView
-            android:id="@+id/text_harga"
+            android:id="@+id/text_harga_beli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Harga"
+            android:text="Harga Beli Perbarang"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-            app:layout_constraintTop_toBottomOf="@id/container_item_category"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_code_barang"
             android:layout_marginTop="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_harga"
+            android:id="@+id/input_layout_modal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
-            app:layout_constraintTop_toBottomOf="@id/text_harga"
+            app:layout_constraintTop_toBottomOf="@id/text_harga_beli"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_harga"
+                android:id="@+id/edt_harga_beli"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text_harga_jual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Harga Jual Perbarang "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_modal"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_harga_jual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/text_harga_jual"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_harga_jual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
 
         <TextView
             android:id="@+id/text_stock"
@@ -165,26 +200,48 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/text_nama_suplier"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_harga"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_harga_jual"
             android:layout_marginTop="12dp"/>
 
-        <com.google.android.material.textfield.TextInputLayout
+
+        <LinearLayout
             android:id="@+id/input_layout_stock"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
-            app:layout_constraintTop_toBottomOf="@id/text_stock"
+            android:layout_height="54dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintStart_toStartOf="@id/input_layout_nama_suplier"
+            app:layout_constraintTop_toBottomOf="@id/text_stock"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_stock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:id="@+id/btn_kurangi_stock"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/min_icon"/>
+
+            <TextView
+                android:id="@+id/text_jumlah_stock"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginStart="140dp"/>
+
+            <ImageView
+                android:id="@+id/btn_add_stock"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_add_24"
+                android:layout_marginStart="140dp"/>
+
+        </LinearLayout>
+
+
 
 
         <TextView
@@ -226,7 +283,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_layout_keterangan"
             android:layout_marginTop="80dp"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

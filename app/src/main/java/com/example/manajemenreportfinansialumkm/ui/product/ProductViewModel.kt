@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener
 class ProductViewModel(private val repository: Repository) : ViewModel() {
     val userStock = repository.userStock
     val userSearchStock = repository.searchItem
-    val messageSuccess = repository.messageSuccess
+//    val messageSuccess = repository.userStockMessageSuccess
     val messageError = repository.messageError
     val isLoading = repository.isLoading
 

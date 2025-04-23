@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.databinding.ActivityMainBinding
-import com.example.manajemenreportfinansialumkm.ui.HomeActivity
+import com.example.manajemenreportfinansialumkm.ui.home.HomeActivity
 import com.example.manajemenreportfinansialumkm.ui.register.RegisterActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import com.facebook.CallbackManager

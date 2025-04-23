@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.FragmentHomeBinding
+import com.example.manajemenreportfinansialumkm.ui.laporanKeuangan.LaporanKeuanganActivity
 import com.example.manajemenreportfinansialumkm.ui.product.ProductActivity
 import com.example.manajemenreportfinansialumkm.ui.transaction.AddTransactionActivity
+import com.example.manajemenreportfinansialumkm.ui.transaction.HistoryTransactionActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
@@ -54,6 +56,15 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding?.laporanKeuanganContainer?.setOnClickListener{
+            val intent = Intent(requireContext(), LaporanKeuanganActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding?.hostyriTranksaksi?.setOnClickListener{
+            val intent = Intent(requireContext(), HistoryTransactionActivity::class.java)
+            startActivity(intent)
+        }
 
 
         viewModel.userAuth.observe(requireActivity()) {

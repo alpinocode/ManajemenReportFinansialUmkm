@@ -1,9 +1,7 @@
 package com.example.manajemenreportfinansialumkm.data
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.util.Patterns
@@ -21,6 +19,7 @@ import com.example.manajemenreportfinansialumkm.data.local.room.UserDao
 import com.example.manajemenreportfinansialumkm.helper.Pemasukan
 import com.example.manajemenreportfinansialumkm.helper.Pengeluaran
 import com.example.manajemenreportfinansialumkm.helper.Stock
+import com.example.manajemenreportfinansialumkm.helper.Transaction
 import com.facebook.AccessToken
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -39,7 +38,11 @@ import com.google.firebase.database.database
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.random.Random
 
 class Repository(private val userDao: UserDao, private val context: Context) {
@@ -66,6 +69,30 @@ class Repository(private val userDao: UserDao, private val context: Context) {
 
     private val _userVerification = MutableLiveData<Boolean?>()
     val userVerfication:LiveData<Boolean?> = _userVerification
+
+    private val _userPemasukan = MutableLiveData<String?>()
+    val userPemasukan:LiveData<String?> = _userPemasukan
+
+    private val _userPengeluaran = MutableLiveData<String?>()
+    val userPengeluaran:LiveData<String?> = _userPengeluaran
+
+    private val _userPengeluaranList = MutableLiveData<List<Pengeluaran>?>()
+    val userPengeluaranList:LiveData<List<Pengeluaran>?> = _userPengeluaranList
+
+    private val _userTransaction = MutableLiveData<List<Transaction>>()
+    val userTransaction:LiveData<List<Transaction>> = _userTransaction
+
+    private val _userAddTransactionSuccess = MutableLiveData<String?>()
+    val userAddTransactionSuccess:LiveData<String?> = _userAddTransactionSuccess
+
+    private val _userAddTransactionError = MutableLiveData<String?>()
+    val userAddTransactionError:LiveData<String?> = _userAddTransactionError
+
+    private val _userStockMessageSuccess = MutableLiveData<String?>()
+    val userStockMessageSuccess:LiveData<String?> = _userStockMessageSuccess
+
+    private val _userStockMessageError = MutableLiveData<String?>()
+    val userStockMessageError:LiveData<String?> = _userStockMessageError
 
     val auth = FirebaseAuth.getInstance()
 
@@ -134,8 +161,10 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             if (task.isSuccessful) {
                 _userAuth.value = auth.currentUser
                 _messageSuccess.value = "Login Success"
+                return@addOnCompleteListener
             } else {
                 _messageError.value = "Authentication Failed"
+                return@addOnCompleteListener
             }
         }
     }
@@ -183,6 +212,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             if(task.isSuccessful) {
                 _userAuth.value = auth.currentUser
                 _messageSuccess.value = "Login With Google Success"
+                return@addOnCompleteListener
             } else {
                 Log.w(TAG, "SinginWithCredetial:Failure", task.exception)
             }
@@ -226,29 +256,42 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         }
     }
 
-    fun addStock( name:String, nameSuplier:String, nameBarang:String, codeBarang:String, kategory:String, harga:Int, stock:Int, keterangan:String,  date:String) {
-        if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || keterangan.isEmpty() || stock.toString().isEmpty() || kategory.isEmpty() || harga.toString().isEmpty()){
-            _messageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
+    fun addStock( name:String, nameSuplier:String, nameBarang:String, codeBarang:String,  hargaJual:Int, hargaBeli:Int, stock:Int, keterangan:String,  date:String) {
+        _userStockMessageError.value = null
+        if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || keterangan.isEmpty() || stock.toString().isEmpty() || hargaJual.toString().isEmpty()){
+            _userStockMessageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
             return
         }
+        if(name.length < 3 || nameSuplier.length < 3 || nameBarang.length < 3 || codeBarang.length < 3 ) {
+            _userStockMessageError.value = "nameSuplier, nameBarang, codebarang Setidak minimal 3 karakter"
+            return
+        }
+        if(stock <= 0 || hargaBeli <= 0 || hargaJual <= 0) {
+            _userStockMessageError.value = "Stock, Harga Beli, Harga Jual tidak boleh 0"
+            return
+        }
+        if(hargaBeli > hargaJual) {
+            _userStockMessageError.value = "Harga Beli tidak boleh lebih besar dari Harga Jual"
+            return
+        }
+        _userStockMessageError.value = null
         val db = Firebase.database
         val ref = db.getReference(name)
 
-        val stock = Stock(name,nameSuplier, nameBarang, codeBarang, kategory, harga,stock,keterangan, date)
-        ref.child("Stock").child(codeBarang).setValue(stock)
+        val modal = hargaBeli * stock
 
-        _messageSuccess.value = "Add Data Success "
+        val stock = Stock(name,nameSuplier, nameBarang, codeBarang, hargaJual, hargaBeli, modal , stock,keterangan, date)
+        ref.child("Stock").child(codeBarang).setValue(stock).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                _userStockMessageSuccess.value = "Add Data Stock Success "
+            } else {
+                _userStockMessageError.value = "Add Data Stock Failed"
+            }
+        }
+        _userStockMessageSuccess.value = null
+
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun addPengeluaran(name:String, codeBarang: String, harga: Int, stock: Int) {
-        val db = Firebase.database
-        val ref = db.getReference(name)
-        val date = LocalDate.now().toString()
-
-        val pengeluaran = Pengeluaran(codeBarang, harga * stock)
-        ref.child("Pembukuan").child("Pengeluaran").child(date).child(codeBarang).setValue(pengeluaran)
-    }
 
     fun getStock() {
         _isLoading.value = true
@@ -261,12 +304,14 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                 for (itemSnapshot in snapshot.child("Stock").children) {
                     val stockItem = itemSnapshot.getValue(Stock::class.java)
 
-                    Log.d("ProductViewModel", "Stock Item: $stockItem")
 
-                    if(stockItem != null) {
-                        dataStock.add(stockItem)
+                    val statusStock = stockItem?.status == true
+                    if(stockItem != null && statusStock) {
+                        stockItem.let { dataStock.add(it) }
                     }
                 }
+                Log.d("ProductViewModel", "Stock Item: $dataStock")
+
                 _userStock.value = dataStock
                 _isLoading.value =false
             }
@@ -274,7 +319,6 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
 
@@ -303,13 +347,14 @@ class Repository(private val userDao: UserDao, private val context: Context) {
 
     fun updateStockData(
         id: String,
-        nameSuplier: String,
-        nameBarang: String,
-        kategory: String,
-        stock: Int,
-        harga: Int,
-        keterangan: String,
-        date: String
+        nameSuplier:String,
+        nameBarang:String,
+        hargaJual:Int,
+        hargaBeli:Int,
+        stock:Int,
+        keterangan:String,
+        modal:Int,
+        date:String
     ) {
         _isLoading.value = true
 
@@ -323,8 +368,9 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             "nameBarang" to nameBarang,
             "keterangan" to keterangan,
             "stock" to stock,
-            "harga" to harga,
-            "kategory" to kategory,
+            "hargaJual" to hargaJual,
+            "hargaBeli" to hargaBeli,
+            "modal" to modal,
             "date" to date
         )
 
@@ -332,22 +378,21 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             .addOnCompleteListener { task ->
                 _isLoading.value = false
                 if (task.isSuccessful) {
-                    _messageSuccess.value = "Update Data Success"
+                    _userStockMessageSuccess.value = "Update Data Success"
                 } else {
                     _messageError.value = "Update Data Failed"
                 }
             }
     }
 
-
     fun deleteStock(id:String) {
         val dataUsername = auth.currentUser?.displayName
         val database = FirebaseDatabase.getInstance().getReference(dataUsername.toString())
-        database.child("Stock").child(id).removeValue()
+        database.child("Stock").child(id).updateChildren(mapOf("status" to false))
             .addOnSuccessListener {
                 getStock()
                 _isLoading.value = false
-                _messageSuccess.value = "delete Data Success"
+                _userStockMessageSuccess.value = "delete Data Stock Success"
             }
             .addOnFailureListener {
                 _isLoading.value = false
@@ -367,7 +412,11 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                 val notificationItem = mutableListOf<Stock>()
                 for (produkSnapshot in snapshot.children) {
                     val produk = produkSnapshot.getValue(Stock::class.java)
-                    produk?.let { notificationItem.add(it) }
+                    produk?.let {
+                        if(produk.status == true) {
+                            notificationItem.add(it)
+                        }
+                    }
                 }
                 Log.d(TAG, "Cek Datanya Notification : ${notificationItem}")
                 _notification.value = notificationItem
@@ -392,7 +441,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                 val filteredList = mutableListOf<Stock>()
                 for (produkSnapshot in snapshot.children) {
                     val produk = produkSnapshot.getValue(Stock::class.java)
-                    if (produk != null && produk.nameBarang!!.contains(query, ignoreCase = true)) {
+                    if (produk != null && produk.status == true && produk.nameBarang!!.contains(query, ignoreCase = true)) {
                         filteredList.add(produk)
                     }
                 }
@@ -405,7 +454,6 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             }
         })
     }
-
 
     fun updateStockAfterTransaction(id: String, stock: Int) {
         val dataUsername = auth.currentUser?.displayName.toString()
@@ -432,11 +480,105 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addPemasukanTransaction(id:String, codeBarang: String, harga: Int, stock: Int) {
+    fun addPengeluaran(name:String, codeBarang: String, hargaBeli: Int, stock: Int) {
+        val db = Firebase.database
+        val ref = db.getReference(name)
+        val dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
+
+        val modal = hargaBeli * stock
+        val pengeluaran = Pengeluaran(codeBarang, modal)
+        ref.child("Pembukuan").child("Pengeluaran").child(dateNow).child(codeBarang).setValue(pengeluaran)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getPengeluaranById(id: String, date: String) {
+        _isLoading.value = true
+        val dataUsername = auth.currentUser?.displayName
+
+        val database = FirebaseDatabase.getInstance()
+            .getReference(dataUsername.toString())
+            .child("Pembukuan")
+            .child("Pengeluaran")
+            .child(date)
+            .child(id)
+
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataPengeluaran = mutableListOf<Pengeluaran>()
+                val pengeluaran = snapshot.getValue(Pengeluaran::class.java)
+                Log.d(TAG, "Cek Data Pengeluaran : $pengeluaran")
+
+                if (pengeluaran != null) {
+                    dataPengeluaran.add(pengeluaran)
+                }
+                _userPengeluaranList.value = dataPengeluaran
+                _isLoading.value = false
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Database Error: ${error.message}")
+            }
+        })
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updatePengeluaran(codeBarang: String, modalBaru: Int) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Log.e("UpdatePengeluaran", "User belum login")
+            return
+        }
+
+        val username = currentUser.displayName ?: "UnknownUser"
+        val databaseRef = FirebaseDatabase.getInstance().getReference(username)
+            .child("Pembukuan")
+            .child("Pengeluaran")
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var isFound = false
+
+                snapshot.children.forEach { tanggalSnapshot ->
+                    if (tanggalSnapshot.hasChild(codeBarang)) {
+                        val barangRef = tanggalSnapshot.child(codeBarang).ref
+
+                        val updates = mapOf(
+                            "codeBarang" to codeBarang,
+                            "totalPengeluaran" to modalBaru
+                        )
+
+                        barangRef.updateChildren(updates)
+                            .addOnSuccessListener {
+                                Log.d("UpdatePengeluaran", "Berhasil update $codeBarang")
+                                _userStockMessageSuccess.value = ""
+                            }
+                            .addOnFailureListener {
+                                Log.e("UpdatePengeluaran", "Gagal update: ${it.message}")
+                            }
+
+                        isFound = true
+                        return@forEach
+                    }
+                }
+
+                if (!isFound) {
+                    Log.d("UpdatePengeluaran", "Data tidak ditemukan untuk codeBarang: $codeBarang")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("UpdatePengeluaran", "Gagal akses Firebase: ${error.message}")
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addPemasukanTransaction(codeBarang: String, harga: Int, stock: Int) {
         val database = Firebase.database
         val dataUsername = auth.currentUser?.displayName.toString()
         val pemasukanRef = database.getReference(dataUsername)
-        val date = LocalDate.now().toString()
+        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
         val randomId = Random.nextInt(0, 40000)
 
         val pemasukanData = Pemasukan(codeBarang, harga * stock)
@@ -449,6 +591,118 @@ class Repository(private val userDao: UserDao, private val context: Context) {
             }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getPemasukan() {
+        _isLoading.value = true
+
+        val dataUsername = auth.currentUser?.displayName.toString()
+        val database = FirebaseDatabase.getInstance().getReference(dataUsername)
+        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM"))
+        val pemasukanRef = database.child("Pembukuan").child("Pemasukan").child(date).orderByChild("totalPemasukan")
+
+        pemasukanRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var totalPemasukanSemua = 0
+
+                for (pemasukanSnapshot in snapshot.children) {
+                    val pemasukan = pemasukanSnapshot.getValue(Pemasukan::class.java)
+
+                    pemasukan?.let {
+                        totalPemasukanSemua += it.totalPemasukan.toString().toInt()
+                    }
+
+                }
+                _userPemasukan.value = totalPemasukanSemua.toString()
+                _isLoading.value = false
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getPengeluaran() {
+        _isLoading.value = true
+        val dataUsername = auth.currentUser?.displayName.toString()
+        val database = FirebaseDatabase.getInstance().getReference(dataUsername)
+        val dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
+        val pengeluaranRef = database.child("Pembukuan").child("Pengeluaran").child(dateNow).orderByChild("totalPengeluaran")
+
+        pengeluaranRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var pengeluaran = 0
+                for (pengeluaranSnapshot in snapshot.children) {
+                    val dataPengeluaranFromDb = pengeluaranSnapshot.getValue(Pengeluaran::class.java)
+
+                    dataPengeluaranFromDb.let {
+                        pengeluaran += it?.totalPengeluaran.toString().toInt()
+                    }
+
+                }
+                _userPengeluaran.value = pengeluaran.toString()
+                _isLoading.value = false
+
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+
+    fun addTransaction(id: String, date: String, namaBarang:String,  harga: Int, quantity:Int) {
+        val username = auth.currentUser?.displayName.toString()
+        val database = FirebaseDatabase.getInstance().getReference(username)
+        val random = Random.nextInt(0, 200000)
+        val trasanctionRef = database.child("Order").child(id).child(random.toString())
+
+
+        val dataTrasanction = Transaction(id, date, namaBarang, quantity, harga * quantity)
+
+        trasanctionRef.setValue(dataTrasanction).addOnCompleteListener{ task ->
+            if(task.isSuccessful) {
+                _userAddTransactionSuccess.value = "Add Transaction Success"
+            } else {
+                _userAddTransactionError.value = "Add Transaction Failed"
+            }
+        }
+    }
+
+    fun getTransaction() {
+        _isLoading.value = true
+        val username = auth.currentUser?.displayName.toString()
+        val database = FirebaseDatabase.getInstance().getReference(username)
+        val getTransactionRef = database.child("Order").orderByChild("namaBarang")
+
+        getTransactionRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val trasanctionItem = mutableListOf<Transaction>()
+
+                for (transactionSnapshot in snapshot.children) {
+                    for (transactionItem in transactionSnapshot.children) {
+                        val transaction = transactionItem.getValue(Transaction::class.java)
+                        transaction?.let {
+                            trasanctionItem.add(it)
+                        }
+                    }
+                }
+                _userTransaction.value = trasanctionItem
+                Log.d(TAG, "Cek Data Transaction : ${trasanctionItem}")
+                _isLoading.value = false
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
     companion object {
         private val TAG = "Repository"
 
