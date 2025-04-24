@@ -75,7 +75,6 @@ class ProductActivity : AppCompatActivity() {
             }
             adapter.submitList(it as MutableList<Stock>?)
         }
-
         viewModel.isLoading.observe(this) {
             if (it != null) {
                 showLoading(it)

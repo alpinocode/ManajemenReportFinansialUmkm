@@ -79,6 +79,9 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     private val _userPengeluaranList = MutableLiveData<List<Pengeluaran>?>()
     val userPengeluaranList:LiveData<List<Pengeluaran>?> = _userPengeluaranList
 
+    private val _userPemasukanList = MutableLiveData<List<Pemasukan>?>()
+    val userPemasukanList:LiveData<List<Pemasukan>?> = _userPemasukanList
+
     private val _userTransaction = MutableLiveData<List<Transaction>>()
     val userTransaction:LiveData<List<Transaction>> = _userTransaction
 
@@ -483,11 +486,12 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     fun addPengeluaran(name:String, codeBarang: String, hargaBeli: Int, stock: Int) {
         val db = Firebase.database
         val ref = db.getReference(name)
-        val dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
+        val dateMontNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
+        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale("id", "ID")))
 
         val modal = hargaBeli * stock
-        val pengeluaran = Pengeluaran(codeBarang, modal)
-        ref.child("Pembukuan").child("Pengeluaran").child(dateNow).child(codeBarang).setValue(pengeluaran)
+        val pengeluaran = Pengeluaran(codeBarang, modal, date = date)
+        ref.child("Pembukuan").child("Pengeluaran").child(dateMontNow).child(codeBarang).setValue(pengeluaran)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -578,12 +582,13 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         val database = Firebase.database
         val dataUsername = auth.currentUser?.displayName.toString()
         val pemasukanRef = database.getReference(dataUsername)
-        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
+        val dateMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM", Locale("id", "ID")))
+        val dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale("id", "ID")))
         val randomId = Random.nextInt(0, 40000)
 
-        val pemasukanData = Pemasukan(codeBarang, harga * stock)
+        val pemasukanData = Pemasukan(codeBarang, harga * stock, dateNow)
 
-        pemasukanRef.child("Pembukuan").child("Pemasukan").child(date).child(randomId.toString()).setValue(pemasukanData).addOnCompleteListener{ task ->
+        pemasukanRef.child("Pembukuan").child("Pemasukan").child(dateMonth).child(randomId.toString()).setValue(pemasukanData).addOnCompleteListener{ task ->
             if (task.isSuccessful) {
                 _messageSuccess.value = "Add Pemasukan Success"
             } else {
@@ -604,16 +609,18 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         pemasukanRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var totalPemasukanSemua = 0
-
+                var pemasukanDataList = mutableListOf<Pemasukan>()
                 for (pemasukanSnapshot in snapshot.children) {
                     val pemasukan = pemasukanSnapshot.getValue(Pemasukan::class.java)
 
                     pemasukan?.let {
                         totalPemasukanSemua += it.totalPemasukan.toString().toInt()
+                        pemasukanDataList.add(it)
                     }
 
                 }
                 _userPemasukan.value = totalPemasukanSemua.toString()
+                _userPemasukanList.value = pemasukanDataList
                 _isLoading.value = false
             }
 
@@ -635,15 +642,18 @@ class Repository(private val userDao: UserDao, private val context: Context) {
         pengeluaranRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var pengeluaran = 0
+                val pengeluaranDataList = mutableListOf<Pengeluaran>()
                 for (pengeluaranSnapshot in snapshot.children) {
                     val dataPengeluaranFromDb = pengeluaranSnapshot.getValue(Pengeluaran::class.java)
 
                     dataPengeluaranFromDb.let {
                         pengeluaran += it?.totalPengeluaran.toString().toInt()
+                        it?.let { it1 -> pengeluaranDataList.add(it1) }
                     }
 
                 }
                 _userPengeluaran.value = pengeluaran.toString()
+                _userPengeluaranList.value = pengeluaranDataList
                 _isLoading.value = false
 
             }

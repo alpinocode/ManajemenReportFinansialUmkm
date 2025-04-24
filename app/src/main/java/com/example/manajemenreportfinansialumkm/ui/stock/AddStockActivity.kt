@@ -154,7 +154,6 @@ class AddStockActivity : AppCompatActivity() {
                 } else if(dataStockBaru == orginalStockFromDb) {
                     if(hargaBeli > dataHargaBeliBarang) {
                         val perubahanModalAdd = selisihHarga * dataStockBaru
-
                         val newModalAddStockdbAndStockSame = modal + perubahanModalAdd
 
                         viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModalAddStockdbAndStockSame, date)
@@ -162,11 +161,10 @@ class AddStockActivity : AppCompatActivity() {
                     } else if(hargaBeli < dataHargaBeliBarang) {
                         val formatToSelisihHarga = abs(selisihHarga)
                         val perubahanModalKurangi = formatToSelisihHarga * dataStockBaru
-                        Log.d(TAG, "Cek Selisih Harga perubahanModalKurangi: $formatToSelisihHarga")
 
                         val newModalKurangiStockdbAndStockSame = modal - perubahanModalKurangi
-                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModalKurangiStockdbAndStockSame, date)
 
+                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModalKurangiStockdbAndStockSame, date)
                         viewModel.updatePengeluaran(stockId, newModalKurangiStockdbAndStockSame)
 
                     } else if(hargaBeli == dataHargaBeliBarang) {
