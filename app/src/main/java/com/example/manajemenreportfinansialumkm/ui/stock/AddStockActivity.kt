@@ -136,6 +136,7 @@ class AddStockActivity : AppCompatActivity() {
                 val selisihStock = dataStockBaru - orginalStockFromDb
                 val absSelisihStock = kotlin.math.abs(selisihStock)
 
+                val selisihHarga = hargaBeli - dataHargaBeliBarang.toInt()
                 if (dataStockBaru > orginalStockFromDb) {
                     val dataUpdate = hargaBeli * absSelisihStock
                     val dataStockAdd = modal + dataUpdate
@@ -143,19 +144,6 @@ class AddStockActivity : AppCompatActivity() {
 
                     viewModel.updatePengeluaran(stockId, dataStockAdd)
                     viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, dataStockAdd, date)
-//                    viewModel.messageError.observe(this) {
-//                        if(it != null) {
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//
-//                        }
-//                    }
-//                    viewModel.messageSuccess.observe(this) {
-//                        if(it != null) {
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            finish()
-//                        }
-//
-//                    }
                 } else if (dataStockBaru < orginalStockFromDb) {
                     val dataUpdateUntukKurangiModal = hargaBeli * absSelisihStock
                     val dataModalYangSudahDiKurangi = modal - dataUpdateUntukKurangiModal
@@ -163,20 +151,7 @@ class AddStockActivity : AppCompatActivity() {
 
                     viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, dataModalYangSudahDiKurangi, date)
                     viewModel.updatePengeluaran(stockId, dataModalYangSudahDiKurangi)
-//                    viewModel.messageError.observe(this) {
-//                        if(it != null) {
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                    viewModel.messageSuccess.observe(this) {
-//                        if (it != null) {
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            finish()
-//                        }
-//
-//                    }
                 } else if(dataStockBaru == orginalStockFromDb) {
-                    val selisihHarga = hargaBeli - dataHargaBeliBarang.toInt()
                     if(hargaBeli > dataHargaBeliBarang) {
                         val perubahanModalAdd = selisihHarga * dataStockBaru
 
@@ -184,18 +159,6 @@ class AddStockActivity : AppCompatActivity() {
 
                         viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModalAddStockdbAndStockSame, date)
                         viewModel.updatePengeluaran(stockId, newModalAddStockdbAndStockSame)
-
-//                        viewModel.messageSuccess.observe(this) {
-//                            if (it != null) {
-//                                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                                finish()
-//                            }
-//                        }
-//                        viewModel.messageError.observe(this) {
-//                            if(it != null) {
-//                                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
                     } else if(hargaBeli < dataHargaBeliBarang) {
                         val formatToSelisihHarga = abs(selisihHarga)
                         val perubahanModalKurangi = formatToSelisihHarga * dataStockBaru
@@ -211,6 +174,7 @@ class AddStockActivity : AppCompatActivity() {
                         viewModel.updatePengeluaran(stockId, modal)
                     }
                 }
+
                 viewModel.messageSuccess.observe(this) {
                     if (it != null) {
                         Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
@@ -222,7 +186,6 @@ class AddStockActivity : AppCompatActivity() {
                         Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                     }
                 }
-
             }
 
 

@@ -7,7 +7,7 @@ import com.example.manajemenreportfinansialumkm.data.Repository
 
 class StockViewModel(private val repository: Repository) : ViewModel(){
     val messageError = repository.userStockMessageError
-    val messageSuccess = repository.messageSuccess
+    val messageSuccess = repository.userStockMessageSuccess
     val userStock = repository.userStock
     val isloading = repository.isLoading
     val dataUserPengeluaran = repository.userPengeluaranList
