@@ -6,7 +6,6 @@ import com.example.manajemenreportfinansialumkm.data.Repository
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeViewModel(private val repository: Repository) : ViewModel() {
-    val userAuth = repository.userAuth
     val userVerification = repository.userVerfication
 
     val messageSuccess = repository.messageSuccess

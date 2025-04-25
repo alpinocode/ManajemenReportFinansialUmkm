@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManajemenReportFinansialUmkm"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.Login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.transaction.HistoryTransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.laporanKeuangan.LaporanKeuanganActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.transaction.DetailAddTransactionActivity"
             android:exported="false" />
@@ -29,12 +38,12 @@
         <activity
             android:name=".ui.product.ProductActivity"
             android:exported="true"
-            android:parentActivityName=".ui.HomeActivity" />
+            android:parentActivityName=".ui.home.HomeActivity" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

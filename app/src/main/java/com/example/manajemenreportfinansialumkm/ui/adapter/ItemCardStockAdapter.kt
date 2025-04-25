@@ -6,24 +6,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.manajemenreportfinansialumkm.databinding.ItemStockBinding
 import com.example.manajemenreportfinansialumkm.databinding.NotificationItemBinding
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.example.manajemenreportfinansialumkm.ui.stock.AddStockActivity
 
-class NotificationAdapter : ListAdapter<Stock,NotificationAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ItemCardStockAdapter(private val stockItem:List<Stock>) : ListAdapter<Stock,ItemCardStockAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    private lateinit var onItemClickCallback:OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemCallback:OnItemClickCallback) {
+        this.onItemClickCallback = onItemCallback
+    }
     class MyViewHolder(private val binding: NotificationItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(stock: Stock) {
             binding.apply {
                 namaBarang.text = stock.nameBarang
                 codeBarang.text = stock.codeBarang
                 stockBarang.text = stock.stock.toString()
-                notificationCard.setOnClickListener {
-                    val context = binding.root.context
-                    val intent = Intent(context, AddStockActivity::class.java)
-                    intent.putExtra(AddStockActivity.STOCK_ID, stock.codeBarang)
-                    context.startActivity(intent)
-                }
             }
         }
     }
@@ -37,6 +35,11 @@ class NotificationAdapter : ListAdapter<Stock,NotificationAdapter.MyViewHolder>(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemCallback(stockItem[position]) }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemCallback(data:Stock)
     }
 
     companion object {

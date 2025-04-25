@@ -2,6 +2,7 @@ package com.example.manajemenreportfinansialumkm.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.FragmentHomeBinding
+import com.example.manajemenreportfinansialumkm.ui.laporanKeuangan.LaporanKeuanganActivity
 import com.example.manajemenreportfinansialumkm.ui.product.ProductActivity
 import com.example.manajemenreportfinansialumkm.ui.transaction.AddTransactionActivity
+import com.example.manajemenreportfinansialumkm.ui.transaction.HistoryTransactionActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
@@ -44,6 +47,8 @@ class HomeFragment : Fragment() {
 
         usersAuth = FirebaseAuth.getInstance()
 
+        Log.d(TAG, "Cari APakah Ada Usernya :${usersAuth?.currentUser?.displayName}")
+        dataUserAuth(usersAuth?.currentUser)
         toProduct?.setOnClickListener{
             val intent = Intent(requireContext(), ProductActivity::class.java)
             startActivity(intent)
@@ -54,13 +59,18 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-
-
-        viewModel.userAuth.observe(requireActivity()) {
-            if(it != null) {
-                dataUserAuth(it)
-            }
+        binding?.laporanKeuanganContainer?.setOnClickListener{
+            val intent = Intent(requireContext(), LaporanKeuanganActivity::class.java)
+            startActivity(intent)
         }
+
+        binding?.hostyriTranksaksi?.setOnClickListener{
+            val intent = Intent(requireContext(), HistoryTransactionActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
 
         viewModel.userVerification.observe(viewLifecycleOwner){
             if(it == true) {

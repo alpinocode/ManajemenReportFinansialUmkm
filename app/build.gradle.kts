@@ -101,5 +101,7 @@ dependencies {
     val work_version = "2.9.1"
     implementation(libs.androidx.work.runtime.ktx)
 
-
+    implementation(libs.mpandroidchart)
+    val lottieVersion = "3.4.0"
+    implementation(libs.lottie)
 }

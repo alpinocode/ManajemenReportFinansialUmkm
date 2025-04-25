@@ -1,20 +1,18 @@
 package com.example.manajemenreportfinansialumkm.ui.transaction
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityDetailAddTransactionBinding
 import com.example.manajemenreportfinansialumkm.helper.Stock
+import com.example.manajemenreportfinansialumkm.helper.currencyToRupiah
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 import java.text.NumberFormat
+import java.time.LocalDate
 import java.util.Locale
 
 class DetailAddTransactionActivity : AppCompatActivity() {
@@ -35,31 +33,44 @@ class DetailAddTransactionActivity : AppCompatActivity() {
 
             viewModel.userTransaction.observe(this) {
                 showData(it)
+                val harga = it.first().hargaJual
+                binding?.btnAddPemasukan?.setOnClickListener {
+                    val codeBarang = binding?.textCodeBarang?.text.toString()
+                    val stock = binding?.textInputQuantity?.text.toString().toInt()
+                    val namaBarang = binding?.textNamaBarang?.text.toString()
+                    harga?.let { it1 -> viewModel.addPemasukan(codeBarang, it1, stock) }
+                    viewModel.updateStock(stockId, stock)
+
+                    val date = LocalDate.now().toString()
+                    if (harga != null) {
+                        viewModel.addTransaction(stockId, date,namaBarang, harga, stock)
+                    }
+
+                    viewModel.messageSuccess.observe(this){
+                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, AddTransactionActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             }
 
-            binding?.btnAddPemasukan?.setOnClickListener {
-                val codeBarang = binding?.textCodeBarang?.text.toString()
-                val harga = cleanCurrency(binding?.textHargaBarang?.text.toString())
-                val stock = binding?.textInputQuantity?.text.toString().toInt()
-                viewModel.addPemasukan( stockId,codeBarang, harga, stock)
-                viewModel.updateStock(stockId, stock)
-            }
         }
     }
 
+    private fun formatToRupiah(number: Double): String {
+        val localeID = Locale("in", "ID")
+        return NumberFormat.getCurrencyInstance(localeID).format(number).replace(",00", "")
+    }
     private fun showData(stock:List<Stock>) {
         binding?.textCodeBarang?.text = stock.first().codeBarang
         binding?.textNamaBarang?.text = stock.first().nameBarang
         binding?.textStockBarang?.text = stock.first().stock.toString()
-        binding?.textHargaBarang?.text = formatToRupiah(stock.first().harga.toString().toDouble())
+        binding?.textHargaBarang?.text = formatToRupiah(stock.first().hargaJual.toString().toDouble())
     }
 
-    private fun formatToRupiah(number: Double):String {
-        val localeID = Locale("in", "ID")
-        return NumberFormat.getCurrencyInstance(localeID).format(number).replace(",00", "")
-    }
     private fun cleanCurrency(text:String):Int {
-        return text.replace("Rp", "", ignoreCase = true).replace(".", "")
+        return text.replace("Rp ", "", ignoreCase = true).replace(".", "")
             .replace(",", "").toInt()
     }
     companion object {

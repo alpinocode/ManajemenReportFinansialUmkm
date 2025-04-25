@@ -9,10 +9,12 @@ data class Stock(
     val nameSuplier: String? = null,
     val nameBarang: String? = null,
     val codeBarang: String? = null,
-    val kategory:String? = null,
-    val harga:Int? = null,
+    val hargaJual:Int? = null,
+    val hargaBeli:Int? = null,
+    val modal:Int? = null,
     val stock: Int? = null,
     val keterangan: String? = null,
-    val date: String? = null
+    val date: String? = null,
+    val status:Boolean = true
 ): Parcelable
 

@@ -3,6 +3,7 @@ package com.example.manajemenreportfinansialumkm.ui.product
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -66,23 +67,27 @@ class ProductActivity : AppCompatActivity() {
         }
 
         viewModel.userStock.observe(this) {
+            val dataStockKosong = it.filter {
+                it.stock == 0
+            }
+            dataStockKosong.forEach {
+                it.codeBarang.let { codeBarang ->viewModel.deleteStock(codeBarang.toString()) }
+            }
             adapter.submitList(it as MutableList<Stock>?)
         }
-
         viewModel.isLoading.observe(this) {
             if (it != null) {
                 showLoading(it)
             }
         }
-        viewModel.messageSuccess.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
+//        viewModel.messageSuccess.observe(this) {
+//            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+//        }
         viewModel.messageError.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
         setUpSearchStock()
 
-2
     }
 
     private fun setUpSearchStock() {

@@ -1,5 +1,6 @@
 package com.example.manajemenreportfinansialumkm.ui.transaction
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +14,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityAddTransactionBinding
-import com.example.manajemenreportfinansialumkm.ui.adapter.TransactionAdapter
+import com.example.manajemenreportfinansialumkm.helper.Stock
+import com.example.manajemenreportfinansialumkm.ui.adapter.ItemCardStockAdapter
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
 class AddTransactionActivity : AppCompatActivity() {
@@ -27,19 +29,15 @@ class AddTransactionActivity : AppCompatActivity() {
         binding = ActivityAddTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = TransactionAdapter()
-        binding.rvAddTransaksi.layoutManager = LinearLayoutManager(this)
-        binding.rvAddTransaksi.adapter = adapter
-
 
         searchTransaksion()
 
         viewModel.userSearchTransaction.observe(this){
-            adapter.submitList(it)
+            showDataTransaction(it as List<Stock>)
         }
 
         viewModel.userTransaction.observe(this) {
-            adapter.submitList(it)
+           showDataTransaction(it)
         }
         viewModel.isLoading.observe(this) {
             if(it != null) {
@@ -52,6 +50,23 @@ class AddTransactionActivity : AppCompatActivity() {
         viewModel.messageError.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+
+    }
+
+    private fun showDataTransaction(transaction:List<Stock>) {
+        val adapter = ItemCardStockAdapter(transaction)
+        binding.rvAddTransaksi.layoutManager = LinearLayoutManager(this)
+        binding.rvAddTransaksi.adapter =adapter
+        adapter.submitList(transaction)
+
+        adapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback{
+            override fun onItemCallback(data: Stock) {
+                val intent = Intent(this@AddTransactionActivity, DetailAddTransactionActivity::class.java)
+                intent.putExtra(DetailAddTransactionActivity.STOCK_ID, data.codeBarang)
+                startActivity(intent)
+                finish()
+            }
+        })
 
     }
 

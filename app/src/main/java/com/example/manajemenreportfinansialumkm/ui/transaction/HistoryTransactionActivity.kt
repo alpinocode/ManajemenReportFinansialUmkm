@@ -1,0 +1,51 @@
+package com.example.manajemenreportfinansialumkm.ui.transaction
+
+import android.os.Bundle
+import android.view.View
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.manajemenreportfinansialumkm.R
+import com.example.manajemenreportfinansialumkm.databinding.ActivityHistoryTransactionBinding
+import com.example.manajemenreportfinansialumkm.ui.adapter.TrasanctionAdapter
+import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
+
+class HistoryTransactionActivity : AppCompatActivity() {
+    private var binding: ActivityHistoryTransactionBinding? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityHistoryTransactionBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
+        val viewModel:TrasanctionViewModel by viewModels {
+            factory
+        }
+
+        val adapter = TrasanctionAdapter()
+        binding?.rvHistoryTransaction?.layoutManager = LinearLayoutManager(this)
+        binding?.rvHistoryTransaction?.adapter = adapter
+
+        viewModel.userHistoryTransaction.observe(this) {
+            if(it != null) {
+                adapter.submitList(it)
+            }
+        }
+        viewModel.isLoading.observe(this) {
+            if(it != null) {
+                showLoading(it)
+            }
+        }
+    }
+
+    private fun showLoading(isLoading:Boolean) {
+        if(isLoading) {
+            binding?.progressBarTransaction?.visibility = View.VISIBLE
+        } else {
+            binding?.progressBarTransaction?.visibility = View.GONE
+        }
+    }
+}
