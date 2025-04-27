@@ -19,35 +19,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/container2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/search_stock"
-        app:layout_constraintEnd_toEndOf="@id/search_stock"
-        app:layout_constraintTop_toBottomOf="@id/search_stock"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        >
 
 
         <TextView
+            android:id="@+id/stock_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_stock"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/search_stock"
+            />
 
-    </LinearLayout>
 
     <TableLayout
+        android:id="@+id/table_layout_stock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/container2"
-        app:layout_constraintTop_toBottomOf="@+id/container2"
-        app:layout_constraintEnd_toEndOf="@+id/container2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stock_text"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp">
@@ -111,11 +105,35 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         android:backgroundTint="@color/blue_light"
         android:contentDescription="@string/stock_in"
         app:srcCompat="@drawable/baseline_add_24"
        />
+
+    <TextView
+        android:id="@+id/text_stock_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Data Stock Empty"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_stock_empty"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_stock_empty"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/animation_lottie"
+        app:lottie_loop="true"/>
 
 
 

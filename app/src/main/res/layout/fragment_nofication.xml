@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                     android:textSize="18sp"/>
             </LinearLayout>
 
-        </Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_notification"
@@ -63,6 +63,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_notification_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Notification Empty"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_notification_empty"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:lottie_rawRes="@raw/animation_lottie"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            android:layout_marginTop="18dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toStartOf="@+id/text_notification_empty"
+            app:layout_constraintTop_toBottomOf="@+id/text_notification_empty" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

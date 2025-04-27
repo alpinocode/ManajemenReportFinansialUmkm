@@ -127,7 +127,7 @@
         android:id="@+id/btn_add_pemasukan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add Pemasukan"
+        android:text="Add Pemasukan"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
