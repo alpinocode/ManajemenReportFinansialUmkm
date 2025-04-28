@@ -70,11 +70,19 @@ class NoficationFragment : Fragment() {
 
         stockAdapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback {
             override fun onItemCallback(data: Stock) {
-                val intent = Intent(requireContext(), AddStockActivity::class.java)
-                intent.putExtra(AddStockActivity.STOCK_ID, data.codeBarang)
+                val intent = Intent(requireContext(), UpdateStockNotifActivity::class.java)
+                intent.putExtra(UpdateStockNotifActivity.STOCK_ID, data.codeBarang)
                 startActivity(intent)
             }
         })
+
+        if(stock.isEmpty()) {
+            binding.textNotificationEmpty.visibility = View.VISIBLE
+            binding.lottieNotificationEmpty.visibility = View.VISIBLE
+        } else {
+            binding.textNotificationEmpty.visibility = View.GONE
+            binding.lottieNotificationEmpty.visibility = View.GONE
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -86,6 +94,9 @@ class NoficationFragment : Fragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
 
+    }
 
 }

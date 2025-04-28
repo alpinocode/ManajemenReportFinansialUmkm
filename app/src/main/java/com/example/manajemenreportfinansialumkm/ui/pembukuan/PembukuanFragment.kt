@@ -74,7 +74,6 @@ class PembukuanFragment : Fragment() {
         }
 
 
-
     }
     private fun showLoading(isLoading:Boolean) {
         if(isLoading) {

@@ -1,35 +1,27 @@
 package com.example.manajemenreportfinansialumkm.ui.notification
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
-import android.util.Log
-import androidx.core.app.NotificationCompat
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.Glide
-import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.data.Repository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class NotificationViewModel(private val repository: Repository) : ViewModel() {
     val notification = repository.notification
     val isLoading = repository.isLoading
+    val userStockData = repository.userStock
+    val messageSuccess = repository.messageSuccess
 
 
     init {
         getNotification()
     }
-    private fun getNotification() = repository.getStockMenipis()
+    fun getNotification() = repository.getStockMenipis()
 
+    fun getStockById(id:String) = repository.getStockById(id)
 
-    companion object {
-         private val CHANNEL_ID = "channel_01"
-        private val CHANNEL_NAME = "channel_name"
-        const val NOTIFICATION_ID = 1
-    }
+    fun updateStock(id: String, stock:Int, modal:Int) = repository.updateStockOnly(id, stock, modal)
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updatePengeluaran(id:String, modal:Int) = repository.updatePengeluaran(id, modal)
+
 }

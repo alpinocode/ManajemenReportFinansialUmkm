@@ -1,5 +1,6 @@
 package com.example.manajemenreportfinansialumkm.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -16,12 +17,13 @@ import androidx.work.WorkManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityHomeBinding
 import com.example.manajemenreportfinansialumkm.helper.NotificationShow
+import com.example.manajemenreportfinansialumkm.ui.Login.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
+    private var binding: ActivityHomeBinding? = null
     private lateinit var workManager: WorkManager
 
     private lateinit var periodicWorkRequest: PeriodicWorkRequest
@@ -29,25 +31,33 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+        setContentView(binding?.root)
+        setSupportActionBar(binding?.toolbar)
 
 
         workManager = WorkManager.getInstance(this)
         startOnTimeTask()
 
-        val navView: BottomNavigationView = binding.navView
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user != null) {
+            val navView: BottomNavigationView? = binding?.navView
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
-        val navController = navHostFragment.findNavController()
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
+            val navController = navHostFragment.findNavController()
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_pembukuan, R.id.navigation_notification
+            val appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.navigation_home, R.id.navigation_pembukuan, R.id.navigation_notification
+                )
             )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+            setupActionBarWithNavController(navController, appBarConfiguration)
+            navView?.setupWithNavController(navController)
+        } else {
+            val intent = Intent()
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
 
     }
 
@@ -75,5 +85,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 
 }

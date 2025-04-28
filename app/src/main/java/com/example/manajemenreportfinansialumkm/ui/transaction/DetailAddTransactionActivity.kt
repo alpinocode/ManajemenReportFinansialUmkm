@@ -11,9 +11,7 @@ import com.example.manajemenreportfinansialumkm.databinding.ActivityDetailAddTra
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.example.manajemenreportfinansialumkm.helper.currencyToRupiah
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
-import java.text.NumberFormat
 import java.time.LocalDate
-import java.util.Locale
 
 class DetailAddTransactionActivity : AppCompatActivity() {
     private var binding:ActivityDetailAddTransactionBinding? = null
@@ -21,6 +19,9 @@ class DetailAddTransactionActivity : AppCompatActivity() {
     private val viewModel:TrasanctionViewModel by viewModels {
         factory
     }
+    private var hargaJual:Int = 0
+    private var stock:Int = 0
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,45 +34,45 @@ class DetailAddTransactionActivity : AppCompatActivity() {
 
             viewModel.userTransaction.observe(this) {
                 showData(it)
-                val harga = it.first().hargaJual
-                binding?.btnAddPemasukan?.setOnClickListener {
-                    val codeBarang = binding?.textCodeBarang?.text.toString()
-                    val stock = binding?.textInputQuantity?.text.toString().toInt()
-                    val namaBarang = binding?.textNamaBarang?.text.toString()
-                    harga?.let { it1 -> viewModel.addPemasukan(codeBarang, it1, stock) }
-                    viewModel.updateStock(stockId, stock)
-
-                    val date = LocalDate.now().toString()
-                    if (harga != null) {
-                        viewModel.addTransaction(stockId, date,namaBarang, harga, stock)
-                    }
-
-                    viewModel.messageSuccess.observe(this){
+            }
+            binding?.btnAddPemasukan?.setOnClickListener {
+                stock = binding?.textInputQuantity?.text.toString().toInt()
+                val namaBarang = binding?.textNamaBarang?.text.toString()
+                val date = LocalDate.now().toString()
+                viewModel.addOrder(stockId, date,namaBarang, hargaJual, stock)
+                viewModel.messageSuccess.observe(this){
+                    if(it != null) {
                         Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, AddTransactionActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
+
+                }
+                viewModel.messageError.observe(this) {
+                    if(it != null) {
+                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+
 
         }
     }
 
-    private fun formatToRupiah(number: Double): String {
-        val localeID = Locale("in", "ID")
-        return NumberFormat.getCurrencyInstance(localeID).format(number).replace(",00", "")
-    }
-    private fun showData(stock:List<Stock>) {
-        binding?.textCodeBarang?.text = stock.first().codeBarang
-        binding?.textNamaBarang?.text = stock.first().nameBarang
-        binding?.textStockBarang?.text = stock.first().stock.toString()
-        binding?.textHargaBarang?.text = formatToRupiah(stock.first().hargaJual.toString().toDouble())
+    private fun showData(stockItem:List<Stock>) {
+        binding?.textCodeBarang?.text = stockItem.first().codeBarang
+        binding?.textNamaBarang?.text = stockItem.first().nameBarang
+        binding?.textStockBarang?.text = stockItem.first().stock.toString()
+        binding?.textHargaBarang?.text = currencyToRupiah(stockItem.first().hargaJual.toString().toDouble())
+        hargaJual = stockItem.first().hargaJual ?: 0
     }
 
-    private fun cleanCurrency(text:String):Int {
-        return text.replace("Rp ", "", ignoreCase = true).replace(".", "")
-            .replace(",", "").toInt()
+    private fun cleanCurrency(text: String): Int {
+        return text.replace("Rp", "", ignoreCase = true)
+            .replace(".", "")
+            .replace(",", "")
+            .toIntOrNull() ?: 0
     }
     companion object {
         const val STOCK_ID = "stock_id"

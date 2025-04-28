@@ -8,8 +8,8 @@ import com.example.manajemenreportfinansialumkm.data.Repository
 class TrasanctionViewModel(private val repository: Repository) : ViewModel() {
     val userTransaction = repository.userStock
     val userSearchTransaction = repository.searchItem
-    val messageSuccess = repository.userAddTransactionSuccess
-    val messageError = repository.userAddTransactionError
+    val messageSuccess = repository.messageSuccess
+    val messageError = repository.messageError
     val isLoading = repository.isLoading
     val userHistoryTransaction = repository.userTransaction
 
@@ -23,12 +23,11 @@ class TrasanctionViewModel(private val repository: Repository) : ViewModel() {
 
     fun getById(id:String) = repository.getStockById(id)
 
-    fun updateStock(id:String, stock:Int) = repository.updateStockAfterTransaction(id, stock)
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addPemasukan(codeBarang:String, harga:Int, stock:Int) = repository.addPemasukanTransaction(codeBarang, harga, stock)
-
-    fun addTransaction(id: String, date:String, namaBarang:String, harga: Int, quantity:Int ) = repository.addTransaction(id, date, namaBarang, harga, quantity )
+    fun addOrder(id: String, date:String, namaBarang:String, harga: Int, quantity:Int ) = repository.addTransactionOrder(id, date, namaBarang, harga, quantity )
 
     fun getTransactionHistory() = repository.getTransaction()
+
+    fun deleteStock(id:String) = repository.deleteStock(id)
 }

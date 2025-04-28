@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.pembukuan.PembukuanFragment"
-    android:layout_marginBottom="100dp">
+    android:layout_marginBottom="110dp">
 
 
 

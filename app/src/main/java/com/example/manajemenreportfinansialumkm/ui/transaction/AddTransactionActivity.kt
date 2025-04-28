@@ -16,6 +16,7 @@ import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityAddTransactionBinding
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.example.manajemenreportfinansialumkm.ui.adapter.ItemCardStockAdapter
+import com.example.manajemenreportfinansialumkm.ui.home.HomeActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
 class AddTransactionActivity : AppCompatActivity() {
@@ -32,11 +33,17 @@ class AddTransactionActivity : AppCompatActivity() {
 
         searchTransaksion()
 
+        binding.btnBackAddTransaction.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
+
         viewModel.userSearchTransaction.observe(this){
             showDataTransaction(it as List<Stock>)
         }
 
         viewModel.userTransaction.observe(this) {
+            showDataEmpty(it)
            showDataTransaction(it)
         }
         viewModel.isLoading.observe(this) {
@@ -44,13 +51,6 @@ class AddTransactionActivity : AppCompatActivity() {
                 showLoading(it)
             }
         }
-        viewModel.messageSuccess.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        viewModel.messageError.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-
     }
 
     private fun showDataTransaction(transaction:List<Stock>) {
@@ -59,15 +59,21 @@ class AddTransactionActivity : AppCompatActivity() {
         binding.rvAddTransaksi.adapter =adapter
         adapter.submitList(transaction)
 
+//        val stockStatus = transaction.filter { stock ->
+//            stock.stock.toString().toInt() <= 0
+//        }
+//        stockStatus.forEach {
+//            it.codeBarang.let { codeBarang -> viewModel.deleteStock(codeBarang.toString()) }
+//        }
+
         adapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback{
             override fun onItemCallback(data: Stock) {
                 val intent = Intent(this@AddTransactionActivity, DetailAddTransactionActivity::class.java)
                 intent.putExtra(DetailAddTransactionActivity.STOCK_ID, data.codeBarang)
                 startActivity(intent)
-                finish()
+                finishAffinity()
             }
         })
-
     }
 
     private fun searchTransaksion() {
@@ -93,6 +99,17 @@ class AddTransactionActivity : AppCompatActivity() {
             binding.progressBarTransaction.visibility = View.VISIBLE
         } else {
             binding.progressBarTransaction.visibility = View.GONE
+        }
+    }
+
+    private fun showDataEmpty(stock:List<Stock>) {
+        if(stock.isEmpty()) {
+            binding.textStockBarangEmpty.visibility = View.VISIBLE
+            binding.lottieAnimationBarangEmpty.visibility = View.VISIBLE
+            binding.searchAddTransaction.visibility = View.GONE
+        } else {
+            binding.textStockBarangEmpty.visibility = View.GONE
+            binding.lottieAnimationBarangEmpty.visibility = View.GONE
         }
     }
 }

@@ -33,8 +33,8 @@ class RegisterActivity : AppCompatActivity() {
             it?.let { it1 -> handleLogin(it1) }
         }
 
-        viewModel.messageError.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        binding?.btnBackRegister?.setOnClickListener {
+            finish()
         }
 
         binding?.btnSubmitRegister?.setOnClickListener {
@@ -43,11 +43,9 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding?.textInputPassword?.text.toString().trim()
             val confirmPassword = binding?.textInputPasswordConfirm?.text.toString().trim()
 
-//            registerViewModel.signUp(name, email, password, confirmPassword)
             viewModel.register(name, email, password, confirmPassword)
         }
 
-//        observeRegister()
 
 
         binding?.textInputLayoutPassword?.setEndIconOnClickListener {
@@ -55,22 +53,33 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding?.textInputLayoutPasswordConfirm?.setEndIconOnClickListener {
-            showAndHidePassword()
+            showAndHidePasswordConfirm()
         }
+
+        viewModel.messageSuccess.observe(this) {
+            if (it != null) {
+                showMessageSuccess(it)
+            }
+        }
+
+        viewModel.messageError.observe(this) {
+            if (it != null) {
+                showMessageError(it)
+            }
+        }
+
     }
 
-//    private fun observeRegister() {
-//        registerViewModel.userLogin.observe(this) {
-//            it?.let { it1 -> handleLogin(it1) }
-//        }
-//        registerViewModel.messageError.observe(this) {
-//            it.let {
-//                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
 
 
+    private fun showMessageSuccess(message:String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        finish()
+    }
+
+    private fun showMessageError(message:String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     private fun handleLogin(usersData: FirebaseUser) {
         if(usersData != null) {
@@ -92,6 +101,19 @@ class RegisterActivity : AppCompatActivity() {
             binding?.textInputLayoutPassword?.endIconDrawable = getDrawable(R.drawable.hidden)
         }
         dataPasswordData?.setSelection( dataPasswordData.text?.length ?: 0)
+        return
+    }
+
+    private fun showAndHidePasswordConfirm() {
+        val dataPasswordConfirmData = binding?.textInputPasswordConfirm
+        if(dataPasswordConfirmData?.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            dataPasswordConfirmData?.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            binding?.textInputLayoutPasswordConfirm?.endIconDrawable = getDrawable(R.drawable.eye)
+        } else {
+            dataPasswordConfirmData?.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding?.textInputLayoutPasswordConfirm?.endIconDrawable = getDrawable(R.drawable.hidden)
+        }
+        dataPasswordConfirmData?.setSelection( dataPasswordConfirmData.text?.length ?: 0)
         return
     }
 
