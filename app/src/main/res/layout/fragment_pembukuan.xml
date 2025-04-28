@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.pembukuan.PembukuanFragment"
-    android:layout_marginBottom="110dp">
+    android:background="@color/pastel_light_blue">
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_pembukuan"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pembukuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="80dp"/>
 
 
-    <TextView
-        android:id="@+id/text_data_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data Pembukuan Tidak Ada"
-        android:textSize="26sp"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="20dp"/>
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_data_empty"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:lottie_rawRes="@raw/animation_lottie"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:layout_constraintStart_toStartOf="@+id/text_data_empty"
-        app:layout_constraintEnd_toEndOf="@+id/text_data_empty"
-        app:layout_constraintTop_toBottomOf="@+id/text_data_empty"/>
+        <TextView
+            android:id="@+id/text_data_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Pembukuan Tidak Ada"
+            android:textSize="26sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="20dp"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_data_empty"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:lottie_rawRes="@raw/animation_lottie"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:layout_constraintStart_toStartOf="@+id/text_data_empty"
+            app:layout_constraintEnd_toEndOf="@+id/text_data_empty"
+            app:layout_constraintTop_toBottomOf="@+id/text_data_empty"/>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

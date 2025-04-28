@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.transaction.AddTransactionActivity">
+    tools:context=".ui.transaction.AddTransactionActivity"
+    android:background="@color/pastel_light_blue">
 
     <ImageView
         android:id="@+id/btn_back_add_transaction"

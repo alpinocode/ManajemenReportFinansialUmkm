@@ -25,13 +25,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/transparent"
+        android:background="@drawable/background_bottom_navigation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/buttom_nav_selector"
-        app:itemTextColor="@color/buttom_nav_selector"/>
+        app:itemTextColor="@color/buttom_nav_selector"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"/>
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_home"

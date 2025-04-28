@@ -11,8 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,62 +111,69 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/text_no_have_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/option_login"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="48dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/text_field_password"/>
-
-            <TextView
-                android:id="@+id/register_to_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register_home"
-                android:textColor="@color/blue_dark"
-                app:layout_constraintBottom_toBottomOf="@id/text_no_have_account"
-                app:layout_constraintStart_toEndOf="@+id/text_no_have_account"
-                app:layout_constraintTop_toTopOf="@id/text_no_have_account"
-                android:layout_marginStart="6dp"/>
-
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="312dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/login"
                 android:textSize="24sp"
+                android:background="@drawable/button_radius"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/register_to_page"/>
+                app:layout_constraintTop_toBottomOf="@id/text_field_password"/>
+
+            <TextView
+                android:id="@+id/text_singIn_method_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@string/sigin_other"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_login"/>
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/btn_google_login"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_login"/>
+                app:layout_constraintTop_toBottomOf="@id/text_singIn_method_other"/>
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btn_facebooklogin"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_width="312dp"
+                android:layout_height="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_google_login"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="32dp"/>
+
+
+            <TextView
+                android:id="@+id/to_register_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_login"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="24dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_facebooklogin"/>
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

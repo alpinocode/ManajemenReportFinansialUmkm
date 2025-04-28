@@ -51,172 +51,185 @@
 
     </RelativeLayout>
 
-
-
-    <LinearLayout
-        android:id="@+id/layout_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/container_pie_chart"
-        app:layout_constraintTop_toBottomOf="@+id/container_pie_chart"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_pemasukan"
+        android:layout_width="170dp"
+        android:layout_height="120dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="12dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_marginStart="18dp"
+        app:layout_constraintStart_toStartOf="@+id/container_pie_chart"
+        app:layout_constraintTop_toBottomOf="@+id/container_pie_chart">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/text_pemasukan_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pemasukan"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/text_pemasukan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="normal"
+                android:textColor="@color/purple_200"
+                app:layout_constraintStart_toStartOf="@id/text_pemasukan_main"
+                app:layout_constraintTop_toBottomOf="@id/text_pemasukan_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="12dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="120dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="12dp"
+        android:layout_marginStart="34dp"
+        app:layout_constraintStart_toEndOf="@id/card_pemasukan"
+        app:layout_constraintTop_toTopOf="@id/card_pemasukan"
+        app:layout_constraintBottom_toBottomOf="@id/card_pemasukan">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_pengeluaran_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/text_pengeluaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="24sp"
+                android:textColor="@color/red"
+                app:layout_constraintStart_toStartOf="@id/text_pengeluaran_main"
+                app:layout_constraintTop_toBottomOf="@id/text_pengeluaran_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="12dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/card_laba_bersih"
+            android:layout_width="170dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
             app:cardCornerRadius="12dp"
-            android:layout_marginBottom="16dp">
-            <LinearLayout
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@id/card_pemasukan"
+            app:layout_constraintTop_toBottomOf="@id/card_pemasukan">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp">
+                android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pemasukan"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/text_pemasukan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textStyle="normal"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/purple_200"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:cardCornerRadius="12dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="12dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pengeluaran"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_pengeluaran"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="normal"
-                    android:layout_marginTop="8dp"
-                    android:textSize="24sp"
-                    android:textColor="@color/red"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_main_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/layout_main"
-        app:layout_constraintTop_toBottomOf="@+id/layout_main"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginTop="12dp">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            app:cardCornerRadius="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical">
-
-                <TextView
+                    android:id="@+id/text_laba_bersih_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Laba Bersih"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"/>
 
                 <TextView
                     android:id="@+id/text_laba_bersih"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:textColor="@color/yellow"
                     android:textSize="24sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="@id/text_laba_bersih_main"
+                    app:layout_constraintTop_toBottomOf="@id/text_laba_bersih_main"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="12dp"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    android:textStyle="normal" />
-            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="170dp"
+            android:layout_height="120dp"
             android:layout_weight="1"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            android:layout_marginStart="34dp"
+            app:layout_constraintStart_toEndOf="@id/card_laba_bersih"
+            app:layout_constraintBottom_toBottomOf="@id/card_laba_bersih"
+            app:layout_constraintTop_toTopOf="@id/card_laba_bersih">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_pajak_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Total Pajak "
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Total Pajak "
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_pajak"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/blue"
-                    android:textSize="24sp"
-                    android:textStyle="normal"
-                    />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/text_pajak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blue"
+                        android:textSize="24sp"
+                        android:textStyle="normal"
+                        app:layout_constraintStart_toStartOf="@+id/text_pajak_main"
+                        app:layout_constraintTop_toBottomOf="@id/text_pajak_main"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginTop="12dp"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
-    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"
