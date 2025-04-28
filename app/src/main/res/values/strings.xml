@@ -5,7 +5,7 @@
     <string name="full_name">Full Name</string>
     <string name="option_login">Belum Punya Akun ? </string>
     <string name="register_home">Register Now</string>
-    <string name="login">Log in</string>
+    <string name="login">Login</string>
 
     <string name="facebook_app_id">1172351034552307</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
