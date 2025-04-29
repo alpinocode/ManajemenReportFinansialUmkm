@@ -54,11 +54,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.messageError.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewModel.messageSuccess.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
         }
 
 

@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityHistoryTransactionBinding
+import com.example.manajemenreportfinansialumkm.helper.Transaction
 import com.example.manajemenreportfinansialumkm.ui.adapter.TrasanctionAdapter
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
@@ -31,6 +32,7 @@ class HistoryTransactionActivity : AppCompatActivity() {
 
         viewModel.userHistoryTransaction.observe(this) {
             if(it != null) {
+                showAndHideLottieAnimation(it)
                 adapter.submitList(it)
             }
         }
@@ -46,6 +48,16 @@ class HistoryTransactionActivity : AppCompatActivity() {
             binding?.progressBarTransaction?.visibility = View.VISIBLE
         } else {
             binding?.progressBarTransaction?.visibility = View.GONE
+        }
+    }
+
+    private fun showAndHideLottieAnimation(transaction:List<Transaction>) {
+        if(transaction.isEmpty()) {
+            binding?.textDataTransactionEmpty?.visibility = View.VISIBLE
+            binding?.lottieAnimationDataTransactionEmpty?.visibility = View.VISIBLE
+        } else {
+            binding?.textDataTransactionEmpty?.visibility = View.GONE
+            binding?.lottieAnimationDataTransactionEmpty?.visibility = View.GONE
         }
     }
 }

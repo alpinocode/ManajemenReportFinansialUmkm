@@ -3,11 +3,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#494646</color>
-    <color name="blue_light">#80CBC4</color>
-    <color name="blue_dark">#0E62F8</color>
+    <color name="blue_light">#00B7C2</color>
+    <color name="blue_dark">#005BC2</color>
     <color name="orange">#FFB433</color>
     <color name="light_cyan">#B4EBE6</color>
     <color name="transparent">#00FBFBFB</color>
-    <color name="selected_color">#2196F3</color> <!-- Biru -->
+    <color name="blue">#2196F3</color> <!-- Biru -->
     <color name="unselected_color">#757575</color> <!-- Abu-abu -->
+    <color name="purple_200">#0F9D58</color>
+    <color name="purple_500">#0F9D58</color>
+    <color name="purple_700">#0F9D58</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="grey">#aaa</color>
+    <color name="button_color">#1E573B</color>
+    <color name="pastel_light_blue">#BEEAFF</color>
+    <color name="yellow">#FFC107</color>
+    <color name="red">#F44336</color>
+    <color name="abu_abu">#E2E2E2</color>
 </resources>

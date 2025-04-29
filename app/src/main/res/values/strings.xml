@@ -3,9 +3,9 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="full_name">Full Name</string>
-    <string name="option_login">Belum Punya Akun ? </string>
-    <string name="register_home">Register Now</string>
-    <string name="login">Log in</string>
+    <string name="option_login">Create an account</string>
+    <string name="login">Login</string>
+    <string name="sigin_other">Or Sign In With</string>
 
     <string name="facebook_app_id">1172351034552307</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
@@ -62,4 +62,5 @@
     <string name="text_no">No</string>
     <string name="text_stock">Stock</string>
     <string name="text_action">Action</string>
+    <string name="dash">-</string>
 </resources>

@@ -58,6 +58,7 @@ class ProductActivity : AppCompatActivity() {
         binding?.floatingActionAddStock?.setOnClickListener {
             val intent = Intent(this, AddStockActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
 
@@ -68,11 +69,12 @@ class ProductActivity : AppCompatActivity() {
 
         viewModel.userStock.observe(this) {
             val dataStockKosong = it.filter {
-                it.stock == 0
+                it.stock.toString().toInt() <= 0
             }
             dataStockKosong.forEach {
                 it.codeBarang.let { codeBarang ->viewModel.deleteStock(codeBarang.toString()) }
             }
+            enableShowDataEmpty(it)
             adapter.submitList(it as MutableList<Stock>?)
         }
         viewModel.isLoading.observe(this) {
@@ -80,14 +82,8 @@ class ProductActivity : AppCompatActivity() {
                 showLoading(it)
             }
         }
-//        viewModel.messageSuccess.observe(this) {
-//            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//        }
-        viewModel.messageError.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        setUpSearchStock()
 
+        setUpSearchStock()
     }
 
     private fun setUpSearchStock() {
@@ -116,6 +112,18 @@ class ProductActivity : AppCompatActivity() {
         })
     }
 
+    private fun enableShowDataEmpty(stock:List<Stock>) {
+        if(stock.isEmpty()) {
+            binding?.textStockEmpty?.visibility = View.VISIBLE
+            binding?.lottieStockEmpty?.visibility = View.VISIBLE
+            binding?.searchStock?.visibility = View.GONE
+            binding?.stockText?.visibility = View.GONE
+            binding?.tableLayoutStock?.visibility = View.GONE
+        } else {
+            binding?.textStockEmpty?.visibility = View.GONE
+            binding?.lottieStockEmpty?.visibility = View.GONE
+        }
+    }
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             binding?.progressbar?.visibility = View.VISIBLE
@@ -125,6 +133,6 @@ class ProductActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        viewModel.loadStockInData()
+            viewModel.loadStockInData()
     }
 }

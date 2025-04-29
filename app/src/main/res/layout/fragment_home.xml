@@ -1,60 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.home.HomeFragment"
-    android:background="@color/blue_light">
+    android:background="@color/pastel_light_blue">
 
-    <ImageView
-        android:id="@+id/btn_logout"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:src="@drawable/logout"
-        android:layout_gravity="end"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="30dp"/>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
-        android:layout_height="170dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="40dp"
-        app:cardCornerRadius="15dp">
+        android:id="@+id/container1_fragment_home"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:backgroundTint="@color/transparent"
+        android:background="@color/transparent"
+        app:cardBackgroundColor="@color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background"
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_user"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    tools:src="@tools:sample/avatars"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="42dp"/>
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image_user"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="end"
-                android:layout_margin="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:src="@tools:sample/avatars" />
+                    <TextView
+                        android:id="@+id/text_username"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Alfino Hasan"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/image_user"
+                        android:layout_marginStart="24dp"
+                        app:layout_constraintTop_toTopOf="@+id/image_user"/>
 
+
+                    <TextView
+                        android:id="@+id/text_total_saldo_usaha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_saldo_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_username"
+                        app:layout_constraintStart_toStartOf="@id/text_username"/>
+
+                    <TextView
+                        android:id="@+id/text_saldo_usaha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/saldo"
+                        app:layout_constraintStart_toStartOf="@id/text_username"
+                        app:layout_constraintTop_toBottomOf="@id/text_total_saldo_usaha"/>
+
+
+
+                <ImageView
+                    android:id="@+id/btn_logout"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/logout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="70dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/image_user"
+                    android:layout_marginEnd="28dp"/>
 
             <LinearLayout
                 android:id="@+id/btn_verification_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/image_user"
-                app:layout_constraintHorizontal_bias="0.904"
-                app:layout_constraintStart_toStartOf="@+id/image_user"
-                app:layout_constraintTop_toBottomOf="@+id/image_user">
+                app:layout_constraintStart_toStartOf="@id/text_total_saldo_usaha"
+                app:layout_constraintTop_toBottomOf="@id/text_saldo_usaha">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -68,254 +108,394 @@
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_marginStart="8dp"/>
+
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/text_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:maxLines="1"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/image_user"
-                app:layout_constraintHorizontal_bias="0.054"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.115" />
-
-
-
-            <TextView
-                android:id="@+id/text_saldo_usaha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/total_saldo_text"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_username"
-                app:layout_constraintTop_toBottomOf="@+id/text_username"
-                app:layout_constraintVertical_bias="0.077" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/saldo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_saldo_usaha"
-                app:layout_constraintTop_toBottomOf="@+id/text_saldo_usaha" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="1000dp"
-        app:cardCornerRadius="40dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <GridLayout
-                android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/laporan_keuangan_container"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container1_fragment_home"
+        android:layout_marginTop="32dp"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:rowCount="2"
-                android:layout_marginTop="20dp">
-                <FrameLayout
-                    android:id="@+id/laporan_keuangan_container"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="10dp"
-                    >
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="110dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/light_cyan"
-                        app:cardCornerRadius="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/laporan"
-                            android:layout_marginTop="20dp"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                android:layout_gravity="center"
+                android:text="@string/laporan"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-                    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="68dp"
-                        android:layout_height="64dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="5dp"
-                        android:backgroundTint="@color/white"
-                        app:cardCornerRadius="50dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="68dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="50dp">
 
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/money_bag"/>
-                    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center"
+                android:src="@drawable/money_bag"/>
+        </androidx.cardview.widget.CardView>
 
 
-                </FrameLayout>
+    </FrameLayout>
 
-
-
-                <FrameLayout
-                    android:id="@+id/hostyri_tranksaksi"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginBottom="10dp"
-                    >
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="110dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/light_cyan"
-                        app:cardCornerRadius="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/history_tranksaksi"
-                            android:layout_marginTop="20dp"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="68dp"
-                        android:layout_height="64dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="5dp"
-                        android:backgroundTint="@color/white"
-                        app:cardCornerRadius="50dp">
-
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/clock"/>
-                    </androidx.cardview.widget.CardView>
-                </FrameLayout>
-            </GridLayout>
-
-            <GridLayout
-                android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/hostyri_tranksaksi"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        app:layout_constraintStart_toEndOf="@id/laporan_keuangan_container"
+        app:layout_constraintBottom_toBottomOf="@id/laporan_keuangan_container"
+        app:layout_constraintTop_toTopOf="@id/laporan_keuangan_container"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:rowCount="2">
-                <FrameLayout
-                    android:id="@+id/product_container"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="10dp"
-                    >
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="110dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/light_cyan"
-                        app:cardCornerRadius="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/product"
-                            android:layout_marginTop="20dp"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                android:layout_gravity="center"
+                android:text="@string/history_tranksaksi"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-                    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="68dp"
-                        android:layout_height="64dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="5dp"
-                        android:backgroundTint="@color/white"
-                        app:cardCornerRadius="50dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="68dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="50dp">
 
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/box"/>
-                    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center"
+                android:src="@drawable/clock"/>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/product_container"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/laporan_keuangan_container"
+        app:layout_constraintTop_toBottomOf="@id/laporan_keuangan_container"
+        android:layout_marginTop="24dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/product"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-                </FrameLayout>
+        </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="68dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="50dp">
 
-
-                <FrameLayout
-                    android:id="@+id/add_transaksi_container"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginBottom="10dp"
-                    >
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="110dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/light_cyan"
-                        app:cardCornerRadius="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/add_tranksaksi"
-                            android:layout_marginTop="20dp"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="68dp"
-                        android:layout_height="64dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="5dp"
-                        android:backgroundTint="@color/white"
-                        app:cardCornerRadius="50dp">
-
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/add"/>
-                    </androidx.cardview.widget.CardView>
-                </FrameLayout>
-            </GridLayout>
-
-        </LinearLayout>
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center"
+                android:src="@drawable/box"/>
+        </androidx.cardview.widget.CardView>
 
 
+    </FrameLayout>
 
-    </androidx.cardview.widget.CardView>
+    <FrameLayout
+        android:id="@+id/add_transaksi_container"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        app:layout_constraintStart_toEndOf="@id/product_container"
+        app:layout_constraintBottom_toBottomOf="@id/product_container"
+        app:layout_constraintTop_toTopOf="@id/product_container"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/add_tranksaksi"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="68dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="50dp">
+
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center"
+                android:src="@drawable/add"/>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
 
-</LinearLayout>
+    <!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/container1_fragment_home">-->
+
+<!--            <GridLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:columnCount="2"-->
+<!--                android:rowCount="2"-->
+<!--                android:layout_marginTop="20dp">-->
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/laporan_keuangan_container"-->
+<!--                    android:layout_width="150dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="30dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    >-->
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="150dp"-->
+<!--                        android:layout_height="110dp"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        app:cardCornerRadius="20dp"-->
+<!--                        android:layout_marginBottom="8dp">-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:text="@string/laporan"-->
+<!--                            android:layout_marginTop="20dp"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:textStyle="bold"/>-->
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="68dp"-->
+<!--                        android:layout_height="64dp"-->
+<!--                        android:layout_marginStart="40dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:backgroundTint="@color/white"-->
+<!--                        app:cardCornerRadius="50dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="42dp"-->
+<!--                            android:layout_height="42dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@drawable/money_bag"/>-->
+<!--                    </androidx.cardview.widget.CardView>-->
+
+
+<!--                </FrameLayout>-->
+
+
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/hostyri_tranksaksi"-->
+<!--                    android:layout_width="150dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="50dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    >-->
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="150dp"-->
+<!--                        android:layout_height="110dp"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        app:cardCornerRadius="20dp"-->
+<!--                        android:layout_marginBottom="8dp">-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:text="@string/history_tranksaksi"-->
+<!--                            android:layout_marginTop="20dp"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:textStyle="bold"/>-->
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="68dp"-->
+<!--                        android:layout_height="64dp"-->
+<!--                        android:layout_marginStart="40dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:backgroundTint="@color/white"-->
+<!--                        app:cardCornerRadius="50dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="42dp"-->
+<!--                            android:layout_height="42dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@drawable/clock"/>-->
+<!--                    </androidx.cardview.widget.CardView>-->
+<!--                </FrameLayout>-->
+<!--            </GridLayout>-->
+
+<!--            <GridLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:columnCount="2"-->
+<!--                android:rowCount="2">-->
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/product_container"-->
+<!--                    android:layout_width="150dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="30dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    >-->
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="150dp"-->
+<!--                        android:layout_height="110dp"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        app:cardCornerRadius="20dp"-->
+<!--                        android:layout_marginBottom="8dp">-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:text="@string/product"-->
+<!--                            android:layout_marginTop="20dp"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:textStyle="bold"/>-->
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="68dp"-->
+<!--                        android:layout_height="64dp"-->
+<!--                        android:layout_marginStart="40dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:backgroundTint="@color/white"-->
+<!--                        app:cardCornerRadius="50dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="42dp"-->
+<!--                            android:layout_height="42dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@drawable/box"/>-->
+<!--                    </androidx.cardview.widget.CardView>-->
+
+
+<!--                </FrameLayout>-->
+
+
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/add_transaksi_container"-->
+<!--                    android:layout_width="150dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="50dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    >-->
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="150dp"-->
+<!--                        android:layout_height="110dp"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        app:cardCornerRadius="20dp"-->
+<!--                        android:layout_marginBottom="8dp">-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:text="@string/add_tranksaksi"-->
+<!--                            android:layout_marginTop="20dp"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:textStyle="bold"/>-->
+
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:layout_width="68dp"-->
+<!--                        android:layout_height="64dp"-->
+<!--                        android:layout_marginStart="40dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:backgroundTint="@color/white"-->
+<!--                        app:cardCornerRadius="50dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="42dp"-->
+<!--                            android:layout_height="42dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@drawable/add"/>-->
+<!--                    </androidx.cardview.widget.CardView>-->
+<!--                </FrameLayout>-->
+<!--            </GridLayout>-->
+
+<!--        </LinearLayout>-->
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
