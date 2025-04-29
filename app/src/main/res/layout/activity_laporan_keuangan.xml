@@ -14,8 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="38dp"/>
 
 
     <RelativeLayout
