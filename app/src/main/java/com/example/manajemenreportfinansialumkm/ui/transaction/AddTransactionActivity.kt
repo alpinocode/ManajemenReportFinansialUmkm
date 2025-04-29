@@ -81,19 +81,26 @@ class AddTransactionActivity : AppCompatActivity() {
     }
 
     private fun searchTransaksion() {
-        binding.searchAddTransaction.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchAddTransaction.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query != null) {
-                    viewModel.searchTransaction(query.toString())
+                    viewModel.searchTransaction(query)
+                    return false
+                } else {
+                    viewModel.loadDataTransaction()
+                    return false
                 }
-                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
-                    viewModel.searchTransaction(newText.toString())
+                if(newText != null) {
+                    viewModel.searchTransaction(newText)
+                    return false
+                } else {
+                    viewModel.loadDataTransaction()
+                    return false
                 }
-                return false
             }
 
         })

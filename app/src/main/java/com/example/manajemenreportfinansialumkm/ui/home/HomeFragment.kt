@@ -1,17 +1,20 @@
 package com.example.manajemenreportfinansialumkm.ui.home
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.FragmentHomeBinding
+import com.example.manajemenreportfinansialumkm.helper.currencyToRupiah
 import com.example.manajemenreportfinansialumkm.ui.Login.LoginActivity
 import com.example.manajemenreportfinansialumkm.ui.laporanKeuangan.LaporanKeuanganActivity
 import com.example.manajemenreportfinansialumkm.ui.product.ProductActivity
@@ -37,6 +40,7 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,6 +73,18 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.isLoading.observe(requireActivity()) {
+            if (it != null) {
+                showLoading(it)
+            }
+        }
+
+        viewModel.userPemasukan.observe(requireActivity()) {
+            if (it != null) {
+                binding?.textSaldoUsaha?.text = currencyToRupiah(it.toString().toDouble())
+            }
+
+        }
 
         toProduct?.setOnClickListener{
             Log.d(TAG, "Apakah User Udah Verification ${userVerification}")

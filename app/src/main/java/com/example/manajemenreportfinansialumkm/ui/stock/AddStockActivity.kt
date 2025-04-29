@@ -68,6 +68,7 @@ class AddStockActivity : AppCompatActivity() {
 
         if (stockId != null) {
             viewModel.getStockById(stockId)
+            binding?.textMain?.text = "Update Product"
             viewModel.userStock.observe(this) {
                 it.also {
                     orginalStockFromDb = it[0].stock.toString().toInt()

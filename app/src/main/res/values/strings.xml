@@ -18,7 +18,7 @@
     // user
     <string name="hello">Hello</string>
     <string name="name_user">Alfino Hasan</string>
-    <string name="total_saldo_text">Total Saldo Usaha</string>
+    <string name="total_saldo_text">Total Pemasukan</string>
     <string name="saldo">Rp 100.000.000</string>
 
     // box
@@ -57,9 +57,11 @@
     <string name="text_nama_suplier">Nama Suplier</string>
     <string name="text_code_barang">Code Barang</string>
 
-
+    // search query
+    <string name="search_query">Search Product/barang</string>
     // product page
     <string name="text_no">No</string>
+    <string name="text_product">Product</string>
     <string name="text_stock">Stock</string>
     <string name="text_action">Action</string>
     <string name="dash">-</string>
