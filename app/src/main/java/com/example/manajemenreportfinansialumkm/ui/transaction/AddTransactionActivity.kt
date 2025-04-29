@@ -8,6 +8,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -59,21 +60,24 @@ class AddTransactionActivity : AppCompatActivity() {
         binding.rvAddTransaksi.adapter =adapter
         adapter.submitList(transaction)
 
-//        val stockStatus = transaction.filter { stock ->
-//            stock.stock.toString().toInt() <= 0
-//        }
-//        stockStatus.forEach {
-//            it.codeBarang.let { codeBarang -> viewModel.deleteStock(codeBarang.toString()) }
-//        }
-
         adapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback{
             override fun onItemCallback(data: Stock) {
-                val intent = Intent(this@AddTransactionActivity, DetailAddTransactionActivity::class.java)
-                intent.putExtra(DetailAddTransactionActivity.STOCK_ID, data.codeBarang)
-                startActivity(intent)
-                finishAffinity()
+                if(data.stock.toString().toInt() <= 0) {
+                    AlertDialog.Builder(this@AddTransactionActivity).apply {
+                        setTitle("Umkm Finansial Report")
+                        setIcon(R.drawable.logo)
+                        setMessage("Stock Barang Habis Silahkan Tambah Stock")
+                        setPositiveButton("Ya", null)
+                    }.show()
+                } else {
+                    val intent = Intent(this@AddTransactionActivity, DetailAddTransactionActivity::class.java)
+                    intent.putExtra(DetailAddTransactionActivity.STOCK_ID, data.codeBarang)
+                    startActivity(intent)
+                    finishAffinity()
+                }
             }
         })
+
     }
 
     private fun searchTransaksion() {
@@ -106,10 +110,17 @@ class AddTransactionActivity : AppCompatActivity() {
         if(stock.isEmpty()) {
             binding.textStockBarangEmpty.visibility = View.VISIBLE
             binding.lottieAnimationBarangEmpty.visibility = View.VISIBLE
-            binding.searchAddTransaction.visibility = View.GONE
         } else {
             binding.textStockBarangEmpty.visibility = View.GONE
             binding.lottieAnimationBarangEmpty.visibility = View.GONE
+            binding.rvAddTransaksi.visibility = View.VISIBLE
+            binding.searchAddTransaction.visibility = View.VISIBLE
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }

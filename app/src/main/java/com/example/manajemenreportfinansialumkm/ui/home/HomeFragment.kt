@@ -127,13 +127,12 @@ class HomeFragment : Fragment() {
 
         }
 
-      
+
     }
 
 
 
 
-    // data Authentication Firebase Provider Authentication
     private fun dataUserAuth(usersData: FirebaseUser?) {
         if(usersData?.photoUrl == null) {
             binding?.textUsername?.text = "Hello ${usersData?.displayName}"
@@ -153,11 +152,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun logoutButton() {
-        val intent = Intent(requireContext(), LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
+    private fun showLoading(isLoading:Boolean) {
+        if(isLoading) {
+            binding?.progressBarHome?.visibility = View.VISIBLE
+        } else {
+            binding?.progressBarHome?.visibility = View.GONE
+        }
     }
 
     companion object {

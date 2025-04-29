@@ -30,6 +30,10 @@ class HistoryTransactionActivity : AppCompatActivity() {
         binding?.rvHistoryTransaction?.layoutManager = LinearLayoutManager(this)
         binding?.rvHistoryTransaction?.adapter = adapter
 
+        binding?.btnBackHistoryTransaction?.setOnClickListener {
+            finish()
+        }
+
         viewModel.userHistoryTransaction.observe(this) {
             if(it != null) {
                 showAndHideLottieAnimation(it)

@@ -17,7 +17,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
 
     fun logOut(id:String) = repository.logOut(id)
 
-    private fun checkedEmailVerification() = repository.checkedEmailVerification()
+     fun checkedEmailVerification() = repository.checkedEmailVerification()
     fun sendVerificationEmail() = repository.userVerification()
     fun signOut(context: Context)  = repository.signOut(context)
 

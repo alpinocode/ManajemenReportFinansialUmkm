@@ -24,7 +24,6 @@ class StockAdapter() : ListAdapter<Stock, StockAdapter.MyViewHolder>(DIFF_CALLBA
                 nomor.text = (position + 1).toString()
                 codeBarang.text = stock.codeBarang
                 namaBarang.text = stock.nameBarang
-                jumlahStock.text = stock.stock.toString()
                 containerStock.setOnClickListener {
                     val intent = Intent(context, AddStockActivity::class.java)
                     intent.putExtra(AddStockActivity.STOCK_ID, stock.codeBarang)

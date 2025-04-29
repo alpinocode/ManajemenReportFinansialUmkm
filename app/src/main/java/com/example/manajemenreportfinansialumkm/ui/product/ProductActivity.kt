@@ -41,7 +41,9 @@ class ProductActivity : AppCompatActivity() {
         binding?.rvStock?.layoutManager = LinearLayoutManager(this)
         binding?.rvStock?.adapter = adapter
 
-
+        binding?.btnBackProduct?.setOnClickListener {
+            finish()
+        }
 
         adapter.onDeleteClick = {
             AlertDialog.Builder(this).apply {
@@ -116,12 +118,12 @@ class ProductActivity : AppCompatActivity() {
         if(stock.isEmpty()) {
             binding?.textStockEmpty?.visibility = View.VISIBLE
             binding?.lottieStockEmpty?.visibility = View.VISIBLE
-            binding?.searchStock?.visibility = View.GONE
-            binding?.stockText?.visibility = View.GONE
-            binding?.tableLayoutStock?.visibility = View.GONE
+
         } else {
             binding?.textStockEmpty?.visibility = View.GONE
             binding?.lottieStockEmpty?.visibility = View.GONE
+            binding?.searchStock?.visibility = View.VISIBLE
+            binding?.cardItemStock?.visibility = View.VISIBLE
         }
     }
     private fun showLoading(isLoading: Boolean) {
@@ -134,5 +136,10 @@ class ProductActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
             viewModel.loadStockInData()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
