@@ -12,20 +12,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.manajemenreportfinansialumkm.databinding.FragmentNoficationBinding
+import com.example.manajemenreportfinansialumkm.databinding.FragmentNotificationBinding
 import com.example.manajemenreportfinansialumkm.helper.Stock
 import com.example.manajemenreportfinansialumkm.ui.adapter.ItemCardStockAdapter
-import com.example.manajemenreportfinansialumkm.ui.stock.AddStockActivity
 import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFactory
 
-class NoficationFragment : Fragment() {
-    private lateinit var binding:FragmentNoficationBinding
+class NotificationFragment : Fragment() {
+    private lateinit var binding:FragmentNotificationBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoficationBinding.inflate(inflater, container, false)
+        binding = FragmentNotificationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -39,9 +38,9 @@ class NoficationFragment : Fragment() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if(ContextCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED) {
+                    requireContext(),
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
             }
         }
@@ -63,9 +62,9 @@ class NoficationFragment : Fragment() {
     }
 
     private fun showDataNotificationStock(stock:List<Stock>) {
-       val stockAdapter = ItemCardStockAdapter(stock)
-       binding.rvNotification.layoutManager = LinearLayoutManager(requireActivity())
-       binding.rvNotification.adapter = stockAdapter
+        val stockAdapter = ItemCardStockAdapter(stock)
+        binding.rvNotification.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvNotification.adapter = stockAdapter
         stockAdapter.submitList(stock)
 
         stockAdapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback {
@@ -86,11 +85,11 @@ class NoficationFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-       if (isLoading) {
-           binding.progressBarNotification.visibility = View.VISIBLE
-       } else {
-           binding.progressBarNotification.visibility = View.GONE
-       }
+        if (isLoading) {
+            binding.progressBarNotification.visibility = View.VISIBLE
+        } else {
+            binding.progressBarNotification.visibility = View.GONE
+        }
     }
 
 

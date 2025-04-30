@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.signInWithGoogle(baseContext)
         }
 
-        binding?.registerToPage?.setOnClickListener{
+        binding?.toRegisterActivity?.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }

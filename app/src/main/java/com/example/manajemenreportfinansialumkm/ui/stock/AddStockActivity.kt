@@ -68,6 +68,7 @@ class AddStockActivity : AppCompatActivity() {
 
         if (stockId != null) {
             viewModel.getStockById(stockId)
+            binding?.textMain?.text = "Update Product"
             viewModel.userStock.observe(this) {
                 it.also {
                     orginalStockFromDb = it[0].stock.toString().toInt()
@@ -112,7 +113,7 @@ class AddStockActivity : AppCompatActivity() {
             }
 
             val btnUpdateStock = binding?.btnTambahStock
-            btnUpdateStock?.text = "Update Stock"
+            btnUpdateStock?.text = "Update Product"
 
             binding?.btnAddStock?.setOnClickListener {
                 dataSTockFromDb++
@@ -143,57 +144,13 @@ class AddStockActivity : AppCompatActivity() {
                 val absSelisihStock = kotlin.math.abs(selisihStock)
 
                 val selisihHarga = hargaBeli - dataHargaBeliBarang.toInt()
-                if (dataStockBaru > orginalStockFromDb) {
-                    val dataUpdate = hargaBeli * absSelisihStock
-                    newModal = modal + dataUpdate
-                    val stock = orginalStockFromDb + absSelisihStock
+                when {
+                    dataStockBaru > orginalStockFromDb -> {
+                        val dataUpdate = hargaBeli * absSelisihStock
+                        newModal = modal + dataUpdate
+                        val stock = orginalStockFromDb + absSelisihStock
 
-                    viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, newModal, date)
-                    viewModel.messageSuccess.observe(this) {
-                        if (it != null) {
-                            viewModel.updatePengeluaran(stockId, newModal)
-
-                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                    }
-                    viewModel.messageError.observe(this) {
-                        if(it != null) {
-                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } else if (dataStockBaru < orginalStockFromDb) {
-                    val dataUpdateUntukKurangiModal = hargaBeli * absSelisihStock
-                    newModal = modal - dataUpdateUntukKurangiModal
-                    val stock = orginalStockFromDb - absSelisihStock
-
-                    viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, newModal, date)
-                    viewModel.messageSuccess.observe(this) {
-                        if (it != null) {
-                            viewModel.updatePengeluaran(stockId, newModal)
-
-                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                    }
-                    viewModel.messageError.observe(this) {
-                        if(it != null) {
-                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } else if(dataStockBaru == orginalStockFromDb) {
-                    if(hargaBeli > dataHargaBeliBarang) {
-                        val perubahanModalAdd = selisihHarga * dataStockBaru
-                        newModal = modal + perubahanModalAdd
-
-                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModal, date)
-                    } else if(hargaBeli < dataHargaBeliBarang) {
-                        val formatToSelisihHarga = abs(selisihHarga)
-                        val perubahanModalKurangi = formatToSelisihHarga * dataStockBaru
-
-                        newModal = modal - perubahanModalKurangi
-
-                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModal, date)
+                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, newModal, date)
                         viewModel.messageSuccess.observe(this) {
                             if (it != null) {
                                 viewModel.updatePengeluaran(stockId, newModal)
@@ -207,8 +164,13 @@ class AddStockActivity : AppCompatActivity() {
                                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                             }
                         }
-                    } else if(hargaBeli == dataHargaBeliBarang) {
-                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, modal, date)
+                    }
+                    dataStockBaru < orginalStockFromDb -> {
+                        val dataUpdateUntukKurangiModal = hargaBeli * absSelisihStock
+                        newModal = modal - dataUpdateUntukKurangiModal
+                        val stock = orginalStockFromDb - absSelisihStock
+
+                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, newModal, date)
                         viewModel.messageSuccess.observe(this) {
                             if (it != null) {
                                 viewModel.updatePengeluaran(stockId, newModal)
@@ -221,6 +183,54 @@ class AddStockActivity : AppCompatActivity() {
                             if(it != null) {
                                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                             }
+                        }
+                    }
+                    dataStockBaru == orginalStockFromDb -> {
+                        when {
+                            hargaBeli > dataHargaBeliBarang -> {
+                                val perubahanModalAdd = selisihHarga * dataStockBaru
+                                newModal = modal + perubahanModalAdd
+
+                                viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModal, date)
+                            }
+                            hargaBeli < dataHargaBeliBarang -> {
+                                val formatToSelisihHarga = abs(selisihHarga)
+                                val perubahanModalKurangi = formatToSelisihHarga * dataStockBaru
+
+                                newModal = modal - perubahanModalKurangi
+
+                                viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModal, date)
+                                viewModel.messageSuccess.observe(this) {
+                                    if (it != null) {
+                                        viewModel.updatePengeluaran(stockId, newModal)
+
+                                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                                        finish()
+                                    }
+                                }
+                                viewModel.messageError.observe(this) {
+                                    if(it != null) {
+                                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                            hargaBeli == dataHargaBeliBarang -> {
+                                viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, modal, date)
+                                viewModel.messageSuccess.observe(this) {
+                                    if (it != null) {
+                                        viewModel.updatePengeluaran(stockId, newModal)
+
+                                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                                        finish()
+                                    }
+                                }
+                                viewModel.messageError.observe(this) {
+                                    if(it != null) {
+                                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }

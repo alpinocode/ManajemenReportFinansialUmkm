@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.notification.NoficationFragment"
+    tools:context=".ui.notification.NotificationFragment"
     android:background="@color/pastel_light_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_notification"
             android:layout_width="match_parent"
@@ -20,9 +20,9 @@
             android:layout_marginTop="40dp">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/notification"/>
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/bell"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stock Yang Mau Habis"
+                    android:text="@string/text_notification"
                     android:textStyle="bold"
                     android:textSize="18sp"/>
             </LinearLayout>
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar_notification"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="110dp"
-           />
+            />
 
         <ProgressBar
             android:id="@+id/progress_bar_notification"
@@ -70,7 +70,7 @@
             android:id="@+id/text_notification_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data Notification Empty"
+            android:text="@string/text_notification_empty"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"

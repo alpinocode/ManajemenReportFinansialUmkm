@@ -17,9 +17,9 @@
         tools:layout="@layout/fragment_pembukuan" />
     <fragment
         android:id="@+id/navigation_notification"
-        android:name="com.example.manajemenreportfinansialumkm.ui.notification.NoficationFragment"
+        android:name="com.example.manajemenreportfinansialumkm.ui.notification.NotificationFragment"
         android:label="fragment_nofication"
-        tools:layout="@layout/fragment_nofication" />
+        tools:layout="@layout/fragment_notification" />
 
 
 </navigation>

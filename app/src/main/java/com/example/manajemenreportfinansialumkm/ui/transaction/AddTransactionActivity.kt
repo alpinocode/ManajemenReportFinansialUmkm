@@ -2,15 +2,11 @@ package com.example.manajemenreportfinansialumkm.ui.transaction
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityAddTransactionBinding
@@ -22,7 +18,7 @@ import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFac
 class AddTransactionActivity : AppCompatActivity() {
     private lateinit var binding:ActivityAddTransactionBinding
     private val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
-    private val viewModel:TrasanctionViewModel by viewModels {
+    private val viewModel:TransactionViewModel by viewModels {
         factory
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,37 +55,47 @@ class AddTransactionActivity : AppCompatActivity() {
         binding.rvAddTransaksi.adapter =adapter
         adapter.submitList(transaction)
 
-//        val stockStatus = transaction.filter { stock ->
-//            stock.stock.toString().toInt() <= 0
-//        }
-//        stockStatus.forEach {
-//            it.codeBarang.let { codeBarang -> viewModel.deleteStock(codeBarang.toString()) }
-//        }
-
         adapter.setOnItemClickCallback(object : ItemCardStockAdapter.OnItemClickCallback{
             override fun onItemCallback(data: Stock) {
-                val intent = Intent(this@AddTransactionActivity, DetailAddTransactionActivity::class.java)
-                intent.putExtra(DetailAddTransactionActivity.STOCK_ID, data.codeBarang)
-                startActivity(intent)
-                finishAffinity()
+                if(data.stock.toString().toInt() <= 0) {
+                    AlertDialog.Builder(this@AddTransactionActivity).apply {
+                        setTitle("Umkm Finansial Report")
+                        setIcon(R.drawable.logo)
+                        setMessage("Stock Barang Habis Silahkan Tambah Stock")
+                        setPositiveButton("Ya", null)
+                    }.show()
+                } else {
+                    val intent = Intent(this@AddTransactionActivity, DetailAddTransactionActivity::class.java)
+                    intent.putExtra(DetailAddTransactionActivity.STOCK_ID, data.codeBarang)
+                    startActivity(intent)
+                    finishAffinity()
+                }
             }
         })
+
     }
 
     private fun searchTransaksion() {
-        binding.searchAddTransaction.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchAddTransaction.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query != null) {
-                    viewModel.searchTransaction(query.toString())
+                    viewModel.searchTransaction(query)
+                    return false
+                } else {
+                    viewModel.loadDataTransaction()
+                    return false
                 }
-                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
-                    viewModel.searchTransaction(newText.toString())
+                if(newText != null) {
+                    viewModel.searchTransaction(newText)
+                    return false
+                } else {
+                    viewModel.loadDataTransaction()
+                    return false
                 }
-                return false
             }
 
         })
@@ -106,10 +112,17 @@ class AddTransactionActivity : AppCompatActivity() {
         if(stock.isEmpty()) {
             binding.textStockBarangEmpty.visibility = View.VISIBLE
             binding.lottieAnimationBarangEmpty.visibility = View.VISIBLE
-            binding.searchAddTransaction.visibility = View.GONE
         } else {
             binding.textStockBarangEmpty.visibility = View.GONE
             binding.lottieAnimationBarangEmpty.visibility = View.GONE
+            binding.rvAddTransaksi.visibility = View.VISIBLE
+            binding.searchAddTransaction.visibility = View.VISIBLE
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }

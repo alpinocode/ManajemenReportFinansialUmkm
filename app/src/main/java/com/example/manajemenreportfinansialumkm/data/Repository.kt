@@ -38,6 +38,7 @@ import com.google.firebase.database.database
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.text.DateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -88,17 +89,19 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     val auth = FirebaseAuth.getInstance()
 
     fun register(name:String, email:String, password:String, confirmPassword:String) {
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _messageError.value = "Format email tidak valid"
-            return
-        }
-        if(name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            _messageError.value = "name, email, password, confirm password Is not Empty"
-            return
-        }
-        if(password != confirmPassword) {
-            _messageError.value = "Password and Confirm Password do not match"
-            return
+        when {
+            name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() -> {
+                _messageError.value = "name, email, password, confirm password Is not Empty"
+                return
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                _messageError.value = "Format Email is not valid"
+                return
+            }
+            password != confirmPassword -> {
+                _messageError.value = "Password and Confirm Password do not match"
+                return
+            }
         }
         _messageSuccess.value = null
         _messageError.value = null
@@ -263,22 +266,25 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     fun addStock(name:String, nameSuplier:String, nameBarang:String, codeBarang:String, hargaJual:Int, hargaBeli:Int, stock:Int, keterangan:String, date:String) {
         _messageSuccess.value = null
         _messageError.value = null
-        if (name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || hargaJual.toString().isEmpty() || hargaBeli.toString().isEmpty() ||keterangan.isEmpty() || stock.toString().isEmpty()){
-            _messageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
-            return
+        when {
+            name.isEmpty() || nameSuplier.isEmpty() || nameBarang.isEmpty() || codeBarang.isEmpty() || hargaJual.toString().isEmpty() || hargaBeli.toString().isEmpty() ||keterangan.isEmpty() || stock.toString().isEmpty() -> {
+                _messageError.value = "nameSuplier, nameBarang, codebarang, keterangan, jumlah tidak boleh kosong"
+                return
+            }
+            name.length < 3 || nameSuplier.length < 3 || nameBarang.length < 3 || codeBarang.length < 3 -> {
+                _messageError.value = "nameSuplier, nameBarang, codebarang Setidak minimal 3 karakter"
+                return
+            }
+            stock <= 0 || hargaBeli <= 0 || hargaJual <= 0 -> {
+                _messageError.value = "Stock, Harga Beli, Harga Jual tidak boleh 0"
+                return
+            }
+            hargaBeli > hargaJual -> {
+                _messageError.value = "Harga Beli tidak boleh lebih besar dari Harga Jual"
+                return
+            }
         }
-        if(name.length < 3 || nameSuplier.length < 3 || nameBarang.length < 3 || codeBarang.length < 3 ) {
-            _messageError.value = "nameSuplier, nameBarang, codebarang Setidak minimal 3 karakter"
-            return
-        }
-        if(stock <= 0 || hargaBeli <= 0 || hargaJual <= 0) {
-            _messageError.value = "Stock, Harga Beli, Harga Jual tidak boleh 0"
-            return
-        }
-        if(hargaBeli > hargaJual) {
-            _messageError.value = "Harga Beli tidak boleh lebih besar dari Harga Jual"
-            return
-        }
+
         _messageError.value = null
         val db = Firebase.database
         val ref = db.getReference(name)
@@ -362,13 +368,21 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     ) {
         _messageSuccess.value = null
         _messageError.value = null
-        if(stock < 1 ) {
-            _messageSuccess.value = "Stock tidak boleh 1"
-            return
-        }
-        if (hargaBeli <= 100 || hargaJual <= 100) {
-            _messageError.value = "HargaBeli atau Jual Tidak Boleh kurang dari 100 perak"
-            return
+
+
+        when{
+            nameSuplier.isEmpty() || nameBarang.isEmpty() || keterangan.isEmpty() -> {
+                _messageError.value ="nameSuplier, nameBarang, keterangan tidak boleh kosong untuk mengupdate data Product/stock"
+                return
+            }
+            stock < 0 -> {
+                _messageError.value = "Stock tidak boleh 1"
+                return
+            }
+            hargaBeli <= 100 || hargaJual <= 100 -> {
+                _messageError.value = "HargaBeli atau Jual Tidak Boleh kurang dari 100 perak"
+                return
+            }
         }
         _messageError.value = null
         _isLoading.value = true

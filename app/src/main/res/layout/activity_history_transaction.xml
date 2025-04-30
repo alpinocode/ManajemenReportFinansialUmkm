@@ -19,8 +19,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/baseline_arrow_back_24"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="34dp"
-            android:layout_marginStart="14dp"/>
+            android:layout_marginTop="42dp"
+            android:layout_marginStart="18dp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -41,7 +41,7 @@
             android:id="@+id/text_data_transaction_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data History Transaction Empty"
+            android:text="@string/text_trasaction_empty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
