@@ -2,16 +2,11 @@ package com.example.manajemenreportfinansialumkm.ui.transaction
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.databinding.ActivityAddTransactionBinding
@@ -23,7 +18,7 @@ import com.example.manajemenreportfinansialumkm.ui.viewModelFactory.ViewModelFac
 class AddTransactionActivity : AppCompatActivity() {
     private lateinit var binding:ActivityAddTransactionBinding
     private val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
-    private val viewModel:TrasanctionViewModel by viewModels {
+    private val viewModel:TransactionViewModel by viewModels {
         factory
     }
     override fun onCreate(savedInstanceState: Bundle?) {

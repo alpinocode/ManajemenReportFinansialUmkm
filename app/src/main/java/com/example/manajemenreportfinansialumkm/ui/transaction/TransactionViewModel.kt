@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.manajemenreportfinansialumkm.data.Repository
 
-class TrasanctionViewModel(private val repository: Repository) : ViewModel() {
+class TransactionViewModel(private val repository: Repository) : ViewModel() {
     val userTransaction = repository.userStock
     val userSearchTransaction = repository.searchItem
     val messageSuccess = repository.messageSuccess

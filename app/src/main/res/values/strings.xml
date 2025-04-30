@@ -50,12 +50,21 @@
     </string-array>
 
     // add stock page
+    <string name="add_product">Add Product</string>
     <string name="stock_in">Add Stock</string>
     <string name="text_keterangan">Keterangan</string>
     <string name="text_jumlah">Jumlah</string>
     <string name="text_nama_barang">Nama Barang</string>
     <string name="text_nama_suplier">Nama Suplier</string>
     <string name="text_code_barang">Code Barang</string>
+    <string name="text_harga_beli_perbarang">Harga Beli Perbarang</string>
+    <string name="text_harga_jual_perbarang">Harga Jual Perbarang</string>
+    <string name="text_harga_jual">Harga Jual</string>
+    <string name="text_stock_value">0</string>
+
+    // notification page
+    <string name="text_notification">Stock Yang Mau Habis</string>
+    <string name="text_update_stock">Update Stock</string>
 
     // search query
     <string name="search_query">Search Product/barang</string>
@@ -65,4 +74,26 @@
     <string name="text_stock">Stock</string>
     <string name="text_action">Action</string>
     <string name="dash">-</string>
+
+    // add detail history quantity page
+    <string name="textquantity">Quantity/Jumlah Barang</string>
+    <string name="btn_text">Add Pemasukan</string>
+    <string name="text_harga_barang">Harga</string>
+
+    // laporan keuangan page
+    <string name="text_judul_laporan_keuangan">Finansial Report</string>
+    <string name="text_pemasukan">Pemasukan</string>
+    <string name="text_pengeluaran">Pengeluaran</string>
+    <string name="text_laba_bersih">Laba Bersih</string>
+    <string name="text_pajak"> Total Pajak </string>
+
+    // text jika data kosong
+    <string name="text_product_empty">Data Product Empty</string>
+    <string name="text_notification_empty">Data Notification Empty</string>
+    <string name="text_pembukuan_empty">Data Pembukuan Tidak Ada</string>
+    <string name="text_trasaction_empty">Data History Transaction Empty</string>
+
+    //item trasanction history page
+    <string name="text_total_harga">Total Harga</string>
+    <string name="text_pembelian">Pembelian</string>
 </resources>

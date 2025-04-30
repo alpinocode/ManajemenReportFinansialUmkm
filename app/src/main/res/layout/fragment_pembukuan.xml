@@ -29,7 +29,7 @@
             android:id="@+id/text_data_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data Pembukuan Tidak Ada"
+            android:text="@string/text_pembukuan_empty"
             android:textSize="26sp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"

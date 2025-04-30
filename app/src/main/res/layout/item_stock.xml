@@ -28,7 +28,6 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:text="mantap"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/nomor"
@@ -43,7 +42,6 @@
             android:maxLines="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="mantap"
             app:layout_constraintStart_toEndOf="@id/code_barang"
             app:layout_constraintTop_toTopOf="@id/code_barang"
             app:layout_constraintBottom_toBottomOf="@id/code_barang"/>

@@ -15,7 +15,7 @@ import com.example.manajemenreportfinansialumkm.ui.pembukuan.PembukuanViewModel
 import com.example.manajemenreportfinansialumkm.ui.product.ProductViewModel
 import com.example.manajemenreportfinansialumkm.ui.register.RegisterViewModel
 import com.example.manajemenreportfinansialumkm.ui.stock.StockViewModel
-import com.example.manajemenreportfinansialumkm.ui.transaction.TrasanctionViewModel
+import com.example.manajemenreportfinansialumkm.ui.transaction.TransactionViewModel
 
 class ViewModelFactory(private val repository: Repository) : ViewModelProvider.NewInstanceFactory() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -32,8 +32,8 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
             return ProductViewModel(repository) as T
         } else if(modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
             return NotificationViewModel(repository) as T
-        } else if(modelClass.isAssignableFrom(TrasanctionViewModel::class.java)) {
-            return TrasanctionViewModel(repository) as T
+        } else if(modelClass.isAssignableFrom(TransactionViewModel::class.java)) {
+            return TransactionViewModel(repository) as T
         } else if(modelClass.isAssignableFrom(LaporanKeuanganViewModel::class.java)) {
             return LaporanKeuanganViewModel(repository) as T
         } else if(modelClass.isAssignableFrom(PembukuanViewModel::class.java)) {

@@ -41,7 +41,7 @@
             android:id="@+id/text_data_transaction_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data History Transaction Empty"
+            android:text="@string/text_trasaction_empty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

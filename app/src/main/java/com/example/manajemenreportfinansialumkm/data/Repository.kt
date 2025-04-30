@@ -368,13 +368,21 @@ class Repository(private val userDao: UserDao, private val context: Context) {
     ) {
         _messageSuccess.value = null
         _messageError.value = null
-        if(stock < 1 ) {
-            _messageSuccess.value = "Stock tidak boleh 1"
-            return
-        }
-        if (hargaBeli <= 100 || hargaJual <= 100) {
-            _messageError.value = "HargaBeli atau Jual Tidak Boleh kurang dari 100 perak"
-            return
+
+
+        when{
+            nameSuplier.isEmpty() || nameBarang.isEmpty() || keterangan.isEmpty() -> {
+                _messageError.value ="nameSuplier, nameBarang, keterangan tidak boleh kosong untuk mengupdate data Product/stock"
+                return
+            }
+            stock < 0 -> {
+                _messageError.value = "Stock tidak boleh 1"
+                return
+            }
+            hargaBeli <= 100 || hargaJual <= 100 -> {
+                _messageError.value = "HargaBeli atau Jual Tidak Boleh kurang dari 100 perak"
+                return
+            }
         }
         _messageError.value = null
         _isLoading.value = true

@@ -113,7 +113,7 @@ class AddStockActivity : AppCompatActivity() {
             }
 
             val btnUpdateStock = binding?.btnTambahStock
-            btnUpdateStock?.text = "Update Stock"
+            btnUpdateStock?.text = "Update Product"
 
             binding?.btnAddStock?.setOnClickListener {
                 dataSTockFromDb++
@@ -234,88 +234,7 @@ class AddStockActivity : AppCompatActivity() {
                         }
                     }
                 }
-//                if (dataStockBaru > orginalStockFromDb) {
-//                    val dataUpdate = hargaBeli * absSelisihStock
-//                    newModal = modal + dataUpdate
-//                    val stock = orginalStockFromDb + absSelisihStock
-//
-//                    viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, newModal, date)
-//                    viewModel.messageSuccess.observe(this) {
-//                        if (it != null) {
-//                            viewModel.updatePengeluaran(stockId, newModal)
-//
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            finish()
-//                        }
-//                    }
-//                    viewModel.messageError.observe(this) {
-//                        if(it != null) {
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                } else if (dataStockBaru < orginalStockFromDb) {
-//                    val dataUpdateUntukKurangiModal = hargaBeli * absSelisihStock
-//                    newModal = modal - dataUpdateUntukKurangiModal
-//                    val stock = orginalStockFromDb - absSelisihStock
-//
-//                    viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, stock, keterangan, newModal, date)
-//                    viewModel.messageSuccess.observe(this) {
-//                        if (it != null) {
-//                            viewModel.updatePengeluaran(stockId, newModal)
-//
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            finish()
-//                        }
-//                    }
-//                    viewModel.messageError.observe(this) {
-//                        if(it != null) {
-//                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                } else if(dataStockBaru == orginalStockFromDb) {
-//                    if(hargaBeli > dataHargaBeliBarang) {
-//                        val perubahanModalAdd = selisihHarga * dataStockBaru
-//                        newModal = modal + perubahanModalAdd
-//
-//                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModal, date)
-//                    } else if(hargaBeli < dataHargaBeliBarang) {
-//                        val formatToSelisihHarga = abs(selisihHarga)
-//                        val perubahanModalKurangi = formatToSelisihHarga * dataStockBaru
-//
-//                        newModal = modal - perubahanModalKurangi
-//
-//                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, newModal, date)
-//                        viewModel.messageSuccess.observe(this) {
-//                            if (it != null) {
-//                                viewModel.updatePengeluaran(stockId, newModal)
-//
-//                                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                                finish()
-//                            }
-//                        }
-//                        viewModel.messageError.observe(this) {
-//                            if(it != null) {
-//                                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                    } else if(hargaBeli == dataHargaBeliBarang) {
-//                        viewModel.updateStock(stockId, namaSuplier, namaBarang, hargaJual, hargaBeli, dataStockBaru, keterangan, modal, date)
-//                        viewModel.messageSuccess.observe(this) {
-//                            if (it != null) {
-//                                viewModel.updatePengeluaran(stockId, newModal)
-//
-//                                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                                finish()
-//                            }
-//                        }
-//                        viewModel.messageError.observe(this) {
-//                            if(it != null) {
-//                                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                    }
-//                }
-//
+
 
             }
 

@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="@+id/btn_back_add_transaction"
         app:layout_constraintStart_toEndOf="@+id/btn_back_add_transaction"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         app:queryHint="@string/search_query"
         android:background="@drawable/background_search"
             android:visibility="gone"/>
@@ -48,7 +48,7 @@
         android:id="@+id/text_stock_barang_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Data Barang Empty"
+        android:text="@string/text_product_empty"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

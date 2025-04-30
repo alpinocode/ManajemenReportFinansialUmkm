@@ -3,6 +3,7 @@ package com.example.manajemenreportfinansialumkm.ui.transaction
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -16,7 +17,7 @@ import java.time.LocalDate
 class DetailAddTransactionActivity : AppCompatActivity() {
     private var binding:ActivityDetailAddTransactionBinding? = null
     private val factory:ViewModelFactory = ViewModelFactory.getInstance(this)
-    private val viewModel:TrasanctionViewModel by viewModels {
+    private val viewModel:TransactionViewModel by viewModels {
         factory
     }
     private var hargaJual:Int = 0
@@ -55,6 +56,11 @@ class DetailAddTransactionActivity : AppCompatActivity() {
                     }
                 }
             }
+            binding?.btnBackDetailAddTransaction?.setOnClickListener {
+                val intent = Intent(this, AddTransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 
 
         }
@@ -73,6 +79,13 @@ class DetailAddTransactionActivity : AppCompatActivity() {
             .replace(".", "")
             .replace(",", "")
             .toIntOrNull() ?: 0
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, AddTransactionActivity::class.java)
+        startActivity(intent)
+        finish()
     }
     companion object {
         const val STOCK_ID = "stock_id"
