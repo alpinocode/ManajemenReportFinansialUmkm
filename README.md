@@ -161,3 +161,55 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 3. Notifikasi ditampilkan di aplikasi.
 
 ---
+
+
+
+```mermaid
+graph TD
+    A[Mulai] --> B[Login]
+    B -->|Kredensial Valid| C[Dashboard]
+    B -->|Kredensial Tidak Valid| D[Tampilkan Notifikasi Kesalahan]
+
+    C --> E[Verifikasi Akun]
+    E -->|Link Valid| C[Dashboard]
+    E -->|Link Tidak Valid| D[Tampilkan Notifikasi Kesalahan]
+
+    C --> F[Daftar]
+    F --> G[Isi Form Pendaftaran]
+    G --> H[Verifikasi Akun]
+
+    C --> I[Tambah Stok]
+    I --> J[Isi Data Barang]
+    J --> K[Simpan ke Database]
+    K --> L[Tampilkan Notifikasi Stok Berhasil Ditambahkan]
+
+    C --> M[Update Stok]
+    M --> N[Pilih Barang]
+    N --> O[Perbarui Data Barang]
+    O --> K
+
+    C --> P[Hapus Stok]
+    P --> Q[Pilih Barang]
+    Q --> R[Konfirmasi Penghapusan]
+    R --> S[Hapus Data dari Database]
+    S --> T[Tampilkan Notifikasi Stok Berhasil Dihapus]
+
+    C --> U[Tambah Transaksi]
+    U --> V[Pilih Barang]
+    V --> W[Masukan Jumlah Barang]
+    W --> X[Simpan Transaksi ke Database]
+    X --> Y[Tampilkan Notifikasi Transaksi Berhasil Ditambahkan]
+
+    C --> Z[Laporan Keuangan]
+    Z --> AA[Tampilkan Ringkasan: Pemasukan, Pengeluaran, Laba, Pajak]
+
+    C --> AB[Pembukuan]
+    AB --> AC[Tampilkan Data Transaksi]
+
+    C --> AD[Riwayat Transaksi]
+    AD --> AE[Tampilkan Daftar Transaksi]
+
+    C --> AF[Notifikasi]
+    AF --> AG[Stok Hampir Habis]
+    AG --> AH[Tampilkan Pemberitahuan]
+```
