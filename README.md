@@ -45,7 +45,6 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 ### 1. Login
 1. **Pengguna membuka aplikasi**.
 2. **Form Login** ditampilkan:
-   - ![LoginPage](https://github.com/user-attachments/assets/1e4e893f-69ed-4614-866f-b9c0618271b8)
    - Input: Email/Username.
    - Input: Password.
 4. **Validasi kredensial pengguna**:
@@ -57,11 +56,10 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 ### 2. Verifikasi (Verif)
 1. **Pengguna mendaftar atau login pertama kali**.
 2. Sistem mengirimkan **Link Verifikasi** melalui email.
-   
-4. **Pengguna Klik Link Verifikasi**:
+3. **Pengguna Klik Link Verifikasi**:
    - Jika Link valid, pengguna diverifikasi.
    - Jika tidak valid, pengguna tidak diverifikasi.
-5. Login Ulang pada Aplikasi
+4. Login Ulang pada Aplikasi
 
 ---
 
