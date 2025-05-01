@@ -113,7 +113,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding?.hostyriTranksaksi?.setOnClickListener{
+        binding?.historyTranksaksi?.setOnClickListener{
             val intent = Intent(requireContext(), HistoryTransactionActivity::class.java)
             startActivity(intent)
         }
