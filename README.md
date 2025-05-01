@@ -1,4 +1,4 @@
-![Register](https://github.com/user-attachments/assets/7bc402df-b33c-452d-a72c-810e2bff21c8)# Panduan Pengguna: Aplikasi Manajemen Finansial UMKM
+# Panduan Pengguna: Aplikasi Manajemen Finansial UMKM
 
 ## Prasyarat
 Sebelum memulai, pastikan Anda memiliki:
