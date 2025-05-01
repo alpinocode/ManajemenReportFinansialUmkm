@@ -214,14 +214,6 @@ graph TD
     AG --> AH[Tampilkan Pemberitahuan]
 ```
 
-### UI/UX APP
-| Login | Rergister | Home | Request Email Verification | Pembukuan | Notification | 
-|---------------|------------| ------------- | -------------- | --------------- | --------------- | 
-| ![Login](https://github.com/user-attachments/assets/d0e3e164-e7c7-477f-be7c-4e974ba81461) | ![Register](https://github.com/user-attachments/assets/efcee783-d19d-4ea2-a07e-b9ebc0f4c745)| ![HomePage](https://github.com/user-attachments/assets/78612085-e21c-4782-9e20-3a70c1c78c08) | ![VerificationSend](https://github.com/user-attachments/assets/32fb30ae-8f7d-488f-af4b-d5a647962f9c) |![PembukuanBottomNavigation](https://github.com/user-attachments/assets/9e84cd4f-cf53-4533-8f89-01476ea88ffd) | ![Notification](https://github.com/user-attachments/assets/0e740ee5-423e-4217-a5e2-55ed31257b4d) |
-
-
-
-
 
 
 
