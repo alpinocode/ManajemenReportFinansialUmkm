@@ -45,7 +45,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 ### 1. Login
 1. **Pengguna membuka aplikasi**.
 2. **Form Login** ditampilkan:
-   - [![LoginPage](https://github.com/user-attachments/assets/70a015ab-e4bc-4fd2-899a-4d6481d548a0)]
+   ![LoginPage](https://github.com/user-attachments/assets/70a015ab-e4bc-4fd2-899a-4d6481d548a0)
    - Input: Email/Username.
    - Input: Password.
 4. **Validasi kredensial pengguna**:
