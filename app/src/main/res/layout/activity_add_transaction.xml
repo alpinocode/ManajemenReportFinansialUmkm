@@ -8,42 +8,58 @@
     tools:context=".ui.transaction.AddTransactionActivity"
     android:background="@color/pastel_light_blue">
 
-    <ImageView
-        android:id="@+id/btn_back_add_transaction"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/baseline_arrow_back_24"
-        android:layout_marginTop="42dp"
-        android:layout_marginStart="18dp" />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_add_transaction"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_back_add_transaction"
-        app:layout_constraintTop_toTopOf="@+id/btn_back_add_transaction"
-        app:layout_constraintStart_toEndOf="@+id/btn_back_add_transaction"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        app:queryHint="@string/search_query"
-        android:background="@drawable/background_search"
-            android:visibility="gone"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_add_transaksi"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/search_add_transaction"
-        app:layout_constraintEnd_toEndOf="@+id/search_add_transaction"
-        app:layout_constraintTop_toBottomOf="@+id/search_add_transaction"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:visibility="gone"/>
-    
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/btn_back_add_transaction"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:layout_marginTop="42dp"
+                android:layout_marginStart="18dp" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_add_transaction"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_back_add_transaction"
+                app:layout_constraintTop_toTopOf="@+id/btn_back_add_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="32dp"
+                app:queryHint="@string/search_query"
+                android:background="@drawable/background_search"
+                android:visibility="gone"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_add_transaksi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/search_add_transaction"
+                app:layout_constraintEnd_toEndOf="@+id/search_add_transaction"
+                app:layout_constraintTop_toBottomOf="@+id/search_add_transaction"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
     <TextView
         android:id="@+id/text_stock_barang_empty"
         android:layout_width="wrap_content"
@@ -59,7 +75,7 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation_barang_empty"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         app:lottie_rawRes="@raw/animation_lottie"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
@@ -76,5 +92,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-        
+
 </androidx.constraintlayout.widget.ConstraintLayout>
