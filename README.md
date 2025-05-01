@@ -1,4 +1,4 @@
-# Panduan Pengguna: Aplikasi Manajemen Finansial UMKM
+![Register](https://github.com/user-attachments/assets/7bc402df-b33c-452d-a72c-810e2bff21c8)# Panduan Pengguna: Aplikasi Manajemen Finansial UMKM
 
 ## Prasyarat
 Sebelum memulai, pastikan Anda memiliki:
@@ -213,3 +213,11 @@ graph TD
     AF --> AG[Stok Hampir Habis]
     AG --> AH[Tampilkan Pemberitahuan]
 ```
+
+### UI/UX APP
+| Register | Login | Home |
+|---------------|------------| ------------- |
+| ![Register](https://github.com/user-attachments/assets/6ecee41b-10fe-4434-9997-371cbfb1359e) | ![LoginPage](https://github.com/user-attachments/assets/66856a83-d176-47e9-baae-4440491c9843) | ![HomePage](https://github.com/user-attachments/assets/78612085-e21c-4782-9e20-3a70c1c78c08)
+
+
+
