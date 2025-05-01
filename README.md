@@ -215,9 +215,11 @@ graph TD
 ```
 
 ### UI/UX APP
-| Register | Login | Home |
+| Login | Rergister | Home | Request Email Verification |
 |---------------|------------| ------------- |
-| ![Register](https://github.com/user-attachments/assets/6ecee41b-10fe-4434-9997-371cbfb1359e) | ![LoginPage](https://github.com/user-attachments/assets/66856a83-d176-47e9-baae-4440491c9843) | ![HomePage](https://github.com/user-attachments/assets/78612085-e21c-4782-9e20-3a70c1c78c08)
+| ![Login](https://github.com/user-attachments/assets/d0e3e164-e7c7-477f-be7c-4e974ba81461) | ![Register](https://github.com/user-attachments/assets/efcee783-d19d-4ea2-a07e-b9ebc0f4c745)| ![HomePage](https://github.com/user-attachments/assets/78612085-e21c-4782-9e20-3a70c1c78c08) | ![VerificationSend](https://github.com/user-attachments/assets/32fb30ae-8f7d-488f-af4b-d5a647962f9c)
+
+
 
 
 
