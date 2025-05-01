@@ -7,6 +7,7 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.manajemenreportfinansialumkm.R
 import com.example.manajemenreportfinansialumkm.SignUpAndSignOutViewModel
@@ -97,7 +98,13 @@ class LoginActivity : AppCompatActivity() {
         })
 
         binding?.btnGoogleLogin?.setOnClickListener{
-            viewModel.signInWithGoogle(baseContext)
+            AlertDialog.Builder(this).apply {
+                setTitle("Umkm Finansial Report")
+                setIcon(R.drawable.logo)
+                setMessage("Mohon maaf atas ketidaknyamanan ini. Saat ini, fitur \"Login dengan Google\" sedang dalam proses pemeliharaan. Kami akan segera mengaktifkannya kembali. Terima kasih atas pengertian Anda.")
+                setPositiveButton("Ya", null)
+            }.show()
+//            viewModel.signInWithGoogle(baseContext)
         }
 
         binding?.toRegisterActivity?.setOnClickListener{

@@ -127,7 +127,7 @@ class Repository(private val userDao: UserDao, private val context: Context) {
                 }
 
             } else {
-                _messageError.value = "Register Failured"
+                _messageError.value = "Email Anda udah pernah terdaftar"
             }
         }
 

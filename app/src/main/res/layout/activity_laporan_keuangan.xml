@@ -193,7 +193,7 @@
             android:layout_weight="1"
             app:cardCornerRadius="12dp"
             android:layout_marginStart="34dp"
-            app:layout_constraintStart_toEndOf="@id/card_laba_bersih"
+            app:layout_constraintStart_toEndOf="@id/card_pemasukan"
             app:layout_constraintBottom_toBottomOf="@id/card_laba_bersih"
             app:layout_constraintTop_toTopOf="@id/card_laba_bersih">
                 <androidx.constraintlayout.widget.ConstraintLayout
