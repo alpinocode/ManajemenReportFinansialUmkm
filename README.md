@@ -7,6 +7,8 @@ Sebelum memulai, pastikan Anda memiliki:
 - Internet yang memadai
 - Download Project Versi terbaru di GitHub ini
 
+
+
 ## Cara Buka Project
 1. **Salin URL GitHub Project**
    - Klik tombol <> Code → pilih HTTPS → Copy URL
@@ -213,6 +215,21 @@ graph TD
     AF --> AG[Stok Hampir Habis]
     AG --> AH[Tampilkan Pemberitahuan]
 ```
+## Tools Used
+
+1. **Firebase Auth**  
+   Used for secure user authentication, including login and registration.
+
+2. **Firebase Realtime Database**  
+   Enables real-time data storage and synchronization across all clients, useful for storing user or attendance data.
+
+3. **MPAndroidChart (Pie Chart)**  
+   An open-source Android charting library used to display data in a pie chart format.  
+   📊 [GitHub - MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+
+4. **CircleImageView**  
+   A library for displaying user profile images in a circular shape.  
+   👤 [GitHub - CircleImageView](https://github.com/hdodenhof/CircleImageView)
 
 
 
