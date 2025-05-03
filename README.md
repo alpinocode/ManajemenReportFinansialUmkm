@@ -242,12 +242,12 @@ graph TD
 
 | Add Stock/Product | Update Stock/Product | Delete Stock/Product |
 |-------------------|----------------------|-----------------------|
-| ![Add Transaction](https://github.com/user-attachments/assets/34ebaf5f-1975-4e5c-b2ae-0f02d483e8e4) | ![Update Product](https://github.com/user-attachments/assets/47dc014d-fbb3-45f3-84c0-6468942895bf) | ![Delete Product](https://github.com/user-attachments/assets/9de299b5-34be-46cb-aeb0-0d79ce7b5852) |
+| ![AddProductStock](https://github.com/user-attachments/assets/1c1b9805-cf01-4704-ac00-24c76380c86c) | ![Update Product](https://github.com/user-attachments/assets/47dc014d-fbb3-45f3-84c0-6468942895bf) | ![Delete Product](https://github.com/user-attachments/assets/9de299b5-34be-46cb-aeb0-0d79ce7b5852) |
 
 
 | Add Transaksi | Financial Report | Bookkeeping |
 |-------------------|----------------------|-----------------------|
-| ![Add Transaction](https://github.com/user-attachments/assets/f07abce1-65e5-454d-a864-372c13874ff1) | ![Finansial Report](https://github.com/user-attachments/assets/770fd2d1-5e3e-446a-8a5d-2c7f470509e4) | ![Bookeping](https://github.com/user-attachments/assets/0ce74637-c644-4d60-bcda-dc0146535fc1) |
+|  ![Add Transaction](https://github.com/user-attachments/assets/b7e8a9f2-af39-47d5-bffe-a866d42a2681) | ![Finansial Report](https://github.com/user-attachments/assets/770fd2d1-5e3e-446a-8a5d-2c7f470509e4) | ![Bookeping](https://github.com/user-attachments/assets/0ce74637-c644-4d60-bcda-dc0146535fc1) |
 
 | History Transaksi | Notifikasi |
 |-------------------|----------------------|
