@@ -119,7 +119,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 7. Tambah Transaksi
+### 7. Add Transaksi
 1. **Pengguna membuka menu "Tambah Transaksi"**.
 2. Pilih barang yang ingin dibeli.
 3. Masukan **"Jumlah Barang"** yang dibeli
@@ -128,7 +128,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 8. Laporan Keuangan
+### 8. Financial Report
 1. **Pengguna membuka menu "Laporan Keuangan"**.
 2. Sistem menampilkan ringkasan:
    - Total Pemasukan.
@@ -139,7 +139,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 9. Pembukuan
+### 9. Bookkeeping
 1. **Pengguna membuka menu "Pembukuan"**.
 2. Sistem menampilkan data transaksi.
 
@@ -215,7 +215,7 @@ graph TD
     AF --> AG[Stok Hampir Habis]
     AG --> AH[Tampilkan Pemberitahuan]
 ```
-## Tools Used
+## Tools/Library Used
 
 1. **Firebase Auth**  
    Used for secure user authentication, including login and registration.
@@ -230,6 +230,8 @@ graph TD
 4. **CircleImageView**  
    A library for displaying user profile images in a circular shape.  
    👤 [GitHub - CircleImageView](https://github.com/hdodenhof/CircleImageView)
+5. **Lottie**
+   
 
 ## Preview App View
 | Login | Register | Send Verification Email |
@@ -241,8 +243,10 @@ graph TD
 | ![addProduct](https://github.com/user-attachments/assets/90c8b216-df4a-4681-af19-879d901f1a72) | ![Update Product](https://github.com/user-attachments/assets/47dc014d-fbb3-45f3-84c0-6468942895bf) | ![Delete Product](https://github.com/user-attachments/assets/9de299b5-34be-46cb-aeb0-0d79ce7b5852) |
 
 
-
-
+| Add Transaksi | Financial Report | Bookkeeping |
+|-------------------|----------------------|-----------------------|
+| ![Add Transaction](https://github.com/user-attachments/assets/f07abce1-65e5-454d-a864-372c13874ff1) | ![Finansial Report](https://github.com/user-attachments/assets/770fd2d1-5e3e-446a-8a5d-2c7f470509e4) | 
+![Bookeping](https://github.com/user-attachments/assets/0ce74637-c644-4d60-bcda-dc0146535fc1) |
 
 
 
