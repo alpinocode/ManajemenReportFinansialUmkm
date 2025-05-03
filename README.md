@@ -54,18 +54,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
    - Jika tidak valid, tampilkan notifikasi kesalahan.
 
 ---
-
-### 2. Send Verification Email (Verif)
-1. **Pengguna mendaftar atau login pertama kali**.
-2. Sistem mengirimkan **Link Verifikasi** melalui email.
-3. **Pengguna Klik Link Verifikasi**:
-   - Jika Link valid, pengguna diverifikasi.
-   - Jika tidak valid, pengguna tidak diverifikasi.
-4. Login Ulang pada Aplikasi
-
----
-
-### 3. Register
+### 2. Register
 1. **Pengguna menekan Tulisan "Create An Account"**.
 2. Pengguna mengisi data:
    - Nama.
@@ -73,7 +62,15 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
    - Password.
    - Password Konfirmasi.
 3. Sistem menyimpan data pengguna ke basis data.
-4. Sistem mengarahkan ke proses **Verifikasi**.
+4. Sistem mengarahkan ke proses **Home Page**.
+   
+### 3. Send Verification Email (Verif)
+1. **Pengguna mendaftar atau login pertama kali**.
+2. Sistem mengirimkan **Link Verifikasi** melalui email.
+3. **Pengguna Klik Link Verifikasi**:
+   - Jika Link valid, pengguna diverifikasi.
+   - Jika tidak valid, pengguna tidak diverifikasi.
+4. Login Ulang pada Aplikasi
 
 ---
 
