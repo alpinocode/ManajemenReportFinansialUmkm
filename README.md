@@ -247,6 +247,10 @@ graph TD
 |-------------------|----------------------|-----------------------|
 | ![Add Transaction](https://github.com/user-attachments/assets/f07abce1-65e5-454d-a864-372c13874ff1) | ![Finansial Report](https://github.com/user-attachments/assets/770fd2d1-5e3e-446a-8a5d-2c7f470509e4) | ![Bookeping](https://github.com/user-attachments/assets/0ce74637-c644-4d60-bcda-dc0146535fc1) |
 
+| History Transaksi | Notifikasi |
+|-------------------|----------------------|
+| ![HistoryTransaksion](https://github.com/user-attachments/assets/eee15daa-53be-451f-97cb-d79ab507f6f2) | ![Notification](https://github.com/user-attachments/assets/d02d5ec6-3aa6-4462-849a-518bf31d5f02) |
+
 
 
 
