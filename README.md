@@ -227,7 +227,8 @@ graph TD
 4. **CircleImageView**  
    A library for displaying user profile images in a circular shape.  
    👤 [GitHub - CircleImageView](https://github.com/hdodenhof/CircleImageView)
-5. **Lottie**
+   
+6. **Lottie**
    Lottie is an open-source library that renders vector animations exported from Adobe After Effects via the Bodymovin plugin. It allows high-quality, lightweight animations across Android, iOS, React Native,       and the web.
 
    Usage in this project:
