@@ -55,7 +55,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 2. Verifikasi (Verif)
+### 2. Send Verification Email (Verif)
 1. **Pengguna mendaftar atau login pertama kali**.
 2. Sistem mengirimkan **Link Verifikasi** melalui email.
 3. **Pengguna Klik Link Verifikasi**:
@@ -65,7 +65,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 3. Daftar
+### 3. Register
 1. **Pengguna menekan Tulisan "Create An Account"**.
 2. Pengguna mengisi data:
    - Nama.
@@ -77,7 +77,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 4. Tambah Stok
+### 4. Add Stok/Product
 1. **Pengguna membuka menu "Produk"**.
 2. Klik tombol **"+"** pada kanan bawah.
 3. Isi data barang:
@@ -93,7 +93,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 5. Update Stok
+### 5. Update Stok/Product
 1. **Pengguna membuka menu "Produk"**.
 2. Pilih barang yang ingin diperbarui.
 3. Perbarui data barang:
@@ -109,7 +109,7 @@ Tonton video demo: [Tautan ke Video](https://youtube.com/shorts/caeJl8oK_ck?feat
 
 ---
 
-### 6. Hapus Stok
+### 6. Delete Stok/Product
 1. **Pengguna membuka menu "Produk"**.
 2. Pilih barang yang ingin dihapus.
 3. Klik tombol **Ikon Tempat Sampah**.
@@ -230,6 +230,15 @@ graph TD
 4. **CircleImageView**  
    A library for displaying user profile images in a circular shape.  
    👤 [GitHub - CircleImageView](https://github.com/hdodenhof/CircleImageView)
+
+## Preview App View
+| Login | Register | Send Verification Email | Add Stock/Product |  Update Stock/Product | Delete Stock/Product |
+| ![Login](https://github.com/user-attachments/assets/8a36292c-0afc-4864-897e-4dcda60ce270) | ![Register](https://github.com/user-attachments/assets/c66a73ea-cc18-453a-b403-7c350bcb3972) |
+![VerificationSend](https://github.com/user-attachments/assets/da6a6add-2ffb-4bd8-950d-18864b8d7b94) | ![addProduct](https://github.com/user-attachments/assets/90c8b216-df4a-4681-af19-879d901f1a72) |
+![Update Produc](https://github.com/user-attachments/assets/47dc014d-fbb3-45f3-84c0-6468942895bf) | ![Delete Product](https://github.com/user-attachments/assets/9de299b5-34be-46cb-aeb0-0d79ce7b5852) |
+
+
+
 
 
 
