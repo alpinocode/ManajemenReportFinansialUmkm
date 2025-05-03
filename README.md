@@ -245,8 +245,7 @@ graph TD
 
 | Add Transaksi | Financial Report | Bookkeeping |
 |-------------------|----------------------|-----------------------|
-| ![Add Transaction](https://github.com/user-attachments/assets/f07abce1-65e5-454d-a864-372c13874ff1) | ![Finansial Report](https://github.com/user-attachments/assets/770fd2d1-5e3e-446a-8a5d-2c7f470509e4) | 
-![Bookeping](https://github.com/user-attachments/assets/0ce74637-c644-4d60-bcda-dc0146535fc1) |
+| ![Add Transaction](https://github.com/user-attachments/assets/f07abce1-65e5-454d-a864-372c13874ff1) | ![Finansial Report](https://github.com/user-attachments/assets/770fd2d1-5e3e-446a-8a5d-2c7f470509e4) | ![Bookeping](https://github.com/user-attachments/assets/0ce74637-c644-4d60-bcda-dc0146535fc1) |
 
 
 
