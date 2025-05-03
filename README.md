@@ -232,10 +232,14 @@ graph TD
    👤 [GitHub - CircleImageView](https://github.com/hdodenhof/CircleImageView)
 
 ## Preview App View
-| Login | Register | Send Verification Email | Add Stock/Product |  Update Stock/Product | Delete Stock/Product |
-| ![Login](https://github.com/user-attachments/assets/8a36292c-0afc-4864-897e-4dcda60ce270) | ![Register](https://github.com/user-attachments/assets/c66a73ea-cc18-453a-b403-7c350bcb3972) |
-![VerificationSend](https://github.com/user-attachments/assets/da6a6add-2ffb-4bd8-950d-18864b8d7b94) | ![addProduct](https://github.com/user-attachments/assets/90c8b216-df4a-4681-af19-879d901f1a72) |
-![Update Produc](https://github.com/user-attachments/assets/47dc014d-fbb3-45f3-84c0-6468942895bf) | ![Delete Product](https://github.com/user-attachments/assets/9de299b5-34be-46cb-aeb0-0d79ce7b5852) |
+| Login | Register | Send Verification Email |
+|-------|----------|--------------------------|
+| ![Login](https://github.com/user-attachments/assets/8a36292c-0afc-4864-897e-4dcda60ce270) | ![Register](https://github.com/user-attachments/assets/c66a73ea-cc18-453a-b403-7c350bcb3972) | ![VerificationSend](https://github.com/user-attachments/assets/da6a6add-2ffb-4bd8-950d-18864b8d7b94) |
+
+| Add Stock/Product | Update Stock/Product | Delete Stock/Product |
+|-------------------|----------------------|-----------------------|
+| ![addProduct](https://github.com/user-attachments/assets/90c8b216-df4a-4681-af19-879d901f1a72) | ![Update Product](https://github.com/user-attachments/assets/47dc014d-fbb3-45f3-84c0-6468942895bf) | ![Delete Product](https://github.com/user-attachments/assets/9de299b5-34be-46cb-aeb0-0d79ce7b5852) |
+
 
 
 
